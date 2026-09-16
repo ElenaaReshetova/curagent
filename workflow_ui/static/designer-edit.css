@@ -1,0 +1,129 @@
+/**
+ * Shared Canvas | DSL surface for Playbook and Flow designers.
+ */
+
+.de-view-toggle {
+  display: inline-flex;
+  border: 1px solid #e4e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+
+.de-view-toggle button {
+  border: none;
+  background: transparent;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b778c;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.de-view-toggle button.active {
+  background: #fff;
+  color: #172033;
+  box-shadow: inset 0 0 0 1px #e4e8f0;
+}
+
+.de-surface-toolbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  border-bottom: 1px solid #e4e8f0;
+  z-index: 2;
+}
+
+.de-surface-hint {
+  font-size: 11px;
+  color: #6b778c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.de-surface-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.de-surface-panel {
+  position: absolute;
+  inset: 0;
+  display: none !important;
+  flex-direction: column;
+  pointer-events: none !important;
+  visibility: hidden;
+  z-index: 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+.de-surface-panel.is-active {
+  display: flex !important;
+  pointer-events: auto !important;
+  visibility: visible;
+  z-index: 1;
+}
+
+.de-dsl-panel {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.de-dsl-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.de-dsl-panel textarea {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  resize: none;
+  padding: 14px;
+  background: #0f172a;
+  color: #e2e8f0;
+  caret-color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  outline: none;
+  pointer-events: auto;
+  box-shadow: none;
+  -webkit-text-fill-color: #e2e8f0;
+}
+
+.de-dsl-panel textarea[readonly] {
+  opacity: 0.85;
+  cursor: default;
+}
+
+.de-dsl-hint {
+  margin: 0;
+  padding: 8px 14px 12px;
+  font-size: 11px;
+  color: #94a3b8;
+  background: #1e293b;
+  border-top: 1px solid #334155;
+  flex-shrink: 0;
+}

@@ -1,0 +1,457 @@
+/* Runtime Profiles module (scoped) */
+
+.runtime-profiles-module {
+  --rp-text: #172033;
+  --rp-muted: #6b778c;
+  --rp-line: #e4e8f0;
+  --rp-blue: #2563eb;
+  --rp-green: #24804c;
+  --rp-amber: #d97706;
+  color: var(--rp-text);
+}
+
+.runtime-profiles-module .rp-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.runtime-profiles-module .rp-head h2 { margin: 4px 0 6px; font-size: 26px; }
+.runtime-profiles-module .rp-head p,
+.runtime-profiles-module .rp-crumb { margin: 0; color: var(--rp-muted); font-size: 13px; }
+.runtime-profiles-module .rp-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.runtime-profiles-module .rp-btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 9px 14px;
+  cursor: pointer;
+  background: var(--rp-blue);
+  color: #fff;
+  font-weight: 650;
+}
+.runtime-profiles-module .rp-btn.secondary {
+  background: #fff;
+  border: 1px solid var(--rp-line);
+  color: var(--rp-text);
+}
+.runtime-profiles-module .rp-btn.small { padding: 6px 10px; font-size: 12px; }
+.runtime-profiles-module .rp-btn.full { width: 100%; }
+
+.runtime-profiles-module .rp-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 14px;
+  background: #eef4ff;
+  border: 1px solid #d9e6ff;
+  border-radius: 12px;
+  font-size: 13px;
+}
+.runtime-profiles-module .rp-flow b {
+  color: var(--rp-blue);
+  background: #fff;
+  border: 1px solid #7da0f4;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.runtime-profiles-module .rp-flow span {
+  background: #fff;
+  border: 1px solid var(--rp-line);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.runtime-profiles-module .rp-arrow { color: var(--rp-muted); font-weight: 700; }
+
+.runtime-profiles-module .rp-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.runtime-profiles-module .rp-stat {
+  background: #fff;
+  border: 1px solid var(--rp-line);
+  border-radius: 12px;
+  padding: 16px;
+}
+.runtime-profiles-module .rp-stat span,
+.runtime-profiles-module .rp-stat em {
+  display: block;
+  color: var(--rp-muted);
+  font-size: 12px;
+  font-style: normal;
+}
+.runtime-profiles-module .rp-stat strong {
+  display: block;
+  font-size: 26px;
+  margin: 8px 0;
+}
+.runtime-profiles-module .rp-stat .warn { color: var(--rp-amber) !important; }
+
+.runtime-profiles-module .rp-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.runtime-profiles-module .rp-toolbar input { flex: 1; min-width: 180px; }
+.runtime-profiles-module .rp-toolbar input,
+.runtime-profiles-module .rp-toolbar select,
+.runtime-profiles-module input,
+.runtime-profiles-module select,
+.runtime-profiles-module textarea {
+  background: #fff;
+  border: 1px solid #d9dee8;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.runtime-profiles-module .rp-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.runtime-profiles-module .rp-card {
+  text-align: left;
+  background: #fff;
+  border: 1px solid var(--rp-line);
+  border-radius: 12px;
+  padding: 18px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  position: relative;
+}
+.runtime-profiles-module .rp-card:hover {
+  box-shadow: 0 8px 24px #27344a16;
+  transform: translateY(-1px);
+}
+.runtime-profiles-module .rp-status {
+  float: right;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 750;
+}
+.runtime-profiles-module .active-status { background: #e9f7ef; color: var(--rp-green); }
+.runtime-profiles-module .degraded-status { background: #fff3df; color: var(--rp-amber); }
+.runtime-profiles-module .draft-status { background: #eef1f6; color: #687487; }
+.runtime-profiles-module .rp-card h3 { margin: 0 0 8px; font-size: 16px; clear: both; }
+.runtime-profiles-module .rp-card p {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--rp-muted);
+  min-height: 34px;
+}
+.runtime-profiles-module .rp-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.runtime-profiles-module .rp-badge {
+  display: inline-block;
+  background: #eef2f7;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+}
+.runtime-profiles-module .rp-card hr {
+  border: 0;
+  border-top: 1px solid #edf0f4;
+  margin: 12px 0;
+}
+.runtime-profiles-module .rp-card small { color: var(--rp-muted); font-size: 11px; }
+
+.runtime-profiles-module .rp-hidden { display: none !important; }
+
+.runtime-profiles-module .rp-drawer {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(70%, 920px);
+  background: #f6f8fb;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -15px 0 40px #1d26331c;
+  border-left: 1px solid var(--rp-line);
+}
+.runtime-profiles-module .rp-drawer-head {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid var(--rp-line);
+  padding: 18px 22px;
+}
+.runtime-profiles-module .rp-drawer-head h2 { margin: 4px 0 0; font-size: 20px; }
+.runtime-profiles-module .rp-drawer-head small { color: var(--rp-muted); font-size: 11px; letter-spacing: 0.6px; }
+.runtime-profiles-module .rp-close {
+  background: transparent;
+  border: 0;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--rp-muted);
+}
+.runtime-profiles-module .rp-tabs {
+  background: #fff;
+  border-bottom: 1px solid var(--rp-line);
+  padding: 0 16px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+}
+.runtime-profiles-module .rp-tabs button {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--rp-muted);
+  padding: 12px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font: inherit;
+}
+.runtime-profiles-module .rp-tabs button.active {
+  color: var(--rp-blue);
+  border-bottom-color: var(--rp-blue);
+}
+.runtime-profiles-module .rp-drawer-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 18px 22px 28px;
+}
+.runtime-profiles-module .rp-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.runtime-profiles-module .rp-panel {
+  background: #fff;
+  border: 1px solid var(--rp-line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.runtime-profiles-module .rp-panel h3 { margin: 0 0 10px; font-size: 14px; }
+.runtime-profiles-module dl {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px;
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+.runtime-profiles-module dt { color: var(--rp-muted); }
+.runtime-profiles-module dd { margin: 0; font-weight: 650; }
+.runtime-profiles-module .rp-health-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid #edf0f4;
+  font-size: 12px;
+}
+.runtime-profiles-module .rp-ok { color: var(--rp-green); }
+.runtime-profiles-module .rp-runtime-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.runtime-profiles-module .rp-runtime-grid div {
+  background: #f1f4f8;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.runtime-profiles-module .rp-runtime-grid small {
+  display: block;
+  color: var(--rp-muted);
+  margin-bottom: 4px;
+}
+
+.runtime-profiles-module .rp-editor {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  background: #f6f8fb;
+  display: flex;
+  flex-direction: column;
+}
+.runtime-profiles-module .rp-editor-top {
+  height: 64px;
+  background: #fff;
+  border-bottom: 1px solid var(--rp-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px;
+  gap: 12px;
+}
+.runtime-profiles-module .rp-editor-top h2 { margin: 2px 0 0; font-size: 16px; }
+.runtime-profiles-module .rp-editor-top small { color: var(--rp-muted); font-size: 11px; }
+.runtime-profiles-module .rp-editor-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 200px 1fr 300px;
+}
+.runtime-profiles-module .rp-editor-nav,
+.runtime-profiles-module .rp-editor-form,
+.runtime-profiles-module .rp-editor-json {
+  background: #fff;
+  padding: 18px;
+  overflow: auto;
+}
+.runtime-profiles-module .rp-editor-nav { border-right: 1px solid var(--rp-line); }
+.runtime-profiles-module .rp-editor-json { border-left: 1px solid var(--rp-line); background: #f6f8fb; }
+.runtime-profiles-module .rp-editor-nav button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 8px 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--rp-muted);
+}
+.runtime-profiles-module .rp-editor-nav button.active { color: var(--rp-blue); font-weight: 700; }
+.runtime-profiles-module .rp-editor-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  margin: 12px 0;
+}
+.runtime-profiles-module .rp-editor-form h3 { margin: 18px 0 8px; font-size: 14px; }
+.runtime-profiles-module .rp-editor-form textarea {
+  resize: vertical;
+  min-height: 64px;
+  font-family: inherit;
+}
+.runtime-profiles-module .rp-version-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rp-line);
+}
+.runtime-profiles-module .rp-version-row:last-child { border-bottom: 0; }
+.runtime-profiles-module .rp-editor-json pre {
+  background: #121826;
+  color: #dce5f4;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 11px;
+  white-space: pre-wrap;
+  margin: 0 0 12px;
+}
+.runtime-profiles-module .rp-okbox {
+  background: #e9f7ef;
+  color: var(--rp-green);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.runtime-profiles-module .rp-okbox.warn {
+  background: #fff3df;
+  color: var(--rp-amber);
+}
+
+.runtime-profiles-module .rp-effective {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: #f6f8fb;
+  display: flex;
+  flex-direction: column;
+}
+.runtime-profiles-module .rp-effective-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #fff;
+  border-bottom: 1px solid var(--rp-line);
+}
+.runtime-profiles-module .rp-effective-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+}
+.runtime-profiles-module .rp-effective-nav {
+  background: #fff;
+  border-right: 1px solid var(--rp-line);
+  padding: 18px;
+}
+.runtime-profiles-module .rp-effective-nav label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  margin: 12px 0;
+}
+.runtime-profiles-module .rp-effective-result {
+  padding: 18px;
+  overflow: auto;
+}
+.runtime-profiles-module .rp-effective-result pre {
+  background: #121826;
+  color: #dce5f4;
+  padding: 16px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  font-size: 11px;
+}
+
+.runtime-profiles-module .rp-modal {
+  position: absolute;
+  inset: 0;
+  background: #121a2878;
+  z-index: 35;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8vh;
+}
+.runtime-profiles-module .rp-modal-box {
+  width: min(500px, 92%);
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+}
+.runtime-profiles-module .rp-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.runtime-profiles-module .rp-modal-head h2 { margin: 0; font-size: 18px; }
+.runtime-profiles-module .rp-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  margin: 12px 0;
+}
+.runtime-profiles-module .rp-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+@media (max-width: 1100px) {
+  .runtime-profiles-module .rp-cards { grid-template-columns: 1fr 1fr; }
+  .runtime-profiles-module .rp-stats { grid-template-columns: 1fr 1fr; }
+  .runtime-profiles-module .rp-drawer { width: 88%; }
+  .runtime-profiles-module .rp-runtime-grid { grid-template-columns: 1fr 1fr; }
+  .runtime-profiles-module .rp-editor-body { grid-template-columns: 160px 1fr 240px; }
+}
+@media (max-width: 720px) {
+  .runtime-profiles-module .rp-cards { grid-template-columns: 1fr; }
+}

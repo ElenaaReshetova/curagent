@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Управляемая платформа AI Delivery</title>
+  <link rel="stylesheet" href="/static/help/help.css?v=1">
+  <link rel="stylesheet" href="/static/styles.css?v=57">
+  <link rel="stylesheet" href="/static/flow-canvas.css?v=60">
+  <link rel="stylesheet" href="/static/react-dist/designer.css?v=40">
+  <link rel="stylesheet" href="/static/designer-edit.css?v=2">
+  <link rel="stylesheet" href="/static/skills/skills.css?v=40">
+  <link rel="stylesheet" href="/static/rules/rules.css?v=33">
+  <link rel="stylesheet" href="/static/knowledge/knowledge.css?v=38">
+  <link rel="stylesheet" href="/static/flows/flows.css?v=55">
+  <link rel="stylesheet" href="/static/runtime_profiles/runtime_profiles.css?v=36">
+  <link rel="stylesheet" href="/static/executions/executions.css?v=40">
+  <link rel="stylesheet" href="/static/launches/launches.css?v=2">
+  <link rel="stylesheet" href="/static/human_checkpoints/human_checkpoints.css?v=40">
+  <link rel="stylesheet" href="/static/controls/controls.css?v=38">
+  <link rel="stylesheet" href="/static/integrations/integrations.css?v=44">
+  <link rel="stylesheet" href="/static/capabilities_platform/capabilities_platform.css?v=41">
+  <link rel="stylesheet" href="/static/audit/audit.css?v=41">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="global-nav">
+      <div class="platform-brand">
+        <span class="brand-icon">AI</span>
+        <div>
+          <strong id="platform-name">AI PDLC Platform</strong>
+          <small>Е2Е Сценарий · Навык (skill) · Способность</small>
+        </div>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-section">ОБЗОР</li>
+        <li class="active" data-view="overview"><span class="nav-ico">⌂</span> Обзор</li>
+
+        <li class="nav-section">СБОРКА</li>
+        <li data-view="flows"><span class="nav-ico">⇢</span> Е2Е Сценарии</li>
+        <li data-view="skills"><span class="nav-ico">◇</span> Навыки (skills)</li>
+        <li data-view="rules"><span class="nav-ico">≡</span> Правила (rules)</li>
+        <li data-view="knowledge"><span class="nav-ico">▱</span> Области знаний</li>
+        <li data-view="runtime-profiles"><span class="nav-ico">✦</span> Профили исполнения</li>
+
+        <li class="nav-section">ЗАПУСК</li>
+        <li data-view="executions"><span class="nav-ico">▶</span> Запуски</li>
+        <li data-view="checkpoints"><span class="nav-ico">✓</span> Согласования</li>
+        <li data-view="inspector"><span class="nav-ico">⌕</span> Инспектор запуска</li>
+
+        <li class="nav-section">УПРАВЛЕНИЕ</li>
+        <li data-view="controls"><span class="nav-ico">◉</span> Контроли</li>
+        <li data-view="integrations"><span class="nav-ico">↗</span> Интеграции</li>
+        <li data-view="capabilities-platform"><span class="nav-ico">⌁</span> Реестр способностей</li>
+        <li data-view="audit"><span class="nav-ico">◷</span> Аудит</li>
+      </ul>
+      <a id="nav-temporal" href="#" target="_blank" class="nav-link-external">Temporal UI ↗</a>
+    </aside>
+
+    <div class="content-shell">
+      <div class="workspace-row">
+        <main class="main-area">
+      <!-- OVERVIEW -->
+      <div id="view-overview" class="view active">
+        <div id="overview-module" class="overview-module" aria-label="Обзор">
+          <section id="ov-catalog-view">
+            <div class="ov-head">
+              <div>
+                <div class="ov-crumb">Обзор</div>
+                <h2>Обзор платформы</h2>
+                <p>Е2Е Сценарий → Навык (skill) → Способность → MCP. Настройте цепочку, затем запускайте и контролируйте.</p>
+              </div>
+              <div class="ov-actions">
+                <span class="ov-updated" id="overview-updated">Обновление…</span>
+                <button type="button" class="ov-btn secondary" id="ov-refresh-btn">Обновить</button>
+              </div>
+            </div>
+
+            <section class="ov-explanation">
+              <div class="ov-node">Work Item</div><span>→</span>
+              <div class="ov-node active">Е2Е Сценарий</div><span>→</span>
+              <div class="ov-node">Навык</div><span>→</span>
+              <div class="ov-node">Способность</div><span>→</span>
+              <div class="ov-node">MCP</div>
+            </section>
+
+            <section class="ov-setup" aria-label="Путь настройки агента">
+              <div class="ov-section-label">Настройка агента</div>
+              <ol class="ov-setup-steps" id="overview-setup-path">
+                <li><button type="button" data-view-target="integrations"><span>1</span><strong>Интеграции</strong><small>MCP-серверы и инструменты</small></button></li>
+                <li><button type="button" data-view-target="capabilities-platform"><span>2</span><strong>Способности</strong><small>Инструменты → способности</small></button></li>
+                <li><button type="button" data-view-target="rules"><span>3</span><strong>Правила (rules)</strong><small>Инструкции агента</small></button></li>
+                <li><button type="button" data-view-target="skills"><span>4</span><strong>Навыки (skills)</strong><small>Когнитивные операции</small></button></li>
+                <li><button type="button" data-view-target="controls"><span>5</span><strong>Контроли</strong><small>Обязательные проверки артефактов</small></button></li>
+                <li><button type="button" data-view-target="flows"><span>6</span><strong>Е2Е Сценарии</strong><small>сквозной процесс</small></button></li>
+              </ol>
+            </section>
+
+            <section class="ov-stats" id="overview-stats">
+              <div class="ov-stat"><span>Активные запуски</span><strong id="ov-metric-active">—</strong><em id="ov-metric-active-sub">—</em></div>
+              <div class="ov-stat"><span>Ожидают согласования</span><strong class="warn" id="ov-metric-checkpoints">—</strong><em id="ov-metric-checkpoints-sub">—</em></div>
+              <div class="ov-stat"><span>Опубликованные сценарии</span><strong id="ov-metric-playbooks">—</strong><em id="ov-metric-playbooks-sub">—</em></div>
+              <div class="ov-stat"><span>Активные способности</span><strong id="ov-metric-capabilities">—</strong><em id="ov-metric-capabilities-sub">—</em></div>
+            </section>
+
+            <section class="ov-quick" id="overview-quick-actions">
+              <button type="button" data-view-target="flows"><b>⇢</b><span><strong>Е2Е Сценарии</strong><small>сквозная оркестрация</small></span></button>
+              <button type="button" data-view-target="controls"><b>◉</b><span><strong>Контроли</strong><small>Обязательные проверки</small></span></button>
+              <button type="button" data-view-target="executions"><b>▶</b><span><strong>Запуски</strong><small>Сценарии для агента</small></span></button>
+              <button type="button" data-view-target="checkpoints"><b>✓</b><span><strong>Согласования</strong><small>Проверка и решение</small></span></button>
+              <button type="button" data-view-target="integrations"><b>↗</b><span><strong>Интеграции</strong><small>Каталог MCP</small></span></button>
+              <button type="button" data-view-target="audit"><b>◷</b><span><strong>Аудит</strong><small>Журнал решений</small></span></button>
+            </section>
+
+            <div class="ov-section-label">Запуск</div>
+            <div class="ov-grid ov-grid-2">
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Недавние выполнения</h3><p>Текущие и недавние управляемые запуски</p></div>
+                  <button type="button" class="ov-link" data-view-target="inspector">Инспектор →</button>
+                </div>
+                <div id="overview-executions" class="ov-list"></div>
+              </section>
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Согласования</h3><p>Ожидают решения человека</p></div>
+                  <button type="button" class="ov-link" data-view-target="checkpoints">Очередь →</button>
+                </div>
+                <div id="overview-checkpoints" class="ov-list"></div>
+              </section>
+            </div>
+
+            <div class="ov-section-label">Сборка</div>
+            <div class="ov-grid ov-grid-3">
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Е2Е Сценарии</h3><p>Опубликованные процессы</p></div>
+                  <button type="button" class="ov-link" data-view-target="flows">Каталог →</button>
+                </div>
+                <div id="overview-playbooks"></div>
+              </section>
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Навыки (skills)</h3><p>Реализации интерфейсов</p></div>
+                  <button type="button" class="ov-link" data-view-target="skills">Каталог →</button>
+                </div>
+                <div id="overview-skills" class="ov-chip-grid"></div>
+              </section>
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Каталог сборки</h3><p>Е2Е Сценарии · Знания · Профили · Правила (rules)</p></div>
+                </div>
+                <div id="overview-build" class="ov-nav-tiles"></div>
+              </section>
+            </div>
+
+            <div class="ov-section-label">Управление</div>
+            <div class="ov-grid ov-grid-3">
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Контроли</h3><p>Обязательные гейты и политики</p></div>
+                  <button type="button" class="ov-link" data-view-target="controls">Все контроли →</button>
+                </div>
+                <div id="overview-controls" class="ov-list"></div>
+              </section>
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Интеграции</h3><p>Внешние подключения и здоровье</p></div>
+                  <button type="button" class="ov-link" data-view-target="integrations">Каталог →</button>
+                </div>
+                <div id="overview-integrations" class="ov-chip-grid"></div>
+              </section>
+              <section class="ov-card">
+                <div class="ov-card-head">
+                  <div><h3>Реестр и аудит</h3><p>Способности и журнал control plane</p></div>
+                </div>
+                <div id="overview-govern" class="ov-nav-tiles"></div>
+              </section>
+            </div>
+
+          </section>
+        </div>
+      </div>
+
+      <div id="view-runtime-profiles" class="view">
+        <div id="runtime-profiles-module" class="runtime-profiles-module" aria-label="Профили исполнения">
+          <section id="rp-catalog-view">
+            <div class="rp-head">
+              <div>
+                <div class="rp-crumb">Сборка / Профили исполнения</div>
+                <h2>Профили исполнения</h2>
+                <p>Провайдеры, модели, лимиты и безопасность для управляемого исполнения.</p>
+              </div>
+              <div class="rp-actions">
+                <button type="button" class="rp-btn" id="rp-btn-create">+ Новый профиль</button>
+              </div>
+            </div>
+            <section class="rp-flow">
+              <span>Навык (skill)</span>
+              <span class="rp-arrow">→</span>
+              <b>Профиль исполнения</b>
+              <span class="rp-arrow">→</span>
+              <span>Провайдер + Модель</span>
+              <span class="rp-arrow">→</span>
+              <span>Запуск в песочнице</span>
+            </section>
+            <section class="rp-stats">
+              <div class="rp-stat"><span>Активные профили</span><strong id="rp-metric-active">—</strong><em>Опубликованные конфигурации</em></div>
+              <div class="rp-stat"><span>Исправные провайдеры</span><strong id="rp-metric-healthy">—</strong><em>Проверка здоровья</em></div>
+              <div class="rp-stat"><span>Запуски за месяц</span><strong id="rp-metric-runs">—</strong><em>За 30 дней</em></div>
+            </section>
+            <section class="rp-toolbar">
+              <input id="rp-search" placeholder="Поиск провайдера, модели или профиля..." />
+              <select id="rp-type-filter">
+                <option value="">Все типы</option>
+                <option>PRODUCTION</option><option>DEVELOPMENT</option><option>RESTRICTED</option>
+                <option>HIGH_ACCURACY</option><option>LOW_COST</option>
+              </select>
+              <select id="rp-provider-filter">
+                <option value="">Все провайдеры</option>
+                <option>QWEN_CODE_CLI</option><option>OPENAI_API</option><option>LOCAL_VLLM</option><option>GIGACHAT</option>
+              </select>
+            </section>
+            <section class="rp-cards" id="rp-cards"></section>
+          </section>
+
+          <aside id="rp-drawer" class="rp-drawer rp-hidden">
+            <div class="rp-drawer-head">
+              <div><small>ПРОФИЛЬ ИСПОЛНЕНИЯ</small><h2 id="rp-drawer-name">—</h2></div>
+              <div class="drawer-head-actions">
+                <div id="rp-drawer-menu"></div>
+                <button type="button" class="rp-close" id="rp-close-drawer">×</button>
+              </div>
+            </div>
+            <div class="rp-tabs">
+              <button type="button" class="active" data-tab="overview">Обзор</button>
+              <button type="button" data-tab="provider">Провайдер</button>
+              <button type="button" data-tab="model">Модель</button>
+              <button type="button" data-tab="limits">Лимиты</button>
+              <button type="button" data-tab="security">Безопасность</button>
+              <button type="button" data-tab="capabilities">Способности</button>
+              <button type="button" data-tab="fallback">Резерв</button>
+              <button type="button" data-tab="versions">Версии</button>
+            </div>
+            <div class="rp-drawer-body">
+              <div id="rp-tab-overview">
+                <div class="rp-overview-grid">
+                  <div class="rp-panel"><h3>Обзор</h3><p id="rp-description"></p><dl id="rp-meta"></dl></div>
+                  <div class="rp-panel"><h3>Здоровье</h3><div id="rp-health"></div></div>
+                </div>
+                <div class="rp-panel">
+                  <h3>Эффективный runtime</h3>
+                  <div class="rp-runtime-grid" id="rp-runtime-grid"></div>
+                  <button type="button" class="rp-btn" id="rp-edit-profile">Редактировать профиль</button>
+                </div>
+              </div>
+              <div id="rp-tab-provider" class="rp-hidden"><div class="rp-panel"><h3>Провайдер</h3><dl id="rp-provider-body"></dl></div></div>
+              <div id="rp-tab-model" class="rp-hidden"><div class="rp-panel"><h3>Модель</h3><dl id="rp-model-body"></dl></div></div>
+              <div id="rp-tab-limits" class="rp-hidden"><div class="rp-panel"><h3>Лимиты</h3><dl id="rp-limits-body"></dl></div></div>
+              <div id="rp-tab-security" class="rp-hidden"><div class="rp-panel"><h3>Безопасность</h3><dl id="rp-security-body"></dl></div></div>
+              <div id="rp-tab-capabilities" class="rp-hidden"><div class="rp-panel"><h3>Способности</h3><div id="rp-capabilities"></div></div></div>
+              <div id="rp-tab-fallback" class="rp-hidden"><div class="rp-panel"><h3>Резерв</h3><div id="rp-fallback-body"></div></div></div>
+              <div id="rp-tab-versions" class="rp-hidden">
+                <div class="rp-panel">
+                  <div class="rp-actions" style="margin-bottom:12px">
+                    <button type="button" class="rp-btn secondary small" id="rp-btn-create-draft">Создать черновик</button>
+                  </div>
+                  <h3>Версии</h3>
+                  <div id="rp-versions-list"></div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div id="rp-editor" class="rp-editor rp-hidden">
+            <div class="rp-editor-top">
+              <div><small>РЕДАКТОР ПРОФИЛЯ ИСПОЛНЕНИЯ</small><h2 id="rp-editor-title">Профиль исполнения</h2></div>
+              <div class="rp-actions">
+                <button type="button" class="rp-btn secondary" id="rp-test">Проверить соединение</button>
+                <button type="button" class="rp-btn secondary" id="rp-validate">Проверить</button>
+                <button type="button" class="rp-btn secondary" id="rp-save-draft">Сохранить черновик</button>
+                <button type="button" class="rp-btn" id="rp-activate">Активировать</button>
+                <button type="button" class="rp-close" id="rp-close-editor">×</button>
+              </div>
+            </div>
+            <div class="rp-editor-body">
+              <nav class="rp-editor-nav">
+                <button type="button" class="active" data-section="general">Общее</button>
+                <button type="button" data-section="provider">Провайдер</button>
+                <button type="button" data-section="model">Модель</button>
+                <button type="button" data-section="limits">Лимиты</button>
+                <button type="button" data-section="sandbox">Песочница</button>
+                <button type="button" data-section="capabilities">Способности</button>
+                <button type="button" data-section="secrets">Секреты</button>
+              </nav>
+              <section class="rp-editor-form">
+                <div class="rp-ed-section" data-section="general">
+                  <h3>Общее</h3>
+                  <label>Название<input id="rp-ed-name" /></label>
+                  <label>Описание<textarea id="rp-ed-description" rows="3"></textarea></label>
+                  <label>Тип<select id="rp-ed-type">
+                    <option>PRODUCTION</option><option>DEVELOPMENT</option><option>TEST</option>
+                    <option>RESTRICTED</option><option>HIGH_ACCURACY</option><option>LOW_COST</option>
+                    <option>BATCH</option><option>CUSTOM</option>
+                  </select></label>
+                  <label>Надзор<select id="rp-ed-supervision">
+                    <option>AUTONOMOUS</option><option>SUPERVISED</option><option>STRICT</option>
+                  </select></label>
+                  <label>Резервный профиль<select id="rp-ed-fallback"><option value="">— нет —</option></select></label>
+                </div>
+                <div class="rp-ed-section rp-hidden" data-section="provider">
+                  <h3>Провайдер</h3>
+                  <label>Провайдер<select id="rp-ed-provider">
+                    <option>QWEN_CODE_CLI</option><option>OPENAI_API</option><option>LOCAL_VLLM</option>
+                    <option>GIGACHAT</option><option>LOCAL_OLLAMA</option><option>ANTHROPIC_API</option>
+                    <option>CUSTOM_HTTP</option>
+                  </select></label>
+                  <label>Регион<input id="rp-ed-region" /></label>
+                  <label>Политика сети<select id="rp-ed-network">
+                    <option>ALLOW_CAPABILITY_GATEWAY_ONLY</option>
+                    <option>ALLOWLIST</option>
+                    <option>UNRESTRICTED</option>
+                    <option>DENY_ALL</option>
+                  </select></label>
+                </div>
+                <div class="rp-ed-section rp-hidden" data-section="model">
+                  <h3>Модель</h3>
+                  <label>Модель<input id="rp-ed-model" /></label>
+                  <label>Температура<input id="rp-ed-temp" type="number" step="0.1" min="0" max="2" /></label>
+                  <label>Max output tokens<input id="rp-ed-max-tokens" type="number" min="1" /></label>
+                </div>
+                <div class="rp-ed-section rp-hidden" data-section="limits">
+                  <h3>Лимиты</h3>
+                  <label>Max execution seconds<input id="rp-ed-max-exec" type="number" min="1" /></label>
+                  <label>Max output tokens<input id="rp-ed-limit-tokens" type="number" min="1" /></label>
+                  <label>Max retries<input id="rp-ed-max-retries" type="number" min="0" /></label>
+                  <label>Max concurrent runs<input id="rp-ed-max-concurrent" type="number" min="1" /></label>
+                </div>
+                <div class="rp-ed-section rp-hidden" data-section="sandbox">
+                  <h3>Песочница</h3>
+                  <label>Sandbox<select id="rp-ed-sandbox">
+                    <option>NONE</option><option>PROCESS</option><option>CONTAINER</option>
+                    <option>MICROVM</option><option>REMOTE_RUNNER</option>
+                  </select></label>
+                  <label>Read-only root FS<select id="rp-ed-readonly-fs">
+                    <option value="true">Да</option><option value="false">Нет</option>
+                  </select></label>
+                  <label>Ephemeral<select id="rp-ed-ephemeral">
+                    <option value="true">Да</option><option value="false">Нет</option>
+                  </select></label>
+                </div>
+                <div class="rp-ed-section rp-hidden" data-section="capabilities">
+                  <h3>Способности</h3>
+                  <label>Allow (через запятую)<textarea id="rp-ed-cap-allow" rows="3"></textarea></label>
+                  <label>Deny (через запятую)<textarea id="rp-ed-cap-deny" rows="2"></textarea></label>
+                  <label>Approval required (через запятую)<textarea id="rp-ed-cap-approval" rows="2"></textarea></label>
+                </div>
+                <div class="rp-ed-section rp-hidden" data-section="secrets">
+                  <h3>Секреты</h3>
+                  <label>Ссылка на секрет<input id="rp-ed-secret" placeholder="vault://ai/..." /></label>
+                </div>
+              </section>
+              <aside class="rp-editor-json">
+                <h3>Эффективный JSON</h3>
+                <pre id="rp-ed-json">{}</pre>
+                <div class="rp-okbox" id="rp-ed-validation">✓ Нет блокирующих проблем</div>
+              </aside>
+            </div>
+          </div>
+
+          <div id="rp-modal" class="rp-modal rp-hidden">
+            <div class="rp-modal-box">
+              <div class="rp-modal-head"><h2 id="rp-modal-title">Создать профиль исполнения</h2><button type="button" class="rp-close" id="rp-close-modal">×</button></div>
+              <label>Название<input id="rp-new-name" value="Новый production-профиль" /></label>
+              <label>Тип<select id="rp-new-type">
+                <option>PRODUCTION</option><option>DEVELOPMENT</option><option>RESTRICTED</option>
+              </select></label>
+              <label>Провайдер<select id="rp-new-provider">
+                <option>QWEN_CODE_CLI</option><option>OPENAI_API</option><option>LOCAL_VLLM</option>
+              </select></label>
+              <div class="rp-modal-actions">
+                <button type="button" class="rp-btn secondary" id="rp-cancel-modal">Отмена</button>
+                <button type="button" class="rp-btn" id="rp-save-profile">Создать черновик</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-skills" class="view">
+        <div id="skills-module" class="skills-module" aria-label="Каталог навыков">
+          <section id="sk-catalog-view">
+            <div class="sk-top-actions">
+              <button type="button" class="sk-btn ghost" id="sk-btn-interfaces">Интерфейсы навыков</button>
+              <button type="button" class="sk-btn" id="sk-btn-create">+ Новый навык</button>
+            </div>
+            <div class="sk-hero-row">
+              <div>
+                <h2>Каталог навыков (skills)</h2>
+                <p>Переиспользуемые версионированные когнитивные операции, реализующие стабильные интерфейсы. Корпоративные навыки нельзя менять — от них наследуются командные.</p>
+              </div>
+              <div class="sk-metrics">
+                <div><b id="sk-metric-skills">—</b><span>Навыки</span></div>
+                <div><b id="sk-metric-published">—</b><span>Опубликовано</span></div>
+                <div><b id="sk-metric-interfaces">—</b><span>Интерфейсы</span></div>
+                <div><b id="sk-metric-validation">—</b><span>Валидация</span></div>
+              </div>
+            </div>
+            <div class="sk-toolbar">
+              <input id="sk-search" placeholder="Поиск: навыки, интерфейсы, способности…" />
+              <select id="sk-type-filter">
+                <option value="">Все типы</option>
+                <option value="CORE">CORE</option>
+                <option value="CORPORATE">CORPORATE</option>
+                <option value="TEAM">TEAM</option>
+                <option value="IMPORTED">IMPORTED</option>
+              </select>
+              <select id="sk-status-filter">
+                <option value="">Все статусы</option>
+                <option value="PUBLISHED">PUBLISHED</option>
+                <option value="DRAFT">DRAFT</option>
+                <option value="DEPRECATED">DEPRECATED</option>
+              </select>
+              <div class="sk-spacer"></div>
+            </div>
+            <div class="sk-cards" id="sk-cards"></div>
+          </section>
+
+          <section id="sk-interfaces-view" class="sk-hidden">
+            <div class="sk-if-page">
+            <button type="button" class="sk-btn back" id="sk-if-back">← К каталогу навыков</button>
+            <div class="sk-hero-row sk-if-hero">
+              <div class="sk-if-hero-copy">
+                <h2>Интерфейсы и контракты</h2>
+                <p>Интерфейсы — стабильные точки расширения для навыков. Контракты — типы данных на входе и выходе. Платформенные интерфейсы только для чтения.</p>
+              </div>
+              <div class="sk-top-actions sk-if-hero-actions">
+                <button type="button" class="sk-btn ghost sk-hidden" id="sk-if-create">+ Новый интерфейс</button>
+              </div>
+            </div>
+            <div class="sk-if-tabs">
+              <button type="button" class="active" data-if-tab="interfaces">Интерфейсы</button>
+              <button type="button" data-if-tab="contracts">Контракты</button>
+            </div>
+            <div id="sk-if-panel-interfaces">
+              <div class="sk-if-stats" id="sk-if-stats"></div>
+              <div class="sk-toolbar">
+                <input id="sk-if-search" placeholder="Поиск по ключу, названию, контрактам…" />
+                <select id="sk-if-source-filter">
+                  <option value="">Все источники</option>
+                  <option value="platform">Платформа (read-only)</option>
+                  <option value="custom">Свои (редактируемые)</option>
+                </select>
+                <div class="sk-spacer"></div>
+                <button type="button" class="sk-btn" id="sk-if-create-inline">+ Новый интерфейс</button>
+              </div>
+              <div id="sk-if-list"></div>
+            </div>
+            <div id="sk-if-panel-contracts" class="sk-hidden">
+              <div class="sk-if-stats" id="sk-ct-stats"></div>
+              <div class="sk-toolbar">
+                <input id="sk-ct-search" placeholder="Поиск по ключу, названию, типу…" />
+                <select id="sk-ct-kind-filter">
+                  <option value="">Все типы</option>
+                  <option value="work_item">work_item</option>
+                  <option value="artifact">artifact</option>
+                  <option value="patch">patch</option>
+                  <option value="decision">decision</option>
+                </select>
+              </div>
+              <div id="sk-ct-list"></div>
+            </div>
+            </div>
+          </section>
+
+          <section id="sk-detail-view" class="sk-hidden">
+            <button type="button" class="sk-btn back" id="sk-btn-back">← К каталогу</button>
+            <div class="sk-detail-head">
+              <div>
+                <div class="sk-eyebrow" id="sk-detail-eyebrow">TEAM · КОМАНДНЫЙ · НАВЫК</div>
+                <h2 id="sk-detail-title">—</h2>
+                <p id="sk-detail-desc"></p>
+              </div>
+              <div class="sk-top-actions detail-head-actions" style="margin:0">
+                <div id="sk-detail-menu"></div>
+                <button type="button" class="sk-btn ghost" id="sk-btn-inherit">Наследовать</button>
+                <button type="button" class="sk-btn ghost" id="sk-btn-test">Запустить тест</button>
+                <button type="button" class="sk-btn ghost" id="sk-btn-edit">Редактор</button>
+                <button type="button" class="sk-btn" id="sk-btn-create-version">Новая версия</button>
+              </div>
+            </div>
+            <div class="sk-meta-strip" id="sk-meta-strip"></div>
+            <div class="sk-tabs">
+              <button type="button" class="active" data-tab="overview">Обзор</button>
+              <button type="button" data-tab="instructions">Инструкции</button>
+              <button type="button" data-tab="package">Пакет</button>
+              <button type="button" data-tab="manifest">Манифест</button>
+              <button type="button" data-tab="interfaces">Интерфейсы</button>
+              <button type="button" data-tab="tests">Тесты</button>
+              <button type="button" data-tab="bindings">Привязки</button>
+              <button type="button" data-tab="versions">Версии</button>
+              <button type="button" data-tab="validation">Валидация</button>
+            </div>
+            <div id="sk-tab-content"></div>
+          </section>
+
+          <section id="sk-editor-view" class="sk-editor sk-hidden">
+            <div class="sk-editor-top">
+              <button type="button" class="sk-btn back" id="sk-editor-back">← Карточка навыка</button>
+              <b id="sk-editor-title">Навык</b>
+              <span class="sk-pill amber" id="sk-editor-pill">DRAFT</span>
+              <div class="sk-spacer"></div>
+              <button type="button" class="sk-btn ghost" id="sk-btn-validate">Проверить</button>
+              <button type="button" class="sk-btn ghost" id="sk-btn-publish">Опубликовать</button>
+              <button type="button" class="sk-btn" id="sk-btn-save-draft">Сохранить draft</button>
+            </div>
+            <div class="sk-ide">
+              <aside class="sk-filetree">
+                <h3>Пакет</h3>
+                <div class="sk-filetree-actions">
+                  <button type="button" class="sk-btn ghost sk-mini" id="sk-btn-add-file">+ Файл</button>
+                  <button type="button" class="sk-btn ghost sk-mini" id="sk-btn-add-folder">+ Папка</button>
+                  <button type="button" class="sk-btn ghost sk-mini" id="sk-btn-delete-entry">Удалить</button>
+                </div>
+                <div id="sk-add-form" class="sk-add-form sk-hidden">
+                  <div class="sk-add-form-title" id="sk-add-form-title">Новый файл</div>
+                  <label id="sk-add-parent-label">В каталоге</label>
+                  <input id="sk-add-parent" readonly />
+                  <label id="sk-add-name-label">Имя</label>
+                  <input id="sk-add-name" placeholder="example.md" autocomplete="off" />
+                  <div class="sk-add-form-actions">
+                    <button type="button" class="sk-btn ghost sk-mini" id="sk-add-cancel">Отмена</button>
+                    <button type="button" class="sk-btn sk-mini" id="sk-add-submit">Добавить</button>
+                  </div>
+                </div>
+                <div id="sk-filetree-root" class="sk-tree-root" data-path="" data-kind="folder" title="Корень пакета — сюда можно перетащить файл">
+                  <span class="sk-tree-root-label">/</span>
+                </div>
+                <div id="sk-filetree-list"></div>
+                <p class="sk-tree-hint">Перетащите файл или папку в каталог, чтобы переместить</p>
+              </aside>
+              <section class="sk-code">
+                <div class="sk-code-tabs"><span class="active" id="sk-active-path">SKILL.md</span></div>
+                <textarea id="sk-editor-text" spellcheck="false"></textarea>
+              </section>
+              <aside class="sk-inspector">
+                <h3>Инспектор</h3>
+                <label>Реализует</label>
+                <div class="sk-chip" id="sk-insp-interface">—</div>
+                <label>Входной контракт</label>
+                <div class="sk-field" id="sk-insp-input">—</div>
+                <label>Выходной контракт</label>
+                <div class="sk-field" id="sk-insp-output">—</div>
+                <label>Способности</label>
+                <div class="sk-chips" id="sk-insp-caps"></div>
+                <h3>Проблемы <span class="sk-count" id="sk-problem-count">0</span></h3>
+                <div id="sk-insp-problems"></div>
+              </aside>
+            </div>
+          </section>
+
+          <div id="sk-modal" class="sk-modal sk-hidden">
+            <div class="sk-modal-card">
+              <button type="button" class="sk-close" id="sk-close-modal">×</button>
+              <h2 id="sk-modal-title">Создать навык</h2>
+              <div id="sk-create-fields">
+                <p>Создайте версионированный навык (skill) под интерфейс. Без прямых MCP-инструментов — только способности. Корпоративные навыки неизменяемы: наследуйте их.</p>
+                <div id="sk-mode-wrap">
+                  <label>Режим</label>
+                  <select id="sk-create-mode">
+                    <option value="new">Новый навык</option>
+                    <option value="inherit">Наследовать от существующего</option>
+                  </select>
+                </div>
+                <div id="sk-inherit-wrap" class="sk-hidden">
+                  <label>Базовый навык (Corporate / Core / Team)</label>
+                  <select id="sk-create-base"></select>
+                </div>
+                <label>Название</label>
+                <input id="sk-create-name" placeholder="Генератор системных требований" />
+                <div id="sk-type-wrap">
+                  <label>Тип</label>
+                  <select id="sk-create-type">
+                    <option value="TEAM">TEAM</option>
+                    <option value="IMPORTED">IMPORTED</option>
+                  </select>
+                </div>
+                <div id="sk-interface-wrap">
+                  <label>Интерфейс</label>
+                  <select id="sk-create-interface"></select>
+                </div>
+                <label>Входной контракт</label>
+                <input id="sk-create-input-contract" placeholder="По умолчанию берётся из интерфейса" autocomplete="off" />
+                <label>Выходной контракт</label>
+                <input id="sk-create-output-contract" placeholder="По умолчанию берётся из интерфейса" autocomplete="off" />
+                <label>Описание</label>
+                <textarea id="sk-create-desc" rows="3"></textarea>
+              </div>
+              <div class="sk-modal-actions">
+                <button type="button" class="sk-btn ghost" id="sk-cancel-modal">Отмена</button>
+                <button type="button" class="sk-btn" id="sk-submit-modal">Продолжить</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="sk-if-modal" class="sk-modal sk-hidden">
+            <div class="sk-modal-card sk-if-modal-card">
+              <button type="button" class="sk-close" id="sk-if-close-modal">×</button>
+              <h2 id="sk-if-modal-title">Новый интерфейс</h2>
+              <p id="sk-if-modal-hint" class="sk-if-hint">Ключ задаётся один раз: <code>domain.action@1</code>. Major-версия — часть ключа.</p>
+              <label>Ключ интерфейса</label>
+              <input id="sk-if-key" placeholder="analysis.my_feature.generate@1" autocomplete="off" />
+              <label>Название</label>
+              <input id="sk-if-name" placeholder="Generate My Feature" />
+              <label>Описание</label>
+              <textarea id="sk-if-desc" rows="2" placeholder="Кратко: что делает навык, реализующий интерфейс"></textarea>
+              <label>Входной контракт</label>
+              <select id="sk-if-input-contract"></select>
+              <div id="sk-if-input-preview" class="sk-contract-preview"></div>
+              <label>Выходной контракт</label>
+              <select id="sk-if-output-contract"></select>
+              <div id="sk-if-output-preview" class="sk-contract-preview"></div>
+              <label>Обязательные capabilities (через запятую)</label>
+              <textarea id="sk-if-caps" rows="2" placeholder="context.read, artifact.patch"></textarea>
+              <div id="sk-if-readonly-note" class="sk-if-readonly-note sk-hidden">
+                Платформенный интерфейс — только просмотр.
+              </div>
+              <div class="sk-modal-actions">
+                <button type="button" class="sk-btn ghost" id="sk-if-cancel-modal">Отмена</button>
+                <button type="button" class="sk-btn sk-hidden" id="sk-if-delete-modal">Удалить</button>
+                <button type="button" class="sk-btn" id="sk-if-submit-modal">Сохранить</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="sk-contract-modal" class="sk-modal sk-hidden">
+            <div class="sk-modal-card sk-contract-modal-card">
+              <button type="button" class="sk-close" id="sk-contract-close-modal">×</button>
+              <h2 id="sk-contract-modal-title">Контракт</h2>
+              <div id="sk-contract-modal-body"></div>
+              <div class="sk-modal-actions">
+                <button type="button" class="sk-btn" id="sk-contract-close-btn">Закрыть</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="view-knowledge" class="view">
+        <div id="knowledge-module" class="knowledge-module" aria-label="Области знаний">
+          <section id="ks-catalog-view">
+            <div class="ks-head">
+              <div>
+                <div class="ks-crumb">Сборка / Области знаний</div>
+                <h2>Области знаний</h2>
+                <p>Определяют, где ИИ может искать доверенный контекст.</p>
+              </div>
+              <div class="ks-actions">
+                <button type="button" class="ks-btn secondary" id="ks-btn-explain">Что это?</button>
+                <button type="button" class="ks-btn" id="ks-btn-create">+ Новая область</button>
+              </div>
+            </div>
+            <section class="ks-explanation">
+              <div class="ks-step"><b>Навык</b><span>запрашивает контекст</span></div>
+              <div class="ks-arrow">→</div>
+              <div class="ks-step active"><b>Область знаний</b><span>выбирает доверенные источники</span></div>
+              <div class="ks-arrow">→</div>
+              <div class="ks-step"><b>Evidence</b><span>возвращает ранжированные факты</span></div>
+            </section>
+            <section class="ks-stats">
+              <div class="ks-stat"><span>Активные области</span><strong id="ks-metric-active">—</strong><em>По доменам</em></div>
+              <div class="ks-stat"><span>Подключённые источники</span><strong id="ks-metric-sources">—</strong><em>Привязки</em></div>
+              <div class="ks-stat"><span>Успех поиска</span><strong id="ks-metric-success">—</strong><em>За 30 дней</em></div>
+              <div class="ks-stat"><span>Устаревшие источники</span><strong class="warn" id="ks-metric-stale">—</strong><em>Требуют внимания</em></div>
+            </section>
+            <section class="ks-toolbar">
+              <input id="ks-search" placeholder="Поиск по имени, ключу или владельцу…" />
+              <select id="ks-type-filter">
+                <option value="">Все типы</option>
+                <option>DOMAIN</option><option>PRODUCT</option><option>TEAM</option>
+                <option>SYSTEM</option><option>REGULATORY</option><option>TEMPORARY</option>
+              </select>
+              <select id="ks-status-filter">
+                <option value="">Все статусы</option>
+                <option value="ACTIVE">Активно</option>
+                <option value="DEGRADED">Деградирует</option>
+                <option value="DRAFT">Черновик</option>
+              </select>
+              <button type="button" class="ks-btn secondary" id="ks-btn-playground">Песочница поиска</button>
+            </section>
+            <section class="ks-cards" id="ks-cards"></section>
+          </section>
+
+          <section id="ks-detail-view" class="ks-hidden">
+            <button type="button" class="ks-btn back" id="ks-btn-back">← К каталогу</button>
+            <div class="ks-detail-head">
+              <div>
+                <div class="ks-eyebrow" id="ks-detail-eyebrow">ОБЛАСТЬ ЗНАНИЙ</div>
+                <h2 id="ks-detail-title">—</h2>
+                <p id="ks-detail-desc"></p>
+              </div>
+              <div class="ks-top-actions detail-head-actions">
+                <div id="ks-detail-menu"></div>
+                <button type="button" class="ks-btn ks-hidden" id="ks-btn-activate">Активировать</button>
+                <button type="button" class="ks-btn secondary ks-hidden" id="ks-btn-disable">Отключить</button>
+                <button type="button" class="ks-btn secondary" id="ks-btn-playground-detail">Песочница поиска</button>
+              </div>
+            </div>
+            <div class="ks-meta-strip" id="ks-meta-strip"></div>
+
+            <div class="ks-detail-body">
+              <div class="ks-detail-grid">
+                <div class="ks-panel">
+                  <h3>Параметры</h3>
+                  <dl id="ks-meta"></dl>
+                </div>
+                <div class="ks-panel">
+                  <h3>Здоровье и использование</h3>
+                  <div id="ks-health-box"></div>
+                </div>
+              </div>
+
+              <div class="ks-panel">
+                <h3>Контекст для агента</h3>
+                <p class="ks-hint">Что агент должен учитывать при поиске по источникам этой области.</p>
+                <div class="ks-form-grid">
+                  <label>Области проектов<input id="ks-project-areas" placeholder="payments, risk, billing" /></label>
+                  <label>Команды<input id="ks-team-names" placeholder="Platform, PAY squad" /></label>
+                </div>
+                <label class="ks-full-label">Дополнительная информация<textarea id="ks-additional-context" rows="3" placeholder="Соглашения, именование, корни репозиториев…"></textarea></label>
+                <button type="button" class="ks-btn" id="ks-save-context">Сохранить контекст</button>
+              </div>
+
+              <div class="ks-panel">
+                <div class="ks-panel-head">
+                  <h3>Подключённые источники / MCP</h3>
+                  <button type="button" class="ks-btn small" id="ks-add-source">+ Добавить источник</button>
+                </div>
+                <div id="ks-source-list"></div>
+              </div>
+
+              <div class="ks-detail-grid">
+                <div class="ks-panel">
+                  <h3>Политика поиска</h3>
+                  <dl id="ks-search-policy"></dl>
+                </div>
+                <div class="ks-panel">
+                  <h3>Доступ</h3>
+                  <dl id="ks-access-policy"></dl>
+                </div>
+              </div>
+
+              <div class="ks-panel">
+                <h3>Как собирается контекст</h3>
+                <div class="ks-pipeline">
+                  <span>Потребность в информации</span><span class="ks-pipe-arrow">→</span>
+                  <span>Выбор источников</span><span class="ks-pipe-arrow">→</span>
+                  <span>Поиск</span><span class="ks-pipe-arrow">→</span>
+                  <span>Ранжирование</span><span class="ks-pipe-arrow">→</span>
+                  <span>Evidence</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div id="ks-modal" class="ks-modal ks-hidden">
+            <div class="ks-modal-box">
+              <div class="ks-modal-head"><h2 id="ks-modal-title">Новая область знаний</h2><button type="button" class="ks-close" id="ks-close-modal">×</button></div>
+              <div id="ks-modal-fields" class="ks-modal-fields" aria-label="Поля области знаний"></div>
+              <div class="ks-modal-actions">
+                <button type="button" class="ks-btn secondary" id="ks-cancel-modal">Отмена</button>
+                <button type="button" class="ks-btn" id="ks-save-space">Создать черновик</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="ks-source-modal" class="ks-modal ks-hidden">
+            <div class="ks-modal-box">
+              <div class="ks-modal-head">
+                <h2 id="ks-source-modal-title">Добавить источник</h2>
+                <button type="button" class="ks-close" id="ks-close-source-modal">×</button>
+              </div>
+              <input type="hidden" id="ks-source-edit-id" value="" />
+              <label>Название<input id="ks-source-name" placeholder="Jira PAY" /></label>
+              <div class="ks-form-row">
+                <label>Провайдер / MCP
+                  <select id="ks-source-provider">
+                    <option value="jira">Jira</option>
+                    <option value="confluence">Confluence</option>
+                    <option value="slack">Slack</option>
+                    <option value="git">Git</option>
+                    <option value="api_catalog">API Catalog</option>
+                    <option value="policy_library">Policy Library</option>
+                    <option value="audit_repo">Audit Repository</option>
+                    <option value="other">Другое</option>
+                  </select>
+                </label>
+                <label>Статус
+                  <select id="ks-source-status">
+                    <option value="ACTIVE">Активно</option>
+                    <option value="DISABLED">Отключено</option>
+                    <option value="DEGRADED">Деградирует</option>
+                  </select>
+                </label>
+              </div>
+              <label>Приоритет (0–100)<input id="ks-source-priority" type="number" min="0" max="100" value="50" /></label>
+              <label>Селектор поиска
+                <textarea id="ks-source-selector" rows="4" placeholder="project: PAY&#10;repos: payment-api, payment-core"></textarea>
+              </label>
+              <p class="ks-hint" id="ks-source-selector-hint">По одной паре ключ: значение на строку. Несколько значений — через запятую.</p>
+              <div class="ks-modal-actions">
+                <button type="button" class="ks-btn secondary" id="ks-cancel-source-modal">Отмена</button>
+                <button type="button" class="ks-btn" id="ks-save-source">Сохранить</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="ks-play" class="ks-play ks-hidden">
+            <div class="ks-play-box">
+              <div class="ks-play-head">
+                <div><small>ПЕСОЧНИЦА ПОИСКА</small><h2>Проверка области знаний</h2></div>
+                <button type="button" class="ks-close" id="ks-close-play">×</button>
+              </div>
+              <div class="ks-play-layout">
+                <aside>
+                  <label>Область знаний<select id="ks-play-space"></select></label>
+                  <label>Потребность в информации
+                    <select id="ks-play-need">
+                      <option value="Architecture context">Архитектурный контекст</option>
+                      <option value="Requirements context">Контекст требований</option>
+                      <option value="Operational context">Операционный контекст</option>
+                    </select>
+                  </label>
+                  <label>Запрос<textarea id="ks-play-query" rows="4" placeholder="Введите запрос для поиска по области знаний…"></textarea></label>
+                  <button type="button" class="ks-btn full" id="ks-run-search">Запустить поиск</button>
+                </aside>
+                <section>
+                  <div class="ks-summary">
+                    <div><small>ИСТОЧНИКИ</small><b id="ks-sum-sources">0</b></div>
+                    <div><small>СЫРЫЕ РЕЗУЛЬТАТЫ</small><b id="ks-sum-raw">0</b></div>
+                    <div><small>EVIDENCE</small><b id="ks-sum-evidence">0</b></div>
+                    <div><small>ИСКЛЮЧЕНО</small><b id="ks-sum-excluded">0</b></div>
+                  </div>
+                  <h3>Ранжированные факты</h3>
+                  <div id="ks-results"><p style="color:var(--ks-muted)">Запустите поиск, чтобы увидеть evidence.</p></div>
+                </section>
+              </div>
+            </div>
+          </div>
+
+          <div id="ks-info" class="ks-info ks-hidden">
+            <div class="ks-info-box">
+              <div class="ks-modal-head"><h2>Зачем нужна область знаний?</h2><button type="button" class="ks-close" id="ks-close-info">×</button></div>
+              <p>Она отделяет навык (skill) от конкретных систем и определяет, где искать контекст.</p>
+              <div class="ks-info-flow">
+                <div><b>Навык</b><span>«Найди архитектурный контекст»</span></div>
+                <div>→</div>
+                <div><b>Область знаний</b><span>Jira PAY + Confluence PAY + Git payment-api</span></div>
+                <div>→</div>
+                <div><b>Evidence</b><span>Проверенные и ранжированные факты</span></div>
+              </div>
+              <p>Без неё каждый навык пришлось бы вручную привязывать к Jira, Slack, Confluence и Git.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="view-rules" class="view">
+        <div id="rules-module" class="rules-module" aria-label="Правила (rules)">
+          <section id="ru-catalog-view">
+            <div class="ru-head">
+              <div>
+                <div class="ru-crumb">Сборка / Правила (rules)</div>
+                <h2>Правила (rules)</h2>
+                <p>Переиспользуемые инструкции, которые уточняют результат навыка, не меняя управляемый процесс.</p>
+              </div>
+              <div class="ru-actions">
+                <button type="button" class="ru-btn" id="ru-btn-create">+ Новое правило</button>
+              </div>
+            </div>
+            <section class="ru-stats">
+              <div class="ru-stat"><span>Опубликовано</span><strong id="ru-metric-published">—</strong><em>Активные версии</em></div>
+              <div class="ru-stat"><span>Черновики</span><strong id="ru-metric-drafts">—</strong><em>В работе</em></div>
+              <div class="ru-stat"><span>Запуски с правилами</span><strong id="ru-metric-executions">—</strong><em>за 30 дней</em></div>
+            </section>
+            <section class="ru-toolbar">
+              <input id="ru-search" placeholder="Поиск по имени или ключу…" />
+              <select id="ru-status-filter">
+                <option value="">Все статусы</option>
+                <option value="PUBLISHED">Опубликовано</option>
+                <option value="DRAFT">Черновик</option>
+                <option value="DEPRECATED">Устарело</option>
+              </select>
+            </section>
+            <section class="ru-table-card">
+                <table>
+                  <thead>
+                    <tr><th>Правило</th><th>Приоритет</th><th>Версия</th><th>Статус</th><th>Использований</th><th></th></tr>
+                  </thead>
+                  <tbody id="ru-rules-body"></tbody>
+                </table>
+            </section>
+          </section>
+
+          <section id="ru-detail-view" class="ru-hidden">
+            <button type="button" class="ru-btn back" id="ru-btn-back">← К каталогу</button>
+            <div class="ru-detail-head">
+              <div>
+                <div class="ru-eyebrow" id="ru-detail-eyebrow">ПРАВИЛО</div>
+                <h2 id="ru-detail-title">—</h2>
+                <p id="ru-detail-desc"></p>
+              </div>
+              <div class="ru-top-actions detail-head-actions">
+                <div id="ru-detail-menu"></div>
+              </div>
+            </div>
+            <div class="ru-meta-strip" id="ru-meta-strip"></div>
+            <div class="ru-tabs">
+              <button type="button" class="active" data-tab="overview">Обзор</button>
+              <button type="button" data-tab="content">Содержание</button>
+              <button type="button" data-tab="usage">Привязки</button>
+              <button type="button" data-tab="versions">Версии</button>
+              <button type="button" data-tab="validation">Проверка</button>
+            </div>
+            <div class="ru-detail-body">
+              <div id="ru-tab-overview">
+                <div class="ru-panel"><h3>Метаданные</h3><dl id="ru-meta"></dl></div>
+                <div class="ru-panel"><h3>Последняя проверка</h3><div id="ru-validation"></div></div>
+              </div>
+              <div id="ru-tab-content" class="ru-hidden">
+                <div class="ru-panel"><h3>Текст правила</h3><pre class="ru-pre" id="ru-content"></pre></div>
+              </div>
+              <div id="ru-tab-usage" class="ru-hidden">
+                <div class="ru-panel">
+                  <h3>Где используется</h3>
+                  <p class="ru-muted">Правило привязывается к слоту навыка внутри этапа PDLC (шаг «Какой навык?» → Привязки · Правила (rules)).</p>
+                  <div id="ru-usage-list"><p class="ru-muted">Загрузка…</p></div>
+                </div>
+              </div>
+              <div id="ru-tab-versions" class="ru-hidden">
+                <div class="ru-panel"><h3>Версии</h3><div id="ru-versions"></div></div>
+              </div>
+              <div id="ru-tab-validation" class="ru-hidden">
+                <div class="ru-panel"><h3>Проверка</h3><div id="ru-validation-dup"></div><p class="ru-muted">См. вкладку «Обзор» для последнего отчёта.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <div id="ru-modal" class="ru-modal ru-hidden">
+            <div class="ru-modal-box">
+              <div class="ru-modal-head"><h2 id="ru-modal-title">Новое правило</h2><button type="button" class="ru-close" id="ru-close-modal">×</button></div>
+              <label>Название<input id="ru-new-name" placeholder="Правило оформления требований" /></label>
+              <label>Ключ<input id="ru-new-key" placeholder="requirements-style-rule" /></label>
+              <label>Описание<textarea id="ru-new-desc" rows="3">Инструкции для генерации требований.</textarea></label>
+              <div class="ru-modal-actions">
+                <button type="button" class="ru-btn secondary" id="ru-cancel-modal">Отмена</button>
+                <button type="button" class="ru-btn" id="ru-save-rule">Создать черновик</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="view-flows" class="view">
+        <div id="flows-module" class="flows-module" aria-label="Е2Е Сценарии">
+          <section id="fl-catalog-view">
+            <div class="fl-head">
+              <div>
+                <div class="fl-crumb">Сборка / Е2Е Сценарии</div>
+                <h2>Е2Е Сценарии</h2>
+                <p>Оркестрация сквозной поставки через графы и контрольные пакеты.</p>
+              </div>
+              <div class="fl-actions">
+                <button type="button" class="fl-btn" id="fl-btn-create">+ Новый Е2Е Сценарий</button>
+              </div>
+            </div>
+            <section class="fl-explanation">
+              <div class="fl-node">Work Item</div>
+              <span class="fl-arrow">→</span>
+              <div class="fl-node active">Е2Е Сценарий</div>
+              <span class="fl-arrow">→</span>
+              <div class="fl-node">Графы</div>
+              <span class="fl-arrow">→</span>
+              <div class="fl-node">Execution</div>
+            </section>
+            <section class="fl-stats">
+              <div class="fl-stat"><span>Опубликовано</span><strong id="fl-metric-published">—</strong><em>Типы поставки</em></div>
+              <div class="fl-stat"><span>Активные запуски</span><strong id="fl-metric-exec">—</strong><em>По сценариям</em></div>
+              <div class="fl-stat"><span>Успешность</span><strong id="fl-metric-success">—</strong><em>За 30 дней</em></div>
+              <div class="fl-stat"><span>Проблемы валидации</span><strong class="warn" id="fl-metric-issues">—</strong><em>Требуют внимания</em></div>
+            </section>
+            <section class="fl-toolbar">
+              <input id="fl-search" placeholder="Поиск по имени, ключу или владельцу..." />
+              <select id="fl-type-filter">
+                <option value="">Все типы</option>
+                <option>FEATURE_DELIVERY</option>
+                <option>BUG_FIX</option>
+                <option>INCIDENT_RESOLUTION</option>
+                <option>RELEASE</option>
+                <option>CUSTOM</option>
+              </select>
+              <select id="fl-status-filter">
+                <option value="">Все статусы</option>
+                <option value="draft">draft</option>
+                <option value="published">published</option>
+                <option value="launched">launched</option>
+              </select>
+              <button type="button" class="fl-btn secondary" id="fl-btn-designer">Открыть дизайнер</button>
+            </section>
+            <section class="fl-cards" id="fl-cards"></section>
+          </section>
+
+          <aside id="fl-drawer" class="fl-drawer fl-hidden">
+            <div class="fl-drawer-head">
+              <div><small>ДЕТАЛИ Е2Е СЦЕНАРИЯ</small><h2 id="fl-drawer-name">—</h2></div>
+              <div class="fl-drawer-head-actions drawer-head-actions">
+                <div id="fl-drawer-menu"></div>
+                <button type="button" class="fl-close" id="fl-close-drawer">×</button>
+              </div>
+            </div>
+            <div class="fl-tabs">
+              <button type="button" class="active" data-tab="overview">Обзор</button>
+              <button type="button" data-tab="stages">Этапы</button>
+              <button type="button" data-tab="validation">Валидация</button>
+            </div>
+            <div class="fl-drawer-body">
+              <div id="fl-tab-overview">
+                <div class="fl-overview-grid">
+                  <div class="fl-panel"><h3>Обзор</h3><p id="fl-description"></p><dl id="fl-meta"></dl></div>
+                  <div class="fl-panel"><h3>Runtime</h3><div id="fl-runtime"></div></div>
+                </div>
+                <div class="fl-panel">
+                  <div class="fl-panel-head">
+                    <h3>Цепочка этапов</h3>
+                    <button type="button" class="fl-btn small" id="fl-edit-designer">Открыть в дизайнере</button>
+                  </div>
+                  <div class="fl-path" id="fl-stage-path"></div>
+                </div>
+                <div class="fl-panel"><h3>Маршрутизация</h3><div id="fl-routing-list"></div></div>
+              </div>
+              <div id="fl-tab-stages" class="fl-hidden"><div class="fl-panel"><h3>Этапы</h3><div id="fl-stages-list"></div></div></div>
+              <div id="fl-tab-validation" class="fl-hidden"><div class="fl-panel"><h3>Валидация</h3><div id="fl-validation-box"></div></div></div>
+            </div>
+          </aside>
+
+          <div id="fl-designer" class="fl-designer fl-hidden">
+            <div class="fl-designer-top">
+              <div><small>ДИЗАЙНЕР Е2Е СЦЕНАРИЯ</small><h2 id="fl-designer-title">Feature Delivery</h2></div>
+              <div class="fl-actions">
+                <button type="button" class="fl-btn secondary" id="fl-designer-save">Сохранить</button>
+                <button type="button" class="fl-btn" id="fl-designer-publish">Опубликовать</button>
+                <button type="button" class="fl-btn fl-hidden" id="fl-designer-launch">Запустить</button>
+                <button type="button" class="fl-btn secondary fl-hidden" id="fl-designer-disarm">Снять</button>
+                <button type="button" class="fl-btn secondary fl-hidden" id="fl-designer-draft">Править</button>
+                <button type="button" class="fl-close" id="fl-close-designer">×</button>
+              </div>
+            </div>
+            <div class="fl-designer-body fl-designer-body--react">
+              <div id="fl-canvas" class="fl-react-host" data-kind="e2e"></div>
+            </div>
+          </div>
+
+          <div id="fl-modal" class="fl-modal fl-hidden">
+            <div class="fl-modal-box">
+              <div class="fl-modal-head"><h2 id="fl-modal-title">Создать Е2Е Сценарий</h2><button type="button" class="fl-close" id="fl-close-modal">×</button></div>
+              <label>Имя<input id="fl-new-name" value="Новый сценарий поставки" /></label>
+              <label>Ключ<input id="fl-new-key" value="new-delivery-flow" /></label>
+              <div class="fl-form-row">
+                <label>Type<select id="fl-new-type">
+                  <option>FEATURE_DELIVERY</option>
+                  <option>BUG_FIX</option>
+                  <option>INCIDENT_RESOLUTION</option>
+                  <option>RELEASE</option>
+                  <option>CUSTOM</option>
+                </select></label>
+                <label>Профиль исполнения<select disabled><option>Qwen Production</option></select></label>
+              </div>
+              <label>Description<textarea id="fl-new-desc" placeholder="Необязательно"></textarea></label>
+              <div class="fl-modal-actions">
+                <button type="button" class="fl-btn secondary" id="fl-cancel-modal">Cancel</button>
+                <button type="button" class="fl-btn" id="fl-save-flow">Создать черновик</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-controls" class="view">
+        <div id="controls-module" class="controls-module" aria-label="Контроли">
+          <section id="co-catalog-view">
+            <div class="co-head">
+              <div>
+                <div class="co-crumb">Управление / Контроли</div>
+                <h2>Контроли</h2>
+                <p>Обязательные требования governance на всём пути исполнения.</p>
+              </div>
+              <div class="co-actions">
+                <button type="button" class="co-btn" id="co-create-btn">+ Новый контроль</button>
+              </div>
+            </div>
+
+            <section class="co-explanation">
+              <div class="co-node">Контекст запуска</div><span>→</span>
+              <div class="co-node active">Оценка контролей</div><span>→</span>
+              <div class="co-node">Pass / Warn / Fail</div><span>→</span>
+              <div class="co-node">Применение</div>
+            </section>
+
+            <section class="co-stats">
+              <div class="co-stat"><span>Активные контроли</span><strong id="co-metric-active">—</strong><em id="co-metric-active-sub">—</em></div>
+              <div class="co-stat"><span>Оценок сегодня</span><strong id="co-metric-evaluations">—</strong><em id="co-metric-evaluations-sub">—</em></div>
+              <div class="co-stat"><span>Открытые нарушения</span><strong class="danger" id="co-metric-violations">—</strong><em id="co-metric-violations-sub">—</em></div>
+              <div class="co-stat"><span>Активные исключения</span><strong class="warn" id="co-metric-exceptions">—</strong><em id="co-metric-exceptions-sub">—</em></div>
+            </section>
+
+            <section class="co-toolbar">
+              <input id="co-search" placeholder="Поиск по названию, ключу или владельцу..." />
+              <select id="co-type">
+                <option value="">Все типы</option>
+                <option>COMPLIANCE</option>
+                <option>PUBLICATION_GATE</option>
+                <option>SECURITY</option>
+                <option>QUALITY_GATE</option>
+                <option>DATA_RESIDENCY</option>
+                <option>COST_LIMIT</option>
+                <option>ARTIFACT_VALIDATION</option>
+              </select>
+              <select id="co-severity">
+                <option value="">Все уровни</option>
+                <option>CRITICAL</option>
+                <option>HIGH</option>
+                <option>MEDIUM</option>
+                <option>LOW</option>
+              </select>
+              <select id="co-status">
+                <option value="">Все статусы</option>
+                <option>ACTIVE</option>
+                <option>DRAFT</option>
+                <option>DEPRECATED</option>
+                <option>DISABLED</option>
+              </select>
+            </section>
+
+            <section class="co-grid" id="co-grid"></section>
+          </section>
+
+          <aside class="co-drawer co-hidden" id="co-drawer">
+            <div class="co-drawer-head">
+              <div><small>ДЕТАЛИ КОНТРОЛЯ</small><h2 id="co-detail-title"></h2></div>
+              <div class="drawer-head-actions">
+                <div id="co-drawer-menu"></div>
+                <button type="button" class="co-btn secondary" id="co-close-drawer">Закрыть</button>
+              </div>
+            </div>
+            <div class="co-drawer-body">
+              <div class="co-overview-grid">
+                <div class="co-panel"><h3>Обзор</h3><p id="co-detail-description"></p><dl class="co-meta" id="co-detail-meta"></dl></div>
+                <div class="co-panel"><h3>Здоровье</h3><div id="co-detail-health"></div></div>
+              </div>
+              <div class="co-panel">
+                <div class="co-panel-head"><h3>Сводка оценки</h3><button type="button" class="co-btn small" id="co-edit-btn">Редактировать</button></div>
+                <div class="co-summary-grid">
+                  <div><small>Точка</small><b id="co-eval-point">—</b></div>
+                  <div><small>Логика</small><b id="co-eval-logic">—</b></div>
+                  <div><small>При сбое</small><b id="co-enforcement">—</b></div>
+                  <div><small>Владелец</small><b id="co-owner">—</b></div>
+                </div>
+              </div>
+              <div class="co-panel"><h3>Применимость</h3><div id="co-applicability"></div></div>
+              <div class="co-panel"><h3>Недавние нарушения</h3><div id="co-violations"></div></div>
+            </div>
+          </aside>
+
+          <div class="co-editor co-hidden" id="co-editor">
+            <div class="co-editor-top">
+              <div><small>РЕДАКТОР КОНТРОЛЯ</small><h2 id="co-editor-title">Редактор контроля</h2></div>
+              <div class="co-actions">
+                <button type="button" class="co-btn secondary" id="co-test-btn">Тест</button>
+                <button type="button" class="co-btn secondary" id="co-validate-btn">Проверить</button>
+                <button type="button" class="co-btn secondary" id="co-activate-btn">Активировать</button>
+                <button type="button" class="co-btn" id="co-save-draft-btn">Сохранить</button>
+                <button type="button" class="co-btn secondary" id="co-close-editor">Закрыть</button>
+              </div>
+            </div>
+            <div class="co-editor-body">
+              <aside class="co-editor-nav">
+                <button type="button" class="active" data-co-tab="general">Общее</button>
+                <button type="button" data-co-tab="applicability">Применимость</button>
+                <button type="button" data-co-tab="evaluation">Оценка</button>
+                <button type="button" data-co-tab="enforcement">Применение</button>
+              </aside>
+              <section class="co-form" id="co-editor-form">
+                <div class="co-editor-section" data-co-section="general">
+                  <h3>Общее</h3>
+                  <label>Название<input id="co-edit-name" /></label>
+                  <label>Описание<textarea id="co-edit-description"></textarea></label>
+                  <div class="co-form-row">
+                    <label>Тип
+                      <select id="co-edit-type">
+                        <option>COMPLIANCE</option>
+                        <option>QUALITY_GATE</option>
+                        <option>SECURITY</option>
+                        <option>PUBLICATION_GATE</option>
+                        <option>DATA_RESIDENCY</option>
+                        <option>COST_LIMIT</option>
+                        <option>ARTIFACT_VALIDATION</option>
+                      </select>
+                    </label>
+                    <label>Критичность
+                      <select id="co-edit-severity">
+                        <option>CRITICAL</option>
+                        <option>HIGH</option>
+                        <option>MEDIUM</option>
+                        <option>LOW</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label>Владелец<input id="co-edit-owner" /></label>
+                </div>
+                <div class="co-editor-section co-hidden" data-co-section="applicability">
+                  <h3>Применимость</h3>
+                  <p class="co-hint">По одной строке: <code>field=value</code>. Пример: <code>artifact.type=BUSINESS_REQUIREMENTS</code></p>
+                  <label>Условия<textarea id="co-edit-applicability" rows="8"></textarea></label>
+                </div>
+                <div class="co-editor-section co-hidden" data-co-section="evaluation">
+                  <h3>Оценка</h3>
+                  <label>Точка оценки
+                    <select id="co-edit-eval-point">
+                      <option>BEFORE_EXECUTION</option>
+                      <option>BEFORE_SKILL</option>
+                      <option>AFTER_SKILL</option>
+                      <option>AFTER_GRAPH</option>
+                      <option>BEFORE_ARTIFACT_PUBLICATION</option>
+                      <option>CONTINUOUS</option>
+                    </select>
+                  </label>
+                  <label>Выражение<textarea id="co-edit-expression" rows="6"></textarea></label>
+                </div>
+                <div class="co-editor-section co-hidden" data-co-section="enforcement">
+                  <h3>Применение</h3>
+                  <label>При сбое
+                    <select id="co-edit-enforcement">
+                      <option>BLOCK</option>
+                      <option>REQUIRE_HUMAN_APPROVAL</option>
+                      <option>PAUSE_EXECUTION</option>
+                      <option>WARN</option>
+                      <option>FAIL_EXECUTION</option>
+                      <option>ESCALATE</option>
+                      <option>ALLOW_WITH_AUDIT</option>
+                    </select>
+                  </label>
+                  <label>Шаги remediation (по строке)<textarea id="co-edit-remediation" rows="6"></textarea></label>
+                </div>
+              </section>
+              <aside class="co-preview-pane">
+                <h3>Эффективная политика</h3>
+                <pre id="co-effective-policy">{}</pre>
+                <h3>Проблемы</h3>
+                <div id="co-problems"></div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="co-modal co-hidden" id="co-create-modal">
+            <div class="co-modal-box">
+              <div class="co-modal-head"><h2>Создать контроль</h2><button type="button" class="co-btn secondary" id="co-close-create">Закрыть</button></div>
+              <label>Название<input id="co-new-name" value="Новый контроль governance" /></label>
+              <div class="co-form-row">
+                <label>Тип<select id="co-new-type"><option>QUALITY_GATE</option><option>COMPLIANCE</option><option>SECURITY</option><option>PUBLICATION_GATE</option><option>DATA_RESIDENCY</option></select></label>
+                <label>Критичность<select id="co-new-severity"><option>HIGH</option><option>CRITICAL</option><option>MEDIUM</option></select></label>
+              </div>
+              <label>Описание<textarea id="co-new-description">Обязательное требование governance.</textarea></label>
+              <div class="co-modal-actions">
+                <button type="button" class="co-btn secondary" id="co-cancel-create">Отмена</button>
+                <button type="button" class="co-btn" id="co-save-control">Создать черновик</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-capabilities-platform" class="view">
+        <div id="capabilities-platform-module" class="capabilities-platform-module" aria-label="Реестр способностей">
+          <section id="cr-catalog-view">
+            <div class="cr-head">
+              <div>
+                <div class="cr-crumb">Управление / Реестр способностей</div>
+                <h2>Реестр способностей</h2>
+                <p>Способности агента, привязанные к MCP-инструментам. Навыки (skills) запрашивают способности — никогда инструменты напрямую.</p>
+              </div>
+              <div class="cr-actions">
+                <button type="button" class="cr-btn" id="cr-create-btn">+ Новая способность</button>
+              </div>
+            </div>
+            <section class="cr-explanation">
+              <div class="cr-node">Навык</div><span>→</span>
+              <div class="cr-node active">Способность</div><span>→</span>
+              <div class="cr-node">MCP tool</div><span>→</span>
+              <div class="cr-node">Внешняя система</div>
+            </section>
+            <section class="cr-stats">
+              <div class="cr-stat"><span>Всего способностей</span><strong id="cr-metric-total">—</strong><em id="cr-metric-total-sub">—</em></div>
+              <div class="cr-stat"><span>Активные</span><strong id="cr-metric-active">—</strong><em id="cr-metric-active-sub">—</em></div>
+              <div class="cr-stat"><span>Черновики</span><strong class="warn" id="cr-metric-draft">—</strong><em id="cr-metric-draft-sub">—</em></div>
+              <div class="cr-stat"><span>Высокий риск</span><strong class="danger" id="cr-metric-high-risk">—</strong><em id="cr-metric-high-risk-sub">—</em></div>
+            </section>
+            <section class="cr-toolbar">
+              <input id="cr-search" placeholder="Поиск по ключу, названию или группе..." />
+              <select id="cr-group"><option value="">Все группы</option></select>
+              <select id="cr-risk">
+                <option value="">Все уровни риска</option>
+                <option value="read">read</option><option value="low">low</option><option value="medium">medium</option><option value="high">high</option><option value="critical">critical</option>
+              </select>
+              <select id="cr-status">
+                <option value="">Все статусы</option>
+                <option value="active">active</option><option value="draft">draft</option><option value="disabled">disabled</option>
+              </select>
+            </section>
+            <section class="cr-grid" id="cr-grid"></section>
+          </section>
+          <aside class="cr-drawer cr-hidden" id="cr-drawer">
+            <div class="cr-drawer-head">
+              <div><small>ДЕТАЛИ СПОСОБНОСТИ</small><h2 id="cr-detail-title"></h2></div>
+              <button type="button" class="cr-btn secondary" id="cr-close-drawer">Закрыть</button>
+            </div>
+            <div class="cr-drawer-body" id="cr-drawer-body"></div>
+          </aside>
+        </div>
+      </div>
+      <div id="view-checkpoints" class="view">
+        <div id="human-checkpoints-module" class="human-checkpoints-module" aria-label="Согласования">
+          <section id="hc-catalog-view">
+            <div class="hc-head">
+              <div>
+                <div class="hc-crumb">Запуск / Согласования</div>
+                <h2>Согласования</h2>
+                <p>Проверяйте выводы ИИ, evidence и принимайте управляемые решения.</p>
+              </div>
+              <div class="hc-actions">
+                <button type="button" class="hc-btn secondary" id="hc-team-btn">Очередь команды</button>
+                <button type="button" class="hc-btn" id="hc-claim-next-btn">Взять следующее</button>
+              </div>
+            </div>
+
+            <section class="hc-flow">
+              <span>Запуск на паузе</span>
+              <span class="hc-arrow">→</span>
+              <b>Согласование</b>
+              <span class="hc-arrow">→</span>
+              <span>Решение</span>
+              <span class="hc-arrow">→</span>
+              <span>Продолжение / откат</span>
+            </section>
+
+            <section class="hc-stats">
+              <div class="hc-stat"><span>Мои открытые</span><strong id="hc-metric-my-open">—</strong><em id="hc-metric-my-open-sub">—</em></div>
+              <div class="hc-stat"><span>Очередь команды</span><strong id="hc-metric-team">—</strong><em id="hc-metric-team-sub">—</em></div>
+              <div class="hc-stat"><span>Просрочено</span><strong class="danger" id="hc-metric-overdue">—</strong><em id="hc-metric-overdue-sub">—</em></div>
+              <div class="hc-stat"><span>Среднее время решения</span><strong id="hc-metric-avg">—</strong><em id="hc-metric-avg-sub">—</em></div>
+            </section>
+
+            <section class="hc-views">
+              <button type="button" class="hc-view" data-view="my">Мои</button>
+              <button type="button" class="hc-view" data-view="team">Команда</button>
+              <button type="button" class="hc-view" data-view="unassigned">Без исполнителя</button>
+              <button type="button" class="hc-view" data-view="overdue">Просрочено</button>
+              <button type="button" class="hc-view" data-view="completed">Завершённые</button>
+              <button type="button" class="hc-view active" data-view="all">Все</button>
+            </section>
+
+            <section class="hc-toolbar">
+              <input id="hc-search" placeholder="Поиск по согласованию, запуску или артефакту..." />
+              <select id="hc-type">
+                <option value="">Все типы</option>
+                <option value="APPROVAL">Утверждение</option>
+                <option value="REVIEW">Ревью</option>
+                <option value="RISK_ACCEPTANCE">Принятие риска</option>
+                <option value="PUBLICATION_APPROVAL">Публикация</option>
+                <option value="MANUAL_INPUT">Ручной ввод</option>
+                <option value="SIGN_OFF">Подпись</option>
+              </select>
+              <select id="hc-priority">
+                <option value="">Все приоритеты</option>
+                <option value="HIGH">Высокий</option>
+                <option value="MEDIUM">Средний</option>
+                <option value="LOW">Низкий</option>
+              </select>
+              <select id="hc-status">
+                <option value="">Все статусы</option>
+                <option value="OPEN">Открыто</option>
+                <option value="ASSIGNED">Назначено</option>
+                <option value="IN_REVIEW">На ревью</option>
+                <option value="ESCALATED">Эскалировано</option>
+                <option value="APPROVED">Утверждено</option>
+                <option value="REJECTED">Отклонено</option>
+                <option value="CHANGES_REQUESTED">Нужны правки</option>
+              </select>
+            </section>
+
+            <section class="hc-list" id="hc-checkpoint-list"></section>
+          </section>
+
+          <div class="hc-detail hc-hidden" id="hc-detail">
+            <div class="hc-detail-head">
+              <div><small>СОГЛАСОВАНИЕ</small><h2 id="hc-detail-title"></h2></div>
+              <div class="hc-actions">
+                <button type="button" class="hc-btn secondary" id="hc-open-execution-btn">Открыть запуск</button>
+                <button type="button" class="hc-btn secondary" id="hc-close-detail">Закрыть</button>
+              </div>
+            </div>
+            <div class="hc-detail-meta">
+              <span id="hc-detail-execution"></span><span id="hc-detail-type"></span><span id="hc-detail-status"></span><span id="hc-detail-risk"></span><span id="hc-detail-sla"></span>
+            </div>
+            <div class="hc-detail-layout">
+              <section class="hc-review-area">
+                <div class="hc-tabs">
+                  <button type="button" class="active" data-tab="review">Ревью</button>
+                  <button type="button" data-tab="artifact">Артефакт</button>
+                  <button type="button" data-tab="diff">Diff</button>
+                  <button type="button" data-tab="evidence">Evidence</button>
+                  <button type="button" data-tab="controls">Контроли</button>
+                  <button type="button" data-tab="graph">Граф</button>
+                  <button type="button" data-tab="activity">Активность</button>
+                  <button type="button" data-tab="audit">Аудит</button>
+                </div>
+
+                <div class="hc-tab-body" id="hc-tab-review">
+                  <div class="hc-panel"><h3>Требуемое решение</h3><p id="hc-question"></p><div class="hc-notice" id="hc-pause-notice">Запуск приостановлен, пока согласование не закрыто.</div></div>
+                  <div class="hc-panel"><h3>Сводка ревью</h3><div class="hc-summary-grid" id="hc-summary-grid"></div></div>
+                  <div class="hc-panel"><h3>Ключевые изменения</h3><div id="hc-key-changes"></div></div>
+                  <div class="hc-panel" id="hc-artifact-teaser-panel">
+                    <h3>Превью артефакта</h3>
+                    <pre class="hc-artifact-teaser" id="hc-artifact-teaser"></pre>
+                    <button type="button" class="hc-btn secondary" id="hc-open-artifact-tab">Открыть полный артефакт</button>
+                  </div>
+                </div>
+                <div class="hc-tab-body hidden" id="hc-tab-artifact"><div class="hc-panel hc-document" id="hc-artifact-body"></div></div>
+                <div class="hc-tab-body hidden" id="hc-tab-diff"><div class="hc-panel"><h3>Изменения относительно предыдущей версии</h3><div id="hc-diff-body"></div></div></div>
+                <div class="hc-tab-body hidden" id="hc-tab-evidence"><div class="hc-panel"><h3>Evidence</h3><div id="hc-evidence-body"></div></div></div>
+                <div class="hc-tab-body hidden" id="hc-tab-controls"><div class="hc-panel"><h3>Результаты контролей</h3><div id="hc-controls-body"></div></div></div>
+                <div class="hc-tab-body hidden" id="hc-tab-graph">
+                  <div class="hc-panel">
+                    <h3>Граф исполнения</h3>
+                    <p class="hc-empty" id="hc-graph-hint">Контекст графа для согласования (readonly).</p>
+                    <div id="hc-run-graph" class="hc-run-graph"></div>
+                  </div>
+                </div>
+                <div class="hc-tab-body hidden" id="hc-tab-activity"><div class="hc-panel"><h3>Активность</h3><div id="hc-activity-body"></div></div></div>
+                <div class="hc-tab-body hidden" id="hc-tab-audit"><div class="hc-panel"><h3>Аудит</h3><div id="hc-audit-body"></div></div></div>
+              </section>
+
+              <aside class="hc-decision-panel">
+                <div class="hc-sla-card"><small>СРОК РЕШЕНИЯ</small><strong id="hc-sla-clock">—</strong><span id="hc-sla-due">—</span></div>
+                <h3>Ваше решение</h3>
+                <div class="hc-decision-result hc-hidden" id="hc-decision-result"></div>
+                <button type="button" class="hc-btn secondary full" id="hc-primary-action">Начать ревью</button>
+                <div id="hc-decision-choices"></div>
+                <label>Комментарий<textarea id="hc-comment" placeholder="Добавьте обоснование или список правок..."></textarea></label>
+                <div class="hc-impact"><b>Влияние</b><p id="hc-impact-text">Выберите решение, чтобы увидеть влияние.</p></div>
+                <button type="button" class="hc-btn full" id="hc-submit-decision">Отправить решение</button>
+              </aside>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div id="view-integrations" class="view">
+        <div id="integrations-module" class="integrations-module" aria-label="Интеграции">
+          <section id="in-catalog-view">
+            <div class="in-head">
+              <div>
+                <div class="in-crumb">Управление / Интеграции</div>
+                <h2>Интеграции</h2>
+                <p>Подключения по протоколам MCP, A2A и ACP. Данные с бэкенда — карточки или стандартный config.json.</p>
+              </div>
+              <div class="in-actions">
+                <div class="in-view-toggle" role="group" aria-label="Режим просмотра">
+                  <button type="button" class="in-btn active" id="in-view-cards" data-view="cards">Карточки</button>
+                  <button type="button" class="in-btn" id="in-view-json" data-view="json">JSON</button>
+                </div>
+                <button type="button" class="in-btn secondary" id="in-refresh-btn">Обновить</button>
+                <button type="button" class="in-btn" id="in-create-btn">+ Подключение</button>
+              </div>
+            </div>
+            <section class="in-explanation">
+              <div class="in-node">MCP</div><span>/</span>
+              <div class="in-node">A2A</div><span>/</span>
+              <div class="in-node">ACP</div><span>→</span>
+              <div class="in-node active">Шлюз способностей</div>
+            </section>
+            <section class="in-stats">
+              <div class="in-stat"><span>Всего</span><strong id="in-metric-total">—</strong><em id="in-metric-total-sub">—</em></div>
+              <div class="in-stat"><span>MCP</span><strong id="in-metric-mcp">—</strong><em id="in-metric-mcp-sub">stdio / SSE / HTTP</em></div>
+              <div class="in-stat"><span>A2A</span><strong id="in-metric-a2a">—</strong><em id="in-metric-a2a-sub">agent ↔ agent</em></div>
+              <div class="in-stat"><span>ACP</span><strong id="in-metric-acp">—</strong><em id="in-metric-acp-sub">agent servers</em></div>
+            </section>
+            <section class="in-toolbar" id="in-cards-toolbar">
+              <input id="in-search" placeholder="Поиск по имени, протоколу или инструменту..." />
+              <select id="in-protocol">
+                <option value="">Все протоколы</option>
+                <option value="MCP">MCP</option>
+                <option value="A2A">A2A</option>
+                <option value="ACP">ACP</option>
+              </select>
+              <select id="in-status">
+                <option value="">Все статусы</option>
+                <option value="ready">ready</option>
+                <option value="misconfigured">misconfigured</option>
+                <option value="disabled">disabled</option>
+              </select>
+            </section>
+            <section class="in-grid" id="in-grid"></section>
+            <section class="in-json-panel in-hidden" id="in-json-panel">
+              <div class="in-json-head">
+                <div>
+                  <h3>config.json</h3>
+                  <small id="in-json-hint">mcpServers — формат Claude Desktop / Cursor · servers — A2A · agent_servers — ACP</small>
+                </div>
+                <div class="in-json-actions">
+                  <select id="in-json-scope">
+                    <option value="all">Все протоколы</option>
+                    <option value="mcp">Только MCP (mcpServers)</option>
+                    <option value="a2a">Только A2A (servers)</option>
+                    <option value="acp">Только ACP (agent_servers)</option>
+                  </select>
+                  <button type="button" class="in-btn secondary" id="in-json-copy">Копировать</button>
+                  <button type="button" class="in-btn" id="in-json-save">Сохранить</button>
+                </div>
+              </div>
+              <textarea id="in-json-editor" spellcheck="false" aria-label="Конфигурация интеграций JSON"></textarea>
+              <p class="in-json-error in-hidden" id="in-json-error"></p>
+            </section>
+          </section>
+
+          <section id="in-detail-view" class="in-hidden">
+            <button type="button" class="in-btn back" id="in-btn-back">← К каталогу</button>
+            <div class="in-detail-head">
+              <div>
+                <div class="in-eyebrow" id="in-detail-protocol">ПОДКЛЮЧЕНИЕ</div>
+                <h2 id="in-detail-title">—</h2>
+                <p id="in-detail-description">—</p>
+              </div>
+              <div class="detail-head-actions">
+                <div id="in-detail-menu"></div>
+              </div>
+            </div>
+            <div class="in-detail-body">
+              <div class="in-overview-grid">
+                <div class="in-panel"><h3>Обзор</h3><dl class="in-meta" id="in-detail-meta"></dl></div>
+                <div class="in-panel"><h3>Статус</h3><div id="in-detail-health"></div></div>
+              </div>
+              <div class="in-panel">
+                <div class="in-panel-head"><h3>Конфиг (стандартный фрагмент)</h3></div>
+                <pre class="in-code" id="in-detail-config">{}</pre>
+              </div>
+              <div class="in-panel"><h3>Инструменты / способности</h3><div class="in-chips" id="in-capabilities"></div></div>
+            </div>
+          </section>
+
+          <section id="in-wizard-view" class="in-hidden">
+            <button type="button" class="in-btn back" id="in-close-wizard">← К каталогу</button>
+            <div class="in-detail-head">
+              <div>
+                <div class="in-eyebrow">Новое подключение</div>
+                <h2>MCP · A2A · ACP</h2>
+                <p>Заполните параметры — справа предпросмотр в стандартном JSON.</p>
+              </div>
+            </div>
+            <div class="in-wizard-layout in-wizard-simple">
+              <section class="in-wizard-content in-form in-panel">
+                <label>Протокол
+                  <select id="in-wizard-protocol">
+                    <option value="MCP">MCP</option>
+                    <option value="A2A">A2A</option>
+                    <option value="ACP">ACP</option>
+                  </select>
+                </label>
+                <div class="in-form-row">
+                  <label>Ключ / имя<input id="in-wizard-key" placeholder="jira" /></label>
+                  <label>Отображаемое имя<input id="in-wizard-name" placeholder="Jira" /></label>
+                </div>
+                <div id="in-wizard-mcp-fields">
+                  <label>Транспорт
+                    <select id="in-wizard-transport">
+                      <option value="stdio">stdio (command)</option>
+                      <option value="url">SSE / HTTP (url)</option>
+                    </select>
+                  </label>
+                  <div class="in-form-row" id="in-wizard-stdio-row">
+                    <label>command<input id="in-wizard-command" placeholder="npx" /></label>
+                    <label>args (через пробел)<input id="in-wizard-args" placeholder="-y @scope/server" /></label>
+                  </div>
+                  <label id="in-wizard-url-row" class="in-hidden">url<input id="in-wizard-url" placeholder="https://mcp.example.com/sse" /></label>
+                </div>
+                <div id="in-wizard-a2a-fields" class="in-hidden">
+                  <label>URL агента<input id="in-wizard-a2a-url" placeholder="http://localhost:9100" /></label>
+                </div>
+                <div id="in-wizard-acp-fields" class="in-hidden">
+                  <div class="in-form-row">
+                    <label>command<input id="in-wizard-acp-command" placeholder="uv" /></label>
+                    <label>args (через пробел)<input id="in-wizard-acp-args" placeholder="run agent acp" /></label>
+                  </div>
+                </div>
+                <label>Описание<textarea id="in-wizard-description" rows="2" placeholder="Кратко, зачем это подключение"></textarea></label>
+                <div class="in-wizard-actions">
+                  <button type="button" class="in-btn" id="in-wizard-save">Сохранить</button>
+                </div>
+              </section>
+              <aside class="in-preview-pane in-panel">
+                <h3>Предпросмотр JSON</h3>
+                <pre id="in-wizard-preview">{}</pre>
+              </aside>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div id="view-audit" class="view">
+        <div id="audit-module" class="audit-module" aria-label="Аудит">
+          <section id="au-catalog-view">
+            <div class="au-head">
+              <div>
+                <div class="au-crumb">Управление / Аудит</div>
+                <h2>Аудит</h2>
+                <p>Неизменяемый журнал решений control plane, изменений и управляемых действий.</p>
+              </div>
+              <div class="au-actions">
+                <button type="button" class="au-btn secondary" id="au-refresh-btn">Обновить</button>
+              </div>
+            </div>
+            <section class="au-explanation">
+              <div class="au-node">Актор</div><span>→</span>
+              <div class="au-node active">Действие</div><span>→</span>
+              <div class="au-node">Сущность</div><span>→</span>
+              <div class="au-node">Evidence</div>
+            </section>
+            <section class="au-stats">
+              <div class="au-stat"><span>Всего событий</span><strong id="au-metric-total">—</strong><em id="au-metric-total-sub">—</em></div>
+              <div class="au-stat"><span>Сегодня</span><strong id="au-metric-today">—</strong><em id="au-metric-today-sub">—</em></div>
+              <div class="au-stat"><span>Акторы</span><strong id="au-metric-actors">—</strong><em id="au-metric-actors-sub">—</em></div>
+              <div class="au-stat"><span>Типы сущностей</span><strong id="au-metric-entities">—</strong><em id="au-metric-entities-sub">—</em></div>
+            </section>
+            <section class="au-toolbar">
+              <input id="au-search" placeholder="Поиск по актору, действию, сущности или описанию..." />
+              <select id="au-entity-type"><option value="">Все типы сущностей</option></select>
+              <select id="au-action"><option value="">Все действия</option></select>
+            </section>
+            <section class="au-table-card">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Время</th>
+                    <th>Актор</th>
+                    <th>Действие</th>
+                    <th>Сущность</th>
+                    <th>Описание</th>
+                  </tr>
+                </thead>
+                <tbody id="au-table-body"></tbody>
+              </table>
+            </section>
+          </section>
+        </div>
+      </div>
+      <div id="view-executions" class="view">
+        <div id="launches-module" class="launches-module" aria-label="Запуски">
+          <section id="ln-catalog-view">
+            <div class="ln-head">
+              <div>
+                <div class="ln-crumb">Запуск / Запуски</div>
+                <h2>Запуски</h2>
+                <p>Е2Е сценарии, которые агент может выполнить. Опубликованные, но не запущенные — система игнорирует.</p>
+              </div>
+              <div class="ln-actions">
+                <button type="button" class="ln-btn secondary" id="ln-btn-refresh">Обновить</button>
+                <button type="button" class="ln-btn" id="ln-btn-launch">+ Запустить сценарий</button>
+              </div>
+            </div>
+            <section class="ln-flow">
+              <span>Сборка → Е2Е</span>
+              <span class="ln-arrow">→</span>
+              <b>Запуск сценария</b>
+              <span class="ln-arrow">→</span>
+              <span>Агент выполняет</span>
+              <span class="ln-arrow">→</span>
+              <span>Инспектор / согласования</span>
+            </section>
+            <section class="ln-stats">
+              <div class="ln-stat"><span>Запущено</span><strong id="ln-metric-launched">—</strong><em id="ln-metric-launched-sub">—</em></div>
+              <div class="ln-stat"><span>Опубликовано</span><strong id="ln-metric-published">—</strong><em id="ln-metric-published-sub">—</em></div>
+              <div class="ln-stat"><span>Доступно</span><strong id="ln-metric-available">—</strong><em id="ln-metric-available-sub">—</em></div>
+              <div class="ln-stat"><span>Игнорируется</span><strong id="ln-metric-ignored">—</strong><em id="ln-metric-ignored-sub">—</em></div>
+            </section>
+            <section class="ln-toolbar">
+              <input id="ln-search" placeholder="Поиск по сценарию или ключу..." />
+              <select id="ln-scope-filter">
+                <option value="launched">Только запущенные</option>
+                <option value="all">Все опубликованные</option>
+              </select>
+            </section>
+            <section class="ln-table-card">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Е2Е сценарий</th>
+                    <th>Этапы</th>
+                    <th>Владелец</th>
+                    <th>За 30 дн.</th>
+                    <th>Статус</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="ln-table-body"></tbody>
+              </table>
+            </section>
+          </section>
+
+          <div id="ln-launch-modal" class="ln-modal ln-hidden">
+            <div class="ln-modal-box">
+              <div class="ln-modal-head"><h2>Запустить сценарий</h2><button type="button" class="ln-close" id="ln-close-launch" aria-label="Закрыть">×</button></div>
+              <p class="ln-modal-hint">Выберите опубликованный Е2Е сценарий. После запуска агент сможет его выполнять; остальные опубликованные сценарии система продолжит игнорировать.</p>
+              <label>Сценарий<select id="ln-launch-select"></select></label>
+              <div class="ln-modal-actions">
+                <button type="button" class="ln-btn secondary" id="ln-cancel-launch">Отмена</button>
+                <button type="button" class="ln-btn" id="ln-confirm-launch">Запустить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-inspector" class="view">
+        <div id="executions-module" class="executions-module" aria-label="Инспектор запуска">
+          <section id="ex-catalog-view">
+            <div class="ex-head">
+              <div>
+                <div class="ex-crumb">Запуск / Инспектор запуска</div>
+                <h2>Инспектор запуска</h2>
+                <p>Конкретные выполнения: прогресс, evidence, артефакты и операторские действия.</p>
+              </div>
+              <div class="ex-actions">
+                <button type="button" class="ex-btn secondary" id="ex-btn-refresh">Обновить</button>
+                <button type="button" class="ex-btn" id="ex-btn-start">+ Новое выполнение</button>
+              </div>
+            </div>
+            <section class="ex-flow">
+              <span>Work Item</span>
+              <span class="ex-arrow">→</span>
+              <b>Выполнение</b>
+              <span class="ex-arrow">→</span>
+              <span>Графы</span>
+              <span class="ex-arrow">→</span>
+              <span>Согласование</span>
+              <span class="ex-arrow">→</span>
+              <span>Артефакты</span>
+            </section>
+            <section class="ex-stats">
+              <div class="ex-stat"><span>Выполняется</span><strong id="ex-metric-running">—</strong><em id="ex-metric-running-sub">—</em></div>
+              <div class="ex-stat"><span>Завершено сегодня</span><strong id="ex-metric-completed">—</strong><em id="ex-metric-completed-sub">—</em></div>
+              <div class="ex-stat"><span>Ошибки</span><strong class="danger" id="ex-metric-failed">—</strong><em id="ex-metric-failed-sub">—</em></div>
+            </section>
+            <section class="ex-toolbar">
+              <input id="ex-search" placeholder="Поиск по выполнению, источнику или Е2Е Сценарию..." />
+              <select id="ex-status-filter">
+                <option value="">Все статусы</option>
+                <option value="RUNNING">Выполняется</option>
+                <option value="WAITING_FOR_HUMAN">Ожидает человека</option>
+                <option value="COMPLETED">Завершён</option>
+                <option value="FAILED">Ошибка</option>
+                <option value="PAUSED">Пауза</option>
+              </select>
+              <select id="ex-type-filter">
+                <option value="">Все типы</option>
+                <option value="FLOW">Е2Е Сценарий</option>
+                <option value="FLOW">Е2Е Сценарий</option>
+                <option value="SKILL">Навык</option>
+              </select>
+              <select id="ex-risk-filter">
+                <option value="">Все уровни риска</option>
+                <option value="LOW">Низкий</option>
+                <option value="MEDIUM">Средний</option>
+                <option value="HIGH">Высокий</option>
+              </select>
+            </section>
+            <section class="ex-table-card">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Выполнение</th>
+                    <th>Источник</th>
+                    <th>Е2Е Сценарий</th>
+                    <th>Текущий этап</th>
+                    <th>Прогресс</th>
+                    <th>Статус</th>
+                    <th>
+                      <button type="button" class="ex-sort" id="ex-sort-started" data-sort="started_at" aria-pressed="true">
+                        Запущен <span class="ex-sort-ind" aria-hidden="true">↓</span>
+                      </button>
+                    </th>
+                    <th>Длительность</th>
+                  </tr>
+                </thead>
+                <tbody id="ex-table-body"></tbody>
+              </table>
+            </section>
+          </section>
+
+          <aside id="ex-inspector" class="ex-inspector ex-hidden">
+            <div class="ex-inspector-head">
+              <div><small>ИНСПЕКТОР ЗАПУСКА</small><h2 id="ex-inspector-title">—</h2></div>
+              <div class="ex-actions">
+                <button type="button" class="ex-btn secondary" id="ex-pause-btn">Пауза</button>
+                <button type="button" class="ex-btn danger" id="ex-cancel-btn">Отменить</button>
+                <button type="button" class="ex-close" id="ex-close-inspector" aria-label="Закрыть">×</button>
+              </div>
+            </div>
+            <div class="ex-tabs">
+              <button type="button" class="active" data-tab="overview">Обзор</button>
+              <button type="button" data-tab="timeline">Хронология</button>
+              <button type="button" data-tab="graph">Граф</button>
+              <button type="button" data-tab="artifacts">Артефакты</button>
+              <button type="button" data-tab="evidence">Evidence</button>
+              <button type="button" data-tab="runtime">Runtime</button>
+              <button type="button" data-tab="logs">Логи</button>
+              <button type="button" data-tab="snapshot">Снимок</button>
+            </div>
+            <div class="ex-inspector-body">
+              <div id="ex-tab-overview">
+                <div class="ex-summary-grid">
+                  <div class="ex-panel"><h3>Статус</h3><div class="big-status" id="ex-big-status">—</div><div class="progress"><i id="ex-big-progress"></i></div><p id="ex-progress-text"></p></div>
+                  <div class="ex-panel"><h3>Выполнение</h3><dl id="ex-meta"></dl></div>
+                  <div class="ex-panel"><h3>Использование</h3><div id="ex-usage"></div></div>
+                </div>
+                <div class="ex-panel">
+                  <div class="ex-panel-head"><h3>Текущая активность</h3><button type="button" class="ex-btn small" id="ex-retry-btn">Повторить шаг</button></div>
+                  <div class="current-activity" id="ex-current-activity"></div>
+                </div>
+                <div class="ex-panel"><h3>Путь этапов</h3><div class="stage-path" id="ex-stage-path"></div></div>
+              </div>
+              <div id="ex-tab-timeline" class="ex-hidden"><div class="ex-panel"><h3>Хронология выполнения</h3><div id="ex-timeline-list"></div></div></div>
+              <div id="ex-tab-graph" class="ex-hidden"><div class="ex-panel"><h3>Граф исполнения</h3><div class="runtime-graph" id="ex-runtime-graph"></div></div></div>
+              <div id="ex-tab-artifacts" class="ex-hidden"><div class="ex-panel"><h3>Артефакты</h3><div id="ex-artifacts-list"></div></div></div>
+              <div id="ex-tab-evidence" class="ex-hidden"><div class="ex-panel"><h3>Evidence</h3><div id="ex-evidence-list"></div></div></div>
+              <div id="ex-tab-runtime" class="ex-hidden"><div class="ex-panel"><h3>Эффективный runtime</h3><pre id="ex-runtime-pre">{}</pre></div></div>
+              <div id="ex-tab-logs" class="ex-hidden"><div class="ex-panel"><h3>Логи</h3><pre class="logs" id="ex-logs-pre"></pre></div></div>
+              <div id="ex-tab-snapshot" class="ex-hidden"><div class="ex-panel"><h3>Неизменяемый снимок</h3><pre id="ex-snapshot-pre">{}</pre></div></div>
+            </div>
+          </aside>
+
+          <div id="ex-start-modal" class="ex-modal ex-hidden">
+            <div class="ex-modal-box">
+              <div class="ex-modal-head"><h2>Новое выполнение</h2><button type="button" class="ex-close" id="ex-close-start" aria-label="Закрыть">×</button></div>
+              <label>Тип<select id="ex-start-type"><option value="FLOW">Е2Е Сценарий</option><option value="SKILL">Навык</option></select></label>
+              <label>Е2Е Сценарий<select id="ex-start-flow"><option>Feature Delivery v2.4.0</option><option>Emergency Bug Fix v1.9.0</option></select></label>
+              <div class="ex-form-row">
+                <label>Тип источника<select id="ex-start-source-type"><option>JIRA</option><option>MANUAL</option></select></label>
+                <label>Ссылка<input id="ex-start-ref" value="PAY-123" /></label>
+              </div>
+              <label>Название<input id="ex-start-title" value="Отмена платежа" /></label>
+              <div class="ex-modal-actions">
+                <button type="button" class="ex-btn secondary" id="ex-cancel-start">Отмена</button>
+                <button type="button" class="ex-btn" id="ex-confirm-start">Запустить</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="ex-artifact-modal" class="ex-modal ex-hidden" role="dialog" aria-modal="true" aria-labelledby="ex-artifact-view-title">
+            <div class="ex-modal-box ex-artifact-modal-box">
+              <div class="ex-modal-head">
+                <h2 id="ex-artifact-view-title">Артефакт</h2>
+                <button type="button" class="ex-close" id="ex-close-artifact" aria-label="Закрыть">×</button>
+              </div>
+              <pre class="ex-artifact-document" id="ex-artifact-view-body"></pre>
+              <div class="ex-modal-actions">
+                <button type="button" class="ex-btn secondary" id="ex-close-artifact-btn">Закрыть</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        </main>
+      </div>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/platform-util.js?v=48"></script>
+  <script src="/static/help/help-registry.js?v=1"></script>
+  <script src="/static/help/help-ui.js?v=2"></script>
+  <script src="/static/overview.js?v=50"></script>
+  <script src="/static/react-dist/designer.js?v=49"></script>
+  <script src="/static/react-flow-bridge.js?v=15"></script>
+  <script src="/static/designer-edit.js?v=2"></script>
+  <script src="/static/skills/module.js?v=52"></script>
+  <script src="/static/rules/module.js?v=47"></script>
+  <script src="/static/knowledge/module.js?v=52"></script>
+  <script src="/static/flows/module.js?v=67"></script>
+  <script src="/static/runtime_profiles/module.js?v=46"></script>
+  <script src="/static/launches/module.js?v=3"></script>
+  <script src="/static/executions/module.js?v=52"></script>
+  <script src="/static/human_checkpoints/module.js?v=49"></script>
+  <script src="/static/controls/module.js?v=46"></script>
+  <script src="/static/integrations/module.js?v=49"></script>
+  <script src="/static/capabilities_platform/module.js?v=46"></script>
+  <script src="/static/audit/module.js?v=44"></script>
+  <script src="/static/app.js?v=53"></script>
+</body>
+</html>
