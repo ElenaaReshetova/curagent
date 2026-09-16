@@ -1,0 +1,16 @@
+{
+  "models": [
+    {
+      "id": "bda5ad1a-8b5d-55b4-b485-bdf8ac87dd25",
+      "key": "lm-studio-local",
+      "name": "LM Studio Local",
+      "description": "OpenAI-compatible local server",
+      "provider": "lm_studio",
+      "model_id": "google/gemma-4-e2b",
+      "temperature": 0.2,
+      "max_tokens": 8192,
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

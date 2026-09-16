@@ -1,0 +1,19 @@
+{
+  "id": "business-requirements",
+  "version": "1.0",
+  "name": "Business Requirements",
+  "description": "Write product requirements documents (PRDs), feature specifications, and business requirements from a work item / task context.",
+  "allowed_capabilities": [
+    "chat.read_thread",
+    "chat.reply",
+    "slack-reply",
+    "context.read"
+  ],
+  "skill_md": "skills/business-requirements/SKILL.md",
+  "tags": [
+    "slack",
+    "brd",
+    "pdlc"
+  ],
+  "status": "published"
+}

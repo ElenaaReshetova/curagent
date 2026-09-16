@@ -1,0 +1,63 @@
+{
+  "spaces": [
+    {
+      "id": "ab5f0f4f-da11-4f55-8583-da8d38d05900",
+      "workspace_id": "default",
+      "key": "daily-banking",
+      "name": "DailyBanking",
+      "purpose": "Доверенный контекст для Sbertrack: daily banking",
+      "space_type": "TEAM",
+      "status": "ACTIVE",
+      "classification": "INTERNAL",
+      "owner_team": "Platform",
+      "project_areas": [
+        "daily-banking"
+      ],
+      "team_names": [
+        "DAILY BANKING"
+      ],
+      "additional_context": "",
+      "sources": [
+        {
+          "id": "cebee731-4684-4c4b-b48c-97d70969bd11",
+          "provider": "confluence",
+          "name": "Wiki Daily banking",
+          "selector": {
+            "project": "daily-banking"
+          },
+          "priority": 100,
+          "status": "ACTIVE",
+          "health_pct": 100.0,
+          "last_checked_at": "2026-07-24T04:36:45.804047"
+        },
+        {
+          "id": "b6a7c8fd-1280-4d48-839c-b60ecd5393bc",
+          "provider": "confluence",
+          "name": "Wiki 2",
+          "selector": {
+            "project": "PAY"
+          },
+          "priority": 50,
+          "status": "ACTIVE",
+          "health_pct": 100.0,
+          "last_checked_at": "2026-07-28T06:26:46.313105"
+        }
+      ],
+      "search_policy": {
+        "max_results": 20,
+        "dedupe": true
+      },
+      "access_policy": {
+        "roles": [
+          "Process Designer"
+        ]
+      },
+      "freshness_hours": 24,
+      "usage_30d": 0,
+      "search_success_pct": 0.0,
+      "created_at": "2026-07-24T04:35:00.377626",
+      "updated_at": "2026-07-28T06:26:46.313577",
+      "revision": 7
+    }
+  ]
+}

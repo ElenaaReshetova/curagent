@@ -1,0 +1,6 @@
+{
+  "servers": {
+    "research-agent": "http://localhost:9100",
+    "review-agent": "https://agents.example.com/review"
+  }
+}

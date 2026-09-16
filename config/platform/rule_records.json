@@ -1,0 +1,68 @@
+{
+  "rules": [
+    {
+      "id": "249929c5-65de-5301-a239-4ea101b9db26",
+      "workspace_id": "default",
+      "key": "brd-structure",
+      "name": "BRD Structure",
+      "description": "Обязательные секции Business Requirements / PRD.",
+      "category": "FORMAT",
+      "owner_team": "Product Analysis",
+      "status": "active",
+      "current_published_version_id": "44793aff-99a1-547c-916c-c480d1487260",
+      "current_draft_version_id": null,
+      "usage_count": 0,
+      "created_at": "2026-07-20T06:10:03.413958",
+      "updated_at": "2026-07-20T06:10:03.413958",
+      "revision": 1
+    },
+    {
+      "id": "32ed43b7-0d37-5339-91c8-cf12bdde2462",
+      "workspace_id": "default",
+      "key": "ru-output-language",
+      "name": "Russian Output Language",
+      "description": "User-facing artifacts must be written in Russian.",
+      "category": "LANGUAGE",
+      "owner_team": "Product Analysis",
+      "status": "active",
+      "current_published_version_id": "dbc7f4a0-9033-52f7-abc3-caf6a7188f18",
+      "current_draft_version_id": null,
+      "usage_count": 0,
+      "created_at": "2026-07-20T06:10:03.413980",
+      "updated_at": "2026-07-20T06:10:03.413980",
+      "revision": 1
+    },
+    {
+      "id": "afd70392-c4f1-51be-9c9f-0b308f2948ee",
+      "workspace_id": "default",
+      "key": "evidence-backed-requirements",
+      "name": "Evidence-Backed Requirements",
+      "description": "Требования опираются на контекст Slack-треда.",
+      "category": "QUALITY",
+      "owner_team": "Product Analysis",
+      "status": "active",
+      "current_published_version_id": "66b870cf-a8b9-55d2-a6d3-27b99b7e4661",
+      "current_draft_version_id": null,
+      "usage_count": 0,
+      "created_at": "2026-07-20T06:10:03.413995",
+      "updated_at": "2026-07-20T06:10:03.413995",
+      "revision": 1
+    },
+    {
+      "id": "9a8343cf-7fbf-5455-a5de-ce7b87e6c682",
+      "workspace_id": "default",
+      "key": "srd-structure",
+      "name": "SRD Structure",
+      "description": "Обязательные секции System Requirements Specification (SRS).",
+      "category": "FORMAT",
+      "owner_team": "Product Analysis",
+      "status": "active",
+      "current_published_version_id": "b0031b93-e116-551d-a70b-da52f492481e",
+      "current_draft_version_id": null,
+      "usage_count": 0,
+      "created_at": "2026-07-20T06:10:03.414012",
+      "updated_at": "2026-07-20T06:10:03.414012",
+      "revision": 1
+    }
+  ]
+}

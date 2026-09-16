@@ -1,0 +1,99 @@
+{
+  "capability_id": "task.read",
+  "version": "1.0",
+  "manifest_version": 1,
+  "name": "Чтение задачи",
+  "description": "Получение задачи из task tracker (канонический контракт).",
+  "group": "tracker",
+  "status": "published",
+  "operation_type": "read",
+  "risk_level": "low",
+  "idempotent": true,
+  "cacheable": true,
+  "requires_approval": false,
+  "allowed_execution_modes": [
+    "read_only",
+    "draft",
+    "change_proposal",
+    "autonomous"
+  ],
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "taskId"
+    ],
+    "properties": {
+      "taskId": {
+        "type": "string"
+      },
+      "include": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "id",
+      "source",
+      "title"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "description": {},
+      "status": {}
+    }
+  },
+  "tags": [
+    "tracker",
+    "mvp"
+  ],
+  "implementations": [
+    {
+      "id": "jira.get-issue",
+      "type": "mcp",
+      "server_id": "jira",
+      "tool_name": "get_issue",
+      "status": "approved",
+      "priority": 100,
+      "risk_level": "low",
+      "enabled": true,
+      "timeout_seconds": 20,
+      "adapter_id": "jira-task-read-adapter",
+      "normalizer_id": "jira-task-read-normalizer",
+      "selectors": {
+        "taskSources": [
+          "jira"
+        ]
+      }
+    }
+  ],
+  "required_input_fields": [
+    "taskId"
+  ],
+  "visibility": {
+    "tenants": [
+      "*"
+    ],
+    "roles": [
+      "*"
+    ],
+    "skills": [
+      "*"
+    ],
+    "playbooks": [
+      "*"
+    ]
+  }
+}

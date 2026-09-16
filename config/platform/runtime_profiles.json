@@ -1,0 +1,28 @@
+{
+  "runtime_profiles": [
+    {
+      "id": "c600923f-543e-5ae0-8fe7-862afe94e044",
+      "key": "local-lm-studio",
+      "name": "Local LM Studio",
+      "description": "Локальный runtime для Slack→BRD→SRD эксперимента. Model: google/gemma-4-e2b",
+      "provider": "lm_studio",
+      "model": "google/gemma-4-e2b",
+      "fallback_models": [],
+      "generation_config": {
+        "temperature": 0.2,
+        "max_tokens": 8192
+      },
+      "sandbox_config": {
+        "network": "localhost"
+      },
+      "limits_json": {
+        "max_concurrency": 2,
+        "max_retries": 2
+      },
+      "secrets_reference": "",
+      "region": "local",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

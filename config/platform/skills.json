@@ -1,0 +1,31 @@
+{
+  "skills": [
+    {
+      "id": "baa44e54-4a74-5e0d-8e9a-253ac201664f",
+      "key": "business-requirements",
+      "name": "Business Requirements",
+      "status": "active",
+      "interface_key": "analysis.business_requirements.generate@1",
+      "source": "filesystem",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "1432aa00-27ba-5151-996c-cb6df1310391",
+      "key": "system-requirements",
+      "name": "System Requirements",
+      "status": "active",
+      "interface_key": "analysis.system_requirements.generate@1",
+      "source": "filesystem",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "7913bed3-46de-5ac2-968e-864de030b8d9",
+      "key": "classify",
+      "name": "Classify Task",
+      "status": "active",
+      "interface_key": "routing.classify@1",
+      "source": "filesystem",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

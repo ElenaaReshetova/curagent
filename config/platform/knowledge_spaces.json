@@ -1,0 +1,25 @@
+{
+  "knowledge_spaces": [
+    {
+      "id": "33933e5a-9703-580b-ac34-785d4c738dbc",
+      "key": "slack-intake",
+      "name": "Slack Intake",
+      "status": "active",
+      "source_bindings": [
+        {
+          "provider": "slack",
+          "scope": "C0AKKCGEKL1"
+        }
+      ],
+      "priorities": [
+        {
+          "provider": "slack",
+          "priority": 100
+        }
+      ],
+      "data_classification": "internal",
+      "freshness_hours": 1,
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

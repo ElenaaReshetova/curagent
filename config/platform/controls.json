@@ -1,0 +1,46 @@
+{
+  "controls": [
+    {
+      "id": "57e4fbcf-a772-55ed-aa97-f50392b10dc2",
+      "key": "user-data-protection",
+      "name": "User data protection before BRD review",
+      "authority": "corporate",
+      "enforcement": "hard",
+      "status": "active",
+      "applicability_rule": {
+        "artifact.type": "BUSINESS_REQUIREMENTS"
+      },
+      "locked_steps": [],
+      "rules": [],
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "a1c3e5f7-9081-4b2d-9e6a-112233445566",
+      "key": "stage-artifact-completeness",
+      "name": "Проверка артефакта этапа",
+      "authority": "corporate",
+      "enforcement": "hard",
+      "status": "active",
+      "applicability_rule": {
+        "exists": "execution.id"
+      },
+      "locked_steps": [
+        {
+          "key": "stage-artifact-gate",
+          "phase": "pre_end",
+          "required": true
+        }
+      ],
+      "rules": [
+        {
+          "id": "exit-contract-satisfied",
+          "then": {
+            "checks_exit_contract": true,
+            "blocking": true
+          }
+        }
+      ],
+      "updated_at": "2026-07-22T04:00:00.000000"
+    }
+  ]
+}

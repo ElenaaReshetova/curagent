@@ -1,0 +1,36 @@
+{
+  "rules": [
+    {
+      "id": "249929c5-65de-5301-a239-4ea101b9db26",
+      "key": "brd-structure",
+      "name": "BRD Structure",
+      "scope": "playbook",
+      "status": "active",
+      "content_md": "Mandatory BRD sections: Problem, Goals, Non-Goals, Stories, Requirements, Metrics.",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "9a8343cf-7fbf-5455-a5de-ce7b87e6c682",
+      "key": "srd-structure",
+      "name": "SRD Structure",
+      "scope": "playbook",
+      "status": "active",
+      "content_md": "Mandatory SRS sections: Introduction, Overall Description, Functional Requirements, NFR, Interfaces, Data, Constraints, Traceability, Open Questions.",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "32ed43b7-0d37-5339-91c8-cf12bdde2462",
+      "key": "ru-output-language",
+      "name": "Russian Output Language",
+      "scope": "workspace",
+      "status": "active",
+      "content_md": "All user-facing artifacts must be written in Russian.",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "key": "evidence-backed-requirements",
+      "name": "Evidence-Backed Requirements",
+      "status": "active"
+    }
+  ]
+}

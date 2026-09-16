@@ -1,0 +1,95 @@
+{
+  "skill_interfaces": [
+    {
+      "id": "70c269ce-c567-5ecf-9a6e-f4ca19b1b771",
+      "key": "analysis.business_requirements.generate@1",
+      "name": "Generate Business Requirements",
+      "version": "1",
+      "input_schema": {
+        "type": "object"
+      },
+      "output_schema": {
+        "type": "object"
+      },
+      "required_capabilities": [
+        "context.read",
+        "chat.read_thread",
+        "artifact.patch",
+        "chat.reply"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "afd4ddfc-e477-5323-815f-613d14bffc98",
+      "key": "analysis.system_requirements.generate@1",
+      "name": "Generate System Requirements",
+      "version": "1",
+      "input_schema": {
+        "type": "object"
+      },
+      "output_schema": {
+        "type": "object"
+      },
+      "required_capabilities": [
+        "context.read",
+        "chat.read_thread",
+        "artifact.patch",
+        "chat.reply"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "a1baab25-7ec0-5c16-a171-aa1858d7410c",
+      "key": "routing.classify@1",
+      "name": "Classify Task",
+      "version": "1",
+      "input_schema": {
+        "type": "object"
+      },
+      "output_schema": {
+        "type": "object"
+      },
+      "required_capabilities": [],
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "372c0386-0fa1-53df-bdee-a3589a3feadf",
+      "key": "analysis.problem.understand@1",
+      "name": "Understand / normalize problem",
+      "version": "1",
+      "input_schema": {
+        "type": "object"
+      },
+      "output_schema": {
+        "type": "object"
+      },
+      "required_capabilities": [
+        "context.read"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-23T14:23:40.086564"
+    },
+    {
+      "id": "4b155292-1d5c-5f41-ab6b-12ca34f245ad",
+      "key": "analysis.code_analysis.generate@1",
+      "name": "Generate code analysis report",
+      "version": "1",
+      "input_schema": {
+        "type": "object"
+      },
+      "output_schema": {
+        "type": "object"
+      },
+      "required_capabilities": [
+        "context.read",
+        "repo.search",
+        "repo.read_file"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-23T14:23:40.086564"
+    }
+  ]
+}

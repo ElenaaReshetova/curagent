@@ -1,0 +1,11 @@
+{
+  "agent_servers": {
+    "platform-coder": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.agent.acp_server"],
+      "env": {
+        "ACP_MODEL": "default"
+      }
+    }
+  }
+}

@@ -1,0 +1,636 @@
+{
+  "id": "generate-business-requirements-slack",
+  "name": "Slack: Business Requirements",
+  "description": "Сценарий BRD после platform classify. In-template classify пропускается если routing уже передан (pre-scenario).",
+  "version": 6,
+  "is_default": false,
+  "status": "published",
+  "steps": [
+    {
+      "id": "step-start",
+      "type": "start",
+      "label": "Start",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 40.0
+      },
+      "description": "Точка входа процесса",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "started",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-evidence",
+      "type": "script",
+      "label": "Collect evidence",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 150.0
+      },
+      "description": "Сбор первичного контекста по задаче (общий для всех сценариев)",
+      "config": {
+        "timeout_minutes": 2
+      },
+      "skill_id": null,
+      "script_id": "collect_evidence",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "evidence",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-compress",
+      "type": "script",
+      "label": "Compress context",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 260.0
+      },
+      "description": "Нормализация / сжатие контекста → бриф исполнения",
+      "config": {
+        "timeout_minutes": 1
+      },
+      "skill_id": null,
+      "script_id": "compress_context",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "evidence",
+          "source_step": "step-evidence",
+          "source_output": "evidence"
+        }
+      ],
+      "output_key": "evidence_brief",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-classify",
+      "type": "skill",
+      "label": "Classify Task",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 370.0
+      },
+      "description": "Классификация задачи на сценарий (primary_skill)",
+      "config": {
+        "timeout_minutes": 1
+      },
+      "skill_id": "classify",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "routing",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-start-playbook",
+      "type": "start_playbook",
+      "label": "Start Playbook",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 480.0
+      },
+      "description": "Начало пользовательского сценария",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "playbook_started",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-route",
+      "type": "gateway_or",
+      "label": "Route by skill",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 600.0
+      },
+      "description": "Ветвление по RoutingDecision.primary_skill",
+      "config": {
+        "mode": "route_skill"
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-brd",
+      "type": "skill",
+      "label": "Business Requirements",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 40.0,
+        "y": 720.0
+      },
+      "description": "Сценарий: Business Requirements",
+      "config": {
+        "timeout_minutes": 15
+      },
+      "skill_id": "business-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-srs",
+      "type": "skill",
+      "label": "System Requirements",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 280.0,
+        "y": 720.0
+      },
+      "description": "Сценарий: System Requirements",
+      "config": {
+        "timeout_minutes": 15
+      },
+      "skill_id": "system-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-tests",
+      "type": "skill",
+      "label": "Test Case Design",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 720.0
+      },
+      "description": "Сценарий: Test Case Design",
+      "config": {
+        "timeout_minutes": 15
+      },
+      "skill_id": "test-case-design",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-code",
+      "type": "skill",
+      "label": "Code Analysis",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 760.0,
+        "y": 720.0
+      },
+      "description": "Сценарий: Code Analysis",
+      "config": {
+        "timeout_minutes": 15
+      },
+      "skill_id": "code-analysis",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-general",
+      "type": "skill",
+      "label": "General",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 1000.0,
+        "y": 720.0
+      },
+      "description": "Сценарий: General",
+      "config": {
+        "timeout_minutes": 15
+      },
+      "skill_id": "general",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-verify",
+      "type": "script",
+      "label": "Verify artifact",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 860.0
+      },
+      "description": "",
+      "config": {
+        "timeout_minutes": 5
+      },
+      "skill_id": null,
+      "script_id": "verify",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "verification_report",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-gateway-or",
+      "type": "gateway_or",
+      "label": "Verify OK?",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 970.0
+      },
+      "description": "yes → human approval; no → refine",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-approval",
+      "type": "approval",
+      "label": "Human approval (BRD)",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1080.0
+      },
+      "description": "Product Owner проверяет BRD в платформе (Human Checkpoints) перед публикацией в Slack",
+      "config": {
+        "auto_approve": false,
+        "timeout_hours": 72,
+        "approver_role": "Product Owner"
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "approval_decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-refine",
+      "type": "skill",
+      "label": "Refine (routed skill)",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 760.0,
+        "y": 1200.0
+      },
+      "description": "",
+      "config": {
+        "mode": "rework",
+        "timeout_minutes": 10
+      },
+      "skill_id": "$routing",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-publish",
+      "type": "script",
+      "label": "Publish artifact",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1200.0
+      },
+      "description": "",
+      "config": {
+        "retries": 5
+      },
+      "skill_id": null,
+      "script_id": "publish",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "publication_receipt",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-end-playbook",
+      "type": "end_playbook",
+      "label": "End Playbook",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 1690.0
+      },
+      "description": "Конец пользовательского сценария",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "playbook_ended",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-end",
+      "type": "end",
+      "label": "End",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 1800.0
+      },
+      "description": "Завершение процесса",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": null,
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-shell-start-evidence",
+      "from_step": "step-start",
+      "to_step": "step-evidence",
+      "label": null
+    },
+    {
+      "id": "e-shell-evidence-compress",
+      "from_step": "step-evidence",
+      "to_step": "step-compress",
+      "label": null
+    },
+    {
+      "id": "e-shell-compress-classify",
+      "from_step": "step-compress",
+      "to_step": "step-classify",
+      "label": null
+    },
+    {
+      "id": "e-shell-classify-start-pb",
+      "from_step": "step-classify",
+      "to_step": "step-start-playbook",
+      "label": null
+    },
+    {
+      "id": "e-shell-start-pb-body",
+      "from_step": "step-start-playbook",
+      "to_step": "step-route",
+      "label": null
+    },
+    {
+      "id": "e-route-brd",
+      "from_step": "step-route",
+      "to_step": "step-generate-brd",
+      "label": "business-requirements"
+    },
+    {
+      "id": "e-route-srs",
+      "from_step": "step-route",
+      "to_step": "step-generate-srs",
+      "label": "system-requirements"
+    },
+    {
+      "id": "e-route-tests",
+      "from_step": "step-route",
+      "to_step": "step-generate-tests",
+      "label": "test-case-design"
+    },
+    {
+      "id": "e-route-code",
+      "from_step": "step-route",
+      "to_step": "step-generate-code",
+      "label": "code-analysis"
+    },
+    {
+      "id": "e-route-general",
+      "from_step": "step-route",
+      "to_step": "step-generate-general",
+      "label": "general"
+    },
+    {
+      "id": "e-brd-verify",
+      "from_step": "step-generate-brd",
+      "to_step": "step-verify",
+      "label": null
+    },
+    {
+      "id": "e-srs-verify",
+      "from_step": "step-generate-srs",
+      "to_step": "step-verify",
+      "label": null
+    },
+    {
+      "id": "e-tests-verify",
+      "from_step": "step-generate-tests",
+      "to_step": "step-verify",
+      "label": null
+    },
+    {
+      "id": "e-code-verify",
+      "from_step": "step-generate-code",
+      "to_step": "step-verify",
+      "label": null
+    },
+    {
+      "id": "e-general-verify",
+      "from_step": "step-generate-general",
+      "to_step": "step-verify",
+      "label": null
+    },
+    {
+      "id": "e-verify-gw",
+      "from_step": "step-verify",
+      "to_step": "step-gateway-or",
+      "label": null
+    },
+    {
+      "id": "e-gw-approval",
+      "from_step": "step-gateway-or",
+      "to_step": "step-approval",
+      "label": "yes"
+    },
+    {
+      "id": "e-gw-refine",
+      "from_step": "step-gateway-or",
+      "to_step": "step-refine",
+      "label": "no"
+    },
+    {
+      "id": "e-approval-publish",
+      "from_step": "step-approval",
+      "to_step": "step-publish",
+      "label": "approve"
+    },
+    {
+      "id": "e-approval-refine",
+      "from_step": "step-approval",
+      "to_step": "step-refine",
+      "label": "request_changes"
+    },
+    {
+      "id": "e-refine-verify",
+      "from_step": "step-refine",
+      "to_step": "step-verify",
+      "label": null
+    },
+    {
+      "id": "e-shell-body-end-pb",
+      "from_step": "step-publish",
+      "to_step": "step-end-playbook",
+      "label": null
+    },
+    {
+      "id": "e-shell-end-pb-end",
+      "from_step": "step-end-playbook",
+      "to_step": "step-end",
+      "label": null
+    }
+  ],
+  "settings": {
+    "max_rework": 1,
+    "publish_retries": 2,
+    "classify_confidence_threshold": 0.3,
+    "default_timeout_minutes": 10,
+    "publication_target": "callback"
+  }
+}

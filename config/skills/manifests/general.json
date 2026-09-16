@@ -1,0 +1,10 @@
+{
+  "id": "general",
+  "version": "1.0",
+  "name": "General",
+  "description": "General task execution. Use for broad tasks, summarization, analysis, or when no specific skill applies.",
+  "allowed_capabilities": [],
+  "skill_md": "skills/general/SKILL.md",
+  "tags": [],
+  "status": "published"
+}

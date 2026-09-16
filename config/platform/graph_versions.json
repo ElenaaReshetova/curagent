@@ -1,0 +1,3102 @@
+{
+  "versions": [
+    {
+      "id": "bd9d251c-5d6c-5e8c-8962-15dd4287026a",
+      "graph_id": "23cf6e2e-410e-5ff7-b361-0fe012799d6b",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "demo-brd",
+        "version": "0.1.0",
+        "name": "Demo BRD Stage",
+        "description": "",
+        "kind": "stage",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [
+          {
+            "id": "start",
+            "type": "trigger",
+            "label": "Start",
+            "position": null,
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {},
+            "metadata": {}
+          },
+          {
+            "id": "agent-1",
+            "type": "agent",
+            "label": "Draft BRD",
+            "position": null,
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "skill_key": "business-requirements"
+            },
+            "metadata": {}
+          },
+          {
+            "id": "stage-artifact-gate",
+            "type": "approval",
+            "label": "Artifact gate",
+            "position": null,
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "gate_kind": "stage_artifact",
+              "channel": "web"
+            },
+            "metadata": {
+              "immutable": true
+            }
+          },
+          {
+            "id": "end",
+            "type": "end",
+            "label": "End",
+            "position": null,
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {},
+            "metadata": {}
+          }
+        ],
+        "edges": [
+          {
+            "id": "e0",
+            "source": "start",
+            "target": "agent-1",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e1",
+            "source": "agent-1",
+            "target": "stage-artifact-gate",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e2",
+            "source": "stage-artifact-gate",
+            "target": "end",
+            "sourceHandle": "approve",
+            "targetHandle": null,
+            "condition": "approve",
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e3",
+            "source": "stage-artifact-gate",
+            "target": "agent-1",
+            "sourceHandle": "changes",
+            "targetHandle": null,
+            "condition": "changes",
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e4",
+            "source": "stage-artifact-gate",
+            "target": "end",
+            "sourceHandle": "reject",
+            "targetHandle": null,
+            "condition": "reject",
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          }
+        ],
+        "variables": [],
+        "policies": {
+          "mandatory_spine": [
+            "trigger",
+            "stage-artifact-gate",
+            "end"
+          ],
+          "control_bindings": [
+            {
+              "control_pack_key": "stage-artifact-completeness",
+              "mandatory": true
+            }
+          ],
+          "skill_bindings": [],
+          "rule_bindings": [],
+          "routing_rules": [],
+          "runtime_profile_key": "",
+          "knowledge_space_key": "",
+          "input_contract_key": "",
+          "output_contract_key": "",
+          "extra": {}
+        },
+        "metadata": {},
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "unknown",
+      "validation_report": {},
+      "revision": 1,
+      "created_at": "2026-08-08T19:12:48.170288",
+      "published_at": null,
+      "updated_at": "2026-08-08T19:12:48.170290"
+    },
+    {
+      "id": "f4740713-4e31-5bd4-945b-dc5aa36d2a80",
+      "graph_id": "96c25e27-708c-5f07-aa06-efdabb07c61b",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "demo-delivery",
+        "version": "0.1.0",
+        "name": "Demo E2E Delivery",
+        "description": "",
+        "kind": "e2e",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [
+          {
+            "id": "start",
+            "type": "trigger",
+            "label": "Start",
+            "position": null,
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "mode": "kafka"
+            },
+            "metadata": {}
+          },
+          {
+            "id": "stage-1",
+            "type": "subflow",
+            "label": "Business Requirements",
+            "position": null,
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "graph_key": "demo-brd",
+              "graph_kind": "stage",
+              "playbook_key": "business-requirements"
+            },
+            "metadata": {}
+          },
+          {
+            "id": "end",
+            "type": "end",
+            "label": "End",
+            "position": null,
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {},
+            "metadata": {}
+          }
+        ],
+        "edges": [
+          {
+            "id": "e0",
+            "source": "start",
+            "target": "stage-1",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e1",
+            "source": "stage-1",
+            "target": "end",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          }
+        ],
+        "variables": [],
+        "policies": null,
+        "metadata": {},
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "unknown",
+      "validation_report": {},
+      "revision": 1,
+      "created_at": "2026-08-08T19:12:48.170309",
+      "published_at": null,
+      "updated_at": "2026-08-08T19:12:48.170309"
+    },
+    {
+      "id": "b2dde1e4-92bc-48e0-a62b-7cc4d4d00eb4",
+      "graph_id": "f07f2ca5-37dd-4099-a62d-3f5cb1e4bf8e",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "f07f2ca5-37dd-4099-a62d-3f5cb1e4bf8e",
+        "version": "0.1.0",
+        "name": "Slack → Classify → BRD | SRD",
+        "description": "",
+        "kind": "e2e",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [
+          {
+            "id": "start",
+            "type": "trigger",
+            "label": "Start",
+            "position": {
+              "x": 48.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "SELF_SERVE_TRIGGER",
+              "triggerType": "SELF_SERVE_TRIGGER",
+              "published": true,
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 48,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "START",
+              "immutable": false,
+              "subtitle": "Work request"
+            }
+          },
+          {
+            "id": "stage-ingress",
+            "type": "delay",
+            "label": "Ingress",
+            "position": {
+              "x": 308.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "source": "slack",
+              "channel_id": "C0AKKCGEKL1",
+              "mode": "mention",
+              "role": "ingress",
+              "type": "DELAY",
+              "timeout_seconds": 300,
+              "knowledge_space_key": "slack-intake",
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 308,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": ""
+            },
+            "metadata": {
+              "legacy_type": "WAIT_EVENT",
+              "immutable": false,
+              "subtitle": "Ingress"
+            }
+          },
+          {
+            "id": "stage-normalize",
+            "type": "integration_action",
+            "label": "Normalize",
+            "position": {
+              "x": 568.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "step": "normalize",
+              "locked": true,
+              "type": "INTEGRATION_ACTION",
+              "integrationProvider": "platform-pipeline",
+              "workflow": "normalize",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 568,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "PLATFORM",
+              "immutable": false,
+              "subtitle": "Platform pipeline"
+            }
+          },
+          {
+            "id": "stage-evidence",
+            "type": "integration_action",
+            "label": "Collect evidence",
+            "position": {
+              "x": 828.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "step": "collect_evidence",
+              "locked": true,
+              "type": "INTEGRATION_ACTION",
+              "integrationProvider": "platform-pipeline",
+              "workflow": "collect_evidence",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 828,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "PLATFORM",
+              "immutable": false,
+              "subtitle": "Platform pipeline"
+            }
+          },
+          {
+            "id": "stage-compress",
+            "type": "integration_action",
+            "label": "Compress context",
+            "position": {
+              "x": 1088.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "step": "compress_context",
+              "locked": true,
+              "type": "INTEGRATION_ACTION",
+              "integrationProvider": "platform-pipeline",
+              "workflow": "compress_context",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 1088,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "PLATFORM",
+              "immutable": false,
+              "subtitle": "Platform pipeline"
+            }
+          },
+          {
+            "id": "stage-classify",
+            "type": "integration_action",
+            "label": "Classify",
+            "position": {
+              "x": 1348.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "step": "classify",
+              "skill_key": "classify",
+              "locked": true,
+              "outlets": [
+                {
+                  "identifier": "brd",
+                  "title": "BRD",
+                  "expression": "primary_skill == business-requirements"
+                },
+                {
+                  "identifier": "srd",
+                  "title": "SRD",
+                  "expression": "primary_skill == system-requirements"
+                }
+              ],
+              "type": "INTEGRATION_ACTION",
+              "integrationProvider": "platform-pipeline",
+              "workflow": "classify",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 1348,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "PLATFORM",
+              "immutable": false,
+              "subtitle": "Platform pipeline"
+            }
+          },
+          {
+            "id": "stage-brd-scenario",
+            "type": "subflow",
+            "label": "BRD scenario",
+            "position": {
+              "x": 1937.328021303423,
+              "y": 7.013789873295451
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "flow_key": "slack-brd-delivery",
+              "graph_key": "slack-brd-delivery",
+              "graph_kind": "e2e",
+              "type": "SUBFLOW",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 1608,
+                "y": 80
+              },
+              "playbook_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "SUBFLOW",
+              "immutable": false,
+              "subtitle": "Е2Е сценарий"
+            }
+          },
+          {
+            "id": "stage-srd-scenario",
+            "type": "subflow",
+            "label": "SRD scenario",
+            "position": {
+              "x": 1937.328021303423,
+              "y": 147.01378987329545
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "flow_key": "slack-srd-delivery",
+              "graph_key": "slack-srd-delivery",
+              "graph_kind": "e2e",
+              "type": "SUBFLOW",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 1608,
+                "y": 220
+              },
+              "playbook_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "SUBFLOW",
+              "immutable": false,
+              "subtitle": "Е2Е сценарий"
+            }
+          },
+          {
+            "id": "end",
+            "type": "end",
+            "label": "End",
+            "position": {
+              "x": 2197.328021303423,
+              "y": 7.013789873295451
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "END",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 1868,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "END",
+              "immutable": false,
+              "subtitle": "Completed"
+            }
+          },
+          {
+            "id": "condition-mslzy3s1",
+            "type": "condition",
+            "label": "Condition",
+            "position": {
+              "x": 1614.5001198146224,
+              "y": 42.39582087246177
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "CONDITION",
+              "outlets": [
+                {
+                  "identifier": "high",
+                  "title": "BRD",
+                  "expression": "input.route == \"high\""
+                },
+                {
+                  "identifier": "medium",
+                  "title": "SRD",
+                  "expression": "input.route == \"medium\""
+                }
+              ]
+            },
+            "metadata": {}
+          }
+        ],
+        "edges": [
+          {
+            "id": "e-start-ingress",
+            "source": "start",
+            "target": "stage-ingress",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-ingress-normalize",
+            "source": "stage-ingress",
+            "target": "stage-normalize",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-normalize-evidence",
+            "source": "stage-normalize",
+            "target": "stage-evidence",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-evidence-compress",
+            "source": "stage-evidence",
+            "target": "stage-compress",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-compress-classify",
+            "source": "stage-compress",
+            "target": "stage-classify",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-classify-brd",
+            "source": "stage-classify",
+            "target": "stage-brd-scenario",
+            "sourceHandle": "primary_skill == business-requirements",
+            "targetHandle": "in",
+            "condition": "primary_skill == business-requirements",
+            "label": "primary_skill == business-requirements",
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-classify-srd",
+            "source": "stage-classify",
+            "target": "stage-srd-scenario",
+            "sourceHandle": "primary_skill == system-requirements",
+            "targetHandle": "in",
+            "condition": "primary_skill == system-requirements",
+            "label": "primary_skill == system-requirements",
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-brd-end",
+            "source": "stage-brd-scenario",
+            "target": "end",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-srd-end",
+            "source": "stage-srd-scenario",
+            "target": "end",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-stage-classify-out-condition-mslzy3s1-9",
+            "source": "stage-classify",
+            "target": "condition-mslzy3s1",
+            "sourceHandle": "out",
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-condition-mslzy3s1-high-stage-brd-scenario-10",
+            "source": "condition-mslzy3s1",
+            "target": "stage-brd-scenario",
+            "sourceHandle": "high",
+            "targetHandle": "in",
+            "condition": "high",
+            "label": "high",
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-condition-mslzy3s1-medium-stage-srd-scenario-11",
+            "source": "condition-mslzy3s1",
+            "target": "stage-srd-scenario",
+            "sourceHandle": "medium",
+            "targetHandle": "in",
+            "condition": "medium",
+            "label": "medium",
+            "priority": 100,
+            "metadata": {}
+          }
+        ],
+        "variables": [],
+        "policies": {
+          "mandatory_spine": [],
+          "control_bindings": [],
+          "skill_bindings": [],
+          "rule_bindings": [],
+          "routing_rules": [],
+          "runtime_profile_key": "",
+          "knowledge_space_key": "",
+          "input_contract_key": "",
+          "output_contract_key": "",
+          "extra": {}
+        },
+        "metadata": {},
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "valid",
+      "validation_report": {
+        "ok": true,
+        "issues": []
+      },
+      "revision": 9,
+      "created_at": "2026-08-09T13:36:16.836055",
+      "published_at": null,
+      "updated_at": "2026-08-09T16:09:08.600408"
+    },
+    {
+      "id": "23083818-80af-46d7-bfa7-cd59974354e8",
+      "graph_id": "3c94188e-473f-40ad-9a8e-bfeb8dd9e4c9",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "3c94188e-473f-40ad-9a8e-bfeb8dd9e4c9",
+        "version": "0.1.0",
+        "name": "1",
+        "description": "",
+        "kind": "stage",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [
+          {
+            "id": "start",
+            "type": "trigger",
+            "label": "START",
+            "position": {
+              "x": -387.5984957020057,
+              "y": 51.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "playbook_key": "",
+              "flow_key": "",
+              "interface_key": null,
+              "knowledge_space_key": "",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "control_source": null,
+              "triggerType": "EVENT_TRIGGER",
+              "type": "EVENT_TRIGGER"
+            },
+            "metadata": {
+              "legacy_type": "START",
+              "immutable": true
+            }
+          },
+          {
+            "id": "main-slot",
+            "type": "ai_agent",
+            "label": "Основная работа аналитика",
+            "position": {
+              "x": 244.0,
+              "y": 51.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "playbook_key": "",
+              "flow_key": "",
+              "interface_key": "analysis.problem.understand@1",
+              "knowledge_space_key": "",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "control_source": null,
+              "type": "AI_AGENT",
+              "agentIdentifier": "analysis.problem.understand@1",
+              "skill_key": "analysis.problem.understand@1",
+              "skill_keys": [
+                "analysis.problem.understand@1"
+              ],
+              "userPrompt": ""
+            },
+            "metadata": {
+              "legacy_type": "SKILL_SLOT"
+            }
+          },
+          {
+            "id": "stage-artifact-gate",
+            "type": "input",
+            "label": "Проверка артефакта аналитика",
+            "position": {
+              "x": 510.43553008595995,
+              "y": 89.90257879656161
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "blocking": true,
+              "gate_kind": "stage_artifact",
+              "failure_behavior": "ASK_HUMAN",
+              "checks_exit_contract": true,
+              "playbook_key": "",
+              "flow_key": "",
+              "interface_key": null,
+              "knowledge_space_key": "",
+              "timeout_seconds": 3600,
+              "control_source": "stage-artifact-completeness@1",
+              "type": "INPUT",
+              "gate_mode": "yes_no",
+              "description": "Approve?",
+              "userInputs": {
+                "properties": {},
+                "buttons": [
+                  {
+                    "identifier": "yes",
+                    "label": "Yes",
+                    "variant": "PRIMARY"
+                  },
+                  {
+                    "identifier": "no",
+                    "label": "No",
+                    "variant": "DANGER"
+                  }
+                ]
+              },
+              "outlets": [
+                {
+                  "identifier": "yes",
+                  "title": "Yes",
+                  "evaluationMethod": "button",
+                  "numOfResponders": 1
+                },
+                {
+                  "identifier": "no",
+                  "title": "No",
+                  "evaluationMethod": "button",
+                  "numOfResponders": 1
+                }
+              ],
+              "collectComment": true
+            },
+            "metadata": {
+              "legacy_type": "CONTROL_GATE",
+              "immutable": true
+            }
+          },
+          {
+            "id": "end",
+            "type": "end",
+            "label": "END",
+            "position": {
+              "x": 815.0,
+              "y": 51.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "playbook_key": "",
+              "flow_key": "",
+              "interface_key": null,
+              "knowledge_space_key": "",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "control_source": null
+            },
+            "metadata": {
+              "legacy_type": "END",
+              "immutable": true
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "e0",
+            "source": "start",
+            "target": "main-slot",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          },
+          {
+            "id": "e1",
+            "source": "main-slot",
+            "target": "stage-artifact-gate",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          },
+          {
+            "id": "e2",
+            "source": "stage-artifact-gate",
+            "target": "end",
+            "sourceHandle": "yes",
+            "targetHandle": null,
+            "condition": "yes",
+            "label": "Yes",
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          },
+          {
+            "id": "e-fail-stage-artifact-gate-main-slot",
+            "source": "stage-artifact-gate",
+            "target": "main-slot",
+            "sourceHandle": "no",
+            "targetHandle": null,
+            "condition": "no",
+            "label": "No",
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          }
+        ],
+        "variables": [],
+        "policies": {
+          "mandatory_spine": [],
+          "control_bindings": [
+            {
+              "control_pack_key": "stage-artifact-completeness",
+              "mandatory": true
+            }
+          ],
+          "skill_bindings": [],
+          "rule_bindings": [],
+          "routing_rules": [],
+          "runtime_profile_key": "",
+          "knowledge_space_key": "",
+          "input_contract_key": "",
+          "output_contract_key": "",
+          "extra": {}
+        },
+        "metadata": {
+          "migrated_from": "playbook"
+        },
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "valid",
+      "validation_report": {
+        "ok": true,
+        "issues": []
+      },
+      "revision": 3,
+      "created_at": "2026-08-09T14:09:33.590451",
+      "published_at": null,
+      "updated_at": "2026-08-11T19:00:53.819886"
+    },
+    {
+      "id": "bfbce302-4a87-489a-9c57-0a8638d9c9db",
+      "graph_id": "5749ebd5-1884-49a9-a3bd-c8d2177f7ccf",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "stage:business-requirements",
+        "version": "0.1.0",
+        "name": "Business Requirements",
+        "description": "",
+        "kind": "stage",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [],
+        "edges": [],
+        "variables": [],
+        "policies": null,
+        "metadata": {},
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "unknown",
+      "validation_report": {},
+      "revision": 1,
+      "created_at": "2026-08-09T14:20:02.045505",
+      "published_at": null,
+      "updated_at": "2026-08-09T14:20:02.045507"
+    },
+    {
+      "id": "4bfc2311-677f-489d-93c7-2c2c9ee28073",
+      "graph_id": "99916e7a-abe2-41ec-9d0e-c10ad4ec8cdb",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "99916e7a-abe2-41ec-9d0e-c10ad4ec8cdb",
+        "version": "0.1.0",
+        "name": "Slack → Business Requirements",
+        "description": "",
+        "kind": "e2e",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [
+          {
+            "id": "start",
+            "type": "trigger",
+            "label": "Start",
+            "position": {
+              "x": -3.0080594841531223,
+              "y": 100.40322379366124
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "SELF_SERVE_TRIGGER",
+              "triggerType": "SELF_SERVE_TRIGGER",
+              "published": true,
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 48,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "START",
+              "immutable": false,
+              "subtitle": "Work request"
+            }
+          },
+          {
+            "id": "stage-publish",
+            "type": "ai",
+            "label": "AI",
+            "position": {
+              "x": 302.17050748752536,
+              "y": 101.8605969217799
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "AI",
+              "userPrompt": "",
+              "systemPrompt": ""
+            },
+            "metadata": {
+              "legacy_type": "PLAYBOOK",
+              "immutable": false,
+              "subtitle": "Этап PDLC"
+            }
+          },
+          {
+            "id": "end",
+            "type": "end",
+            "label": "End",
+            "position": {
+              "x": 843.4435212144267,
+              "y": 91.6589850249493
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "END",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 568,
+                "y": 80
+              },
+              "playbook_key": "",
+              "flow_key": "",
+              "knowledge_space_key": ""
+            },
+            "metadata": {
+              "legacy_type": "END",
+              "immutable": false,
+              "subtitle": "Completed"
+            }
+          },
+          {
+            "id": "webhook-msn6su97",
+            "type": "webhook",
+            "label": "Webhook",
+            "position": {
+              "x": 585.2211455047163,
+              "y": 111.63994626187173
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "WEBHOOK",
+              "url": "",
+              "method": "POST",
+              "onFailure": "terminate",
+              "synchronized": true
+            },
+            "metadata": {}
+          }
+        ],
+        "edges": [
+          {
+            "id": "e-i1pgcrmg",
+            "source": "start",
+            "target": "stage-publish",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-11q0jy3k",
+            "source": "stage-publish",
+            "target": "webhook-msn6su97",
+            "sourceHandle": null,
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          },
+          {
+            "id": "e-webhook-msn6su97-out-end-2",
+            "source": "webhook-msn6su97",
+            "target": "end",
+            "sourceHandle": "out",
+            "targetHandle": "in",
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {}
+          }
+        ],
+        "variables": [],
+        "policies": {
+          "mandatory_spine": [],
+          "control_bindings": [],
+          "skill_bindings": [],
+          "rule_bindings": [],
+          "routing_rules": [],
+          "runtime_profile_key": "",
+          "knowledge_space_key": "",
+          "input_contract_key": "",
+          "output_contract_key": "",
+          "extra": {}
+        },
+        "metadata": {},
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "valid",
+      "validation_report": {
+        "ok": true,
+        "issues": []
+      },
+      "revision": 4,
+      "created_at": "2026-08-09T15:56:18.589744",
+      "published_at": null,
+      "updated_at": "2026-08-10T12:07:50.696924"
+    },
+    {
+      "id": "843671a3-f1c7-4610-871c-1800d9ddde87",
+      "graph_id": "787ff383-0926-457c-8556-bd166c127d1e",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "787ff383-0926-457c-8556-bd166c127d1e",
+        "version": "0.1.0",
+        "name": "Slack → System Requirements",
+        "description": "E2E сценарий SRD (этап PDLC system-requirements). Выбирается router-ом после platform classify. Template: generate-system-requirements.",
+        "kind": "e2e",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [
+          {
+            "id": "start",
+            "type": "trigger",
+            "label": "Start",
+            "position": {
+              "x": 48.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "SELF_SERVE_TRIGGER",
+              "triggerType": "SELF_SERVE_TRIGGER",
+              "published": true,
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 48.0,
+                "y": 80.0
+              }
+            },
+            "metadata": {
+              "legacy_type": "START",
+              "port_migrated": true
+            }
+          },
+          {
+            "id": "stage-srd",
+            "type": "subflow",
+            "label": "System Requirements",
+            "position": {
+              "x": 308.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "playbook_key": "system-requirements",
+              "graph_key": "system-requirements",
+              "graph_kind": "stage",
+              "type": "SUBFLOW",
+              "timeout_seconds": 1800,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 308.0,
+                "y": 80.0
+              }
+            },
+            "metadata": {
+              "legacy_type": "PLAYBOOK",
+              "port_migrated": true
+            }
+          },
+          {
+            "id": "end",
+            "type": "end",
+            "label": "End",
+            "position": {
+              "x": 568.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "END",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 568.0,
+                "y": 80.0
+              }
+            },
+            "metadata": {
+              "legacy_type": "END",
+              "port_migrated": true
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "e-w8fxctmo",
+            "source": "stage-srd",
+            "target": "end",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          },
+          {
+            "id": "e-start-srd",
+            "source": "start",
+            "target": "stage-srd",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          }
+        ],
+        "variables": [],
+        "policies": null,
+        "metadata": {
+          "migrated_from": "flow",
+          "port_rewrite": true
+        },
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "valid",
+      "validation_report": {
+        "ok": true,
+        "issues": []
+      },
+      "revision": 3,
+      "created_at": "2026-08-09T15:56:18.596565",
+      "published_at": null,
+      "updated_at": "2026-08-09T15:56:41.142705"
+    },
+    {
+      "id": "2d3e1d7d-b49f-4cb8-b003-055bc6dd164c",
+      "graph_id": "3076da17-d87a-47a1-be0a-d7734ad1455b",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "graphId": "3076da17-d87a-47a1-be0a-d7734ad1455b",
+        "version": "0.1.0",
+        "name": "GigaCode Desktop → Security Policy Review",
+        "description": "Synthetic E2E: задача из GigaCode Desktop на cybersecurity policy review кода с публикацией отчёта в linked commit.",
+        "kind": "e2e",
+        "entrypoints": [
+          "start"
+        ],
+        "nodes": [
+          {
+            "id": "start",
+            "type": "trigger",
+            "label": "Start",
+            "position": {
+              "x": 48.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "SELF_SERVE_TRIGGER",
+              "triggerType": "SELF_SERVE_TRIGGER",
+              "published": true,
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 48.0,
+                "y": 80.0
+              }
+            },
+            "metadata": {
+              "legacy_type": "START",
+              "port_migrated": true
+            }
+          },
+          {
+            "id": "stage-1",
+            "type": "subflow",
+            "label": "Security Policy Review",
+            "position": {
+              "x": 308.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "playbook_key": "security-policy-review",
+              "graph_key": "security-policy-review",
+              "graph_kind": "stage",
+              "type": "SUBFLOW",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 308.0,
+                "y": 80.0
+              }
+            },
+            "metadata": {
+              "legacy_type": "PLAYBOOK",
+              "port_migrated": true
+            }
+          },
+          {
+            "id": "end",
+            "type": "end",
+            "label": "End",
+            "position": {
+              "x": 568.0,
+              "y": 80.0
+            },
+            "retry": null,
+            "timeout": null,
+            "compensation": null,
+            "config": {
+              "type": "END",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "position": {
+                "x": 568.0,
+                "y": 80.0
+              }
+            },
+            "metadata": {
+              "legacy_type": "END",
+              "port_migrated": true
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "e-start-stage-1",
+            "source": "start",
+            "target": "stage-1",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          },
+          {
+            "id": "e-stage-1-end",
+            "source": "stage-1",
+            "target": "end",
+            "sourceHandle": null,
+            "targetHandle": null,
+            "condition": null,
+            "label": null,
+            "priority": 100,
+            "metadata": {
+              "legacy": true
+            }
+          }
+        ],
+        "variables": [],
+        "policies": null,
+        "metadata": {
+          "migrated_from": "flow",
+          "port_rewrite": true
+        },
+        "schema_version": "1"
+      },
+      "temporal_plan": null,
+      "validation_status": "valid",
+      "validation_report": {
+        "ok": true,
+        "issues": []
+      },
+      "revision": 3,
+      "created_at": "2026-08-09T15:56:18.603892",
+      "published_at": null,
+      "updated_at": "2026-08-09T15:56:41.146972"
+    },
+    {
+      "id": "2ad7967d-9ae9-40f7-8508-f0f63260a848",
+      "graph_id": "6a8b1bee-addf-45ea-9b43-451862783d5d",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "identifier": "6a8b1bee-addf-45ea-9b43-451862783d5d",
+        "title": "Новый сценарий поставки",
+        "description": "",
+        "nodes": [
+          {
+            "identifier": "start",
+            "title": "Start",
+            "icon": null,
+            "description": null,
+            "config": {
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "type": "EVENT_TRIGGER",
+              "triggerType": "EVENT_TRIGGER"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "webhook-msp30ofw",
+            "title": "Webhook",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "WEBHOOK",
+              "method": "POST",
+              "onFailure": "terminate",
+              "synchronized": true
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "webhook-msp30vhx",
+            "title": "AI",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "AI"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "webhook-msp3179j",
+            "title": "AI Agent",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "AI_AGENT"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "input-msp31hj1",
+            "title": "Input",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "INPUT",
+              "description": "Review agent result",
+              "userInputs": {
+                "properties": {
+                  "decision": {
+                    "type": "string",
+                    "title": "Decision",
+                    "enum": [
+                      "approve",
+                      "request_change",
+                      "reject"
+                    ]
+                  },
+                  "changeText": {
+                    "type": "string",
+                    "title": "Change Request Text",
+                    "description": "Describe what needs to be changed"
+                  },
+                  "rejectionReason": {
+                    "type": "string",
+                    "title": "Rejection Reason",
+                    "description": "Why was this rejected?"
+                  }
+                },
+                "required": [
+                  "decision"
+                ],
+                "buttons": [
+                  {
+                    "identifier": "submit",
+                    "label": "Submit",
+                    "variant": "PRIMARY"
+                  }
+                ]
+              },
+              "outlets": [
+                {
+                  "evaluationMethod": "button",
+                  "identifier": "submit",
+                  "title": "Submit",
+                  "numOfResponders": 1
+                }
+              ],
+              "responders": {
+                "users": []
+              }
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "condition-msp321t5",
+            "title": "Condition",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "CONDITION",
+              "options": [
+                {
+                  "identifier": "yes",
+                  "title": "Yes",
+                  "expression": ""
+                },
+                {
+                  "identifier": "no",
+                  "title": "No",
+                  "expression": ""
+                },
+                {
+                  "identifier": "opt3",
+                  "title": "Option 3",
+                  "expression": ""
+                }
+              ]
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "webhook-msp32khr",
+            "title": "Webhook",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "WEBHOOK",
+              "method": "POST",
+              "onFailure": "terminate",
+              "synchronized": true
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          }
+        ],
+        "connections": [
+          {
+            "sourceIdentifier": "start",
+            "targetIdentifier": "webhook-msp30ofw",
+            "sourceOutletIdentifier": "out",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "webhook-msp30ofw",
+            "targetIdentifier": "webhook-msp30vhx",
+            "sourceOutletIdentifier": "out",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "webhook-msp30vhx",
+            "targetIdentifier": "webhook-msp3179j",
+            "sourceOutletIdentifier": "out",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "webhook-msp3179j",
+            "targetIdentifier": "input-msp31hj1",
+            "sourceOutletIdentifier": "out",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "input-msp31hj1",
+            "targetIdentifier": "condition-msp321t5",
+            "sourceOutletIdentifier": "submit",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "condition-msp321t5",
+            "targetIdentifier": "webhook-msp32khr",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": "yes",
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "condition-msp321t5",
+            "targetIdentifier": "webhook-msp32khr",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": "no",
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "condition-msp321t5",
+            "targetIdentifier": "webhook-msp3179j",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": "opt3",
+            "fallback": false
+          }
+        ],
+        "ui": {
+          "positions": {
+            "start": {
+              "x": 40,
+              "y": 160
+            },
+            "webhook-msp30ofw": {
+              "x": 274.80213903743316,
+              "y": 159.8314672459893
+            },
+            "webhook-msp30vhx": {
+              "x": 514.2245989304813,
+              "y": 159.8314672459893
+            },
+            "webhook-msp3179j": {
+              "x": 772.7777618431808,
+              "y": 160.4278973090513
+            },
+            "input-msp31hj1": {
+              "x": 1017.8665571786319,
+              "y": 159.38468401278791
+            },
+            "condition-msp321t5": {
+              "x": 1271.2724161832748,
+              "y": 103.04567389212104
+            },
+            "webhook-msp32khr": {
+              "x": 1592.553707052269,
+              "y": 153.86131954140657
+            }
+          },
+          "kind": "e2e"
+        }
+      },
+      "temporal_plan": null,
+      "validation_status": "invalid",
+      "validation_report": {
+        "ok": false,
+        "issues": [
+          {
+            "code": "MISSING_URL",
+            "message": "WEBHOOK requires url",
+            "severity": "error",
+            "node_id": "webhook-msp30ofw"
+          },
+          {
+            "code": "MISSING_PROMPT",
+            "message": "AI requires userPrompt",
+            "severity": "error",
+            "node_id": "webhook-msp30vhx"
+          },
+          {
+            "code": "MISSING_AGENT",
+            "message": "AI_AGENT requires agentIdentifier",
+            "severity": "error",
+            "node_id": "webhook-msp3179j"
+          },
+          {
+            "code": "MISSING_URL",
+            "message": "WEBHOOK requires url",
+            "severity": "error",
+            "node_id": "webhook-msp32khr"
+          }
+        ]
+      },
+      "revision": 3,
+      "created_at": "2026-08-10T10:42:50.450340",
+      "published_at": null,
+      "updated_at": "2026-08-11T19:59:05.768150"
+    },
+    {
+      "id": "b3ac05ee-7e32-4976-baff-7c7d7cc6563c",
+      "graph_id": "6603d83f-703c-536e-aa3d-dfdbe4b3eda8",
+      "semantic_version": "0.1.0",
+      "status": "DRAFT",
+      "dsl": {
+        "identifier": "stage:4",
+        "title": "4",
+        "description": "",
+        "nodes": [
+          {
+            "identifier": "trigger",
+            "title": "Trigger",
+            "config": {
+              "type": "SELF_SERVE_TRIGGER",
+              "userInputs": {}
+            }
+          },
+          {
+            "identifier": "end",
+            "title": "End",
+            "config": {
+              "type": "END"
+            }
+          }
+        ],
+        "connections": [
+          {
+            "sourceIdentifier": "trigger",
+            "targetIdentifier": "end"
+          }
+        ],
+        "ui": {
+          "kind": "stage"
+        }
+      },
+      "temporal_plan": null,
+      "validation_status": "valid",
+      "validation_report": {
+        "ok": true,
+        "issues": []
+      },
+      "revision": 1,
+      "created_at": "2026-08-11T19:13:13.253001",
+      "published_at": null,
+      "updated_at": "2026-08-11T19:13:13.253003"
+    },
+    {
+      "id": "7424f24a-485d-4d2a-93af-4d222c3da3db",
+      "graph_id": "91ed547e-9570-502d-88c6-c6c04d24c2e0",
+      "semantic_version": "0.1.0",
+      "status": "PUBLISHED",
+      "dsl": {
+        "identifier": "91ed547e-9570-502d-88c6-c6c04d24c2e0",
+        "title": "AI PDLC",
+        "description": "",
+        "produces": [
+          "BUSINESS_REQUIREMENTS",
+          "SYSTEM_REQUIREMENTS"
+        ],
+        "nodes": [
+          {
+            "identifier": "trigger",
+            "title": "Slack task",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "SELF_SERVE_TRIGGER",
+              "published": true,
+              "userInputs": {
+                "properties": {
+                  "channel": {
+                    "type": "string",
+                    "title": "Slack channel",
+                    "description": "ID канала, например C0AKKCGEKL1",
+                    "default": "C0AKKCGEKL1"
+                  },
+                  "thread_ts": {
+                    "type": "string",
+                    "title": "Thread ts",
+                    "description": "timestamp родительского сообщения (conversations.replies)"
+                  },
+                  "text": {
+                    "type": "string",
+                    "title": "Request text",
+                    "description": "Текст задачи, если тред ещё не прочитан"
+                  },
+                  "source_id": {
+                    "type": "string",
+                    "title": "Source id",
+                    "description": "slack:{channel}:{thread_ts} — заполняется gateway автоматически"
+                  }
+                },
+                "required": [
+                  "channel",
+                  "text"
+                ],
+                "order": [
+                  "channel",
+                  "thread_ts",
+                  "text",
+                  "source_id"
+                ]
+              },
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "triggerType": "SELF_SERVE_TRIGGER"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "context_collection",
+            "title": "Context collection",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "WEBHOOK",
+              "url": "https://slack.com/api/conversations.replies?channel={{ .outputs.trigger.channel }}&ts={{ .outputs.trigger.thread_ts }}&inclusive=true",
+              "method": "GET",
+              "headers": {
+                "Authorization": "Bearer {{ .secrets[\"slack-bot-token\"] }}",
+                "Content-Type": "application/json; charset=utf-8"
+              },
+              "synchronized": true,
+              "onTimeout": "fail",
+              "onFailure": "continue",
+              "verbose": true,
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "routing",
+            "title": "Routing",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "AI",
+              "systemPrompt": "You route product-engineering requests. Answer with a JSON object only, no markdown.",
+              "userPrompt": "Classify the Slack request as BRD (business/product requirements) or SRD (system/technical requirements).\n\nSlack thread (API):\n{{ .outputs.context_collection.body }}\n\nRequest text:\n{{ .outputs.trigger.text }}\n\nReturn JSON: {\"scheme\":\"BRD\"|\"SRD\",\"rationale\":\"...\"}",
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "scheme": {
+                    "type": "string",
+                    "enum": [
+                      "BRD",
+                      "SRD"
+                    ]
+                  },
+                  "rationale": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "scheme"
+                ]
+              },
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "route",
+            "title": "Condition",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "CONDITION",
+              "options": [
+                {
+                  "identifier": "brd",
+                  "title": "BRD",
+                  "expression": ".outputs.routing.scheme == \"BRD\""
+                },
+                {
+                  "identifier": "srd",
+                  "title": "SRD",
+                  "expression": ".outputs.routing.scheme == \"SRD\""
+                },
+                {
+                  "identifier": "code",
+                  "title": "CODE",
+                  "expression": ".outputs.routing.scheme == \"CODE\""
+                }
+              ],
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "brd_agent",
+            "title": "BRD agent",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "AI_AGENT",
+              "agentIdentifier": "business-requirements",
+              "userPrompt": "Write or revise a Business Requirements document.\n\nCurrent run dossier:\nRequest:\n{{ .outputs.trigger.text }}\n\nSlack thread:\n{{ .outputs.context_collection.body }}\n\nRouting:\n{{ .outputs.routing.response }}\n\nPrevious BRD (empty on first pass; on rework this is the last draft):\n{{ .outputs.brd_agent.text }}\n\nReviewer feedback (empty unless this is a rework):\n{{ .outputs.review.comment }}\n{{ .outputs.review.reason }}\n\nIf a previous BRD is present, revise it using the reviewer feedback and keep accepted sections. Do not start from scratch. Otherwise write the first draft from the request and thread.",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "produces": "BUSINESS_REQUIREMENTS"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "srd_agent",
+            "title": "SRD agent",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "AI_AGENT",
+              "agentIdentifier": "system-requirements",
+              "userPrompt": "Write or revise a System Requirements document.\n\nCurrent run dossier:\nRequest:\n{{ .outputs.trigger.text }}\n\nSlack thread:\n{{ .outputs.context_collection.body }}\n\nRouting:\n{{ .outputs.routing.response }}\n\nRelated BRD (if any):\n{{ .outputs.brd_agent.text }}\n\nPrevious SRD (empty on first pass; on rework this is the last draft):\n{{ .outputs.srd_agent.text }}\n\nReviewer feedback (empty unless this is a rework):\n{{ .outputs.review.comment }}\n{{ .outputs.review.reason }}\n\nIf a previous SRD is present, revise it using the reviewer feedback and keep accepted sections. Do not start from scratch. Otherwise write the first draft from the request, thread, and any related BRD.",
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "produces": "SYSTEM_REQUIREMENTS"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "review",
+            "title": "Review",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "INPUT",
+              "description": "Approve the {{ .outputs.routing.scheme }} artifact or send it back.\n\n{{ .outputs.brd_agent.text }}{{ .outputs.srd_agent.text }}",
+              "userInputs": {
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "title": "Reason",
+                    "description": "The reason for the approve/decline."
+                  }
+                },
+                "required": [],
+                "buttons": [
+                  {
+                    "identifier": "approve",
+                    "label": "Approve",
+                    "variant": "PRIMARY"
+                  },
+                  {
+                    "identifier": "decline",
+                    "label": "Decline",
+                    "variant": "DANGER"
+                  }
+                ]
+              },
+              "outlets": [
+                {
+                  "evaluationMethod": "button",
+                  "identifier": "approve",
+                  "title": "Approve",
+                  "numOfResponders": 1
+                },
+                {
+                  "evaluationMethod": "button",
+                  "identifier": "decline",
+                  "title": "Decline",
+                  "numOfResponders": 1
+                }
+              ],
+              "notifications": [
+                {
+                  "target": "webhook",
+                  "url": "https://slack.com/api/chat.postMessage",
+                  "headers": {
+                    "Authorization": "Bearer {{ .secrets[\"slack-bot-token\"] }}",
+                    "Content-Type": "application/json; charset=utf-8"
+                  },
+                  "body": {
+                    "channel": "{{ .outputs.trigger.channel }}",
+                    "thread_ts": "{{ .outputs.trigger.thread_ts }}",
+                    "text": "Review required for *{{ .outputs.routing.scheme }}* (AI PDLC).\nApprove or decline in the designer."
+                  }
+                }
+              ],
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN",
+              "collectComment": true
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "publish",
+            "title": "Publishing",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "WEBHOOK",
+              "url": "https://slack.com/api/chat.postMessage",
+              "method": "POST",
+              "headers": {
+                "Authorization": "Bearer {{ .secrets[\"slack-bot-token\"] }}",
+                "Content-Type": "application/json; charset=utf-8"
+              },
+              "body": {
+                "channel": "{{ .outputs.trigger.channel }}",
+                "thread_ts": "{{ .outputs.trigger.thread_ts }}",
+                "text": "Approved *{{ .outputs.routing.scheme }}* artifact:\n\n{{ .outputs.brd_agent.text }}{{ .outputs.srd_agent.text }}\n\nReviewer: {{ .outputs.review.reason }}"
+              },
+              "synchronized": true,
+              "onTimeout": "fail",
+              "onFailure": "terminate",
+              "verbose": true,
+              "timeout_seconds": 3600,
+              "failure_behavior": "ASK_HUMAN"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "webhook-mst1s1i5",
+            "title": "AI Agent",
+            "icon": null,
+            "description": null,
+            "config": {
+              "type": "AI_AGENT",
+              "agentIdentifier": "business-requirements",
+              "produces": "BUSINESS_REQUIREMENTS"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "governance-brd_agent",
+            "title": "Проверки · Business Requirements",
+            "icon": null,
+            "description": "Gate ветки (якорь brd_agent): User data protection before BRD review, Проверка артефакта этапа",
+            "config": {
+              "type": "INTERNAL_SERVICE",
+              "service": "policy.evaluate",
+              "governance": true,
+              "immutable": true,
+              "blocking": true,
+              "producer": "brd_agent",
+              "producer_ids": [
+                "brd_agent"
+              ],
+              "anchor": "brd_agent",
+              "produces": [
+                "BUSINESS_REQUIREMENTS"
+              ],
+              "packs": [
+                {
+                  "key": "user-data-protection",
+                  "name": "User data protection before BRD review",
+                  "severity": "CRITICAL",
+                  "enforcement": "BLOCK",
+                  "expression": "context.artifact.pii_clean == true AND context.artifact.secrets_clean == true",
+                  "evaluation_point": "AFTER_SKILL",
+                  "mandatory": true
+                },
+                {
+                  "key": "stage-artifact-completeness",
+                  "name": "Проверка артефакта этапа",
+                  "severity": "HIGH",
+                  "enforcement": "BLOCK",
+                  "expression": "context.stage_exit_contract_satisfied == true",
+                  "evaluation_point": "BEFORE_ARTIFACT_PUBLICATION",
+                  "mandatory": true
+                }
+              ],
+              "onFailure": "terminate"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "governance-srd_agent",
+            "title": "Проверки · System Requirements",
+            "icon": null,
+            "description": "Gate ветки (якорь srd_agent): Проверка артефакта этапа",
+            "config": {
+              "type": "INTERNAL_SERVICE",
+              "service": "policy.evaluate",
+              "governance": true,
+              "immutable": true,
+              "blocking": true,
+              "producer": "srd_agent",
+              "producer_ids": [
+                "srd_agent"
+              ],
+              "anchor": "srd_agent",
+              "produces": [
+                "SYSTEM_REQUIREMENTS"
+              ],
+              "packs": [
+                {
+                  "key": "stage-artifact-completeness",
+                  "name": "Проверка артефакта этапа",
+                  "severity": "HIGH",
+                  "enforcement": "BLOCK",
+                  "expression": "context.stage_exit_contract_satisfied == true",
+                  "evaluation_point": "BEFORE_ARTIFACT_PUBLICATION",
+                  "mandatory": true
+                }
+              ],
+              "onFailure": "terminate"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          },
+          {
+            "identifier": "governance-webhook-mst1s1i5",
+            "title": "Проверки · Business Requirements",
+            "icon": null,
+            "description": "Gate ветки (якорь webhook-mst1s1i5): User data protection before BRD review, Проверка артефакта этапа",
+            "config": {
+              "type": "INTERNAL_SERVICE",
+              "service": "policy.evaluate",
+              "governance": true,
+              "immutable": true,
+              "blocking": true,
+              "producer": "webhook-mst1s1i5",
+              "producer_ids": [
+                "webhook-mst1s1i5"
+              ],
+              "anchor": "webhook-mst1s1i5",
+              "produces": [
+                "BUSINESS_REQUIREMENTS"
+              ],
+              "packs": [
+                {
+                  "key": "user-data-protection",
+                  "name": "User data protection before BRD review",
+                  "severity": "CRITICAL",
+                  "enforcement": "BLOCK",
+                  "expression": "context.artifact.pii_clean == true AND context.artifact.secrets_clean == true",
+                  "evaluation_point": "AFTER_SKILL",
+                  "mandatory": true
+                },
+                {
+                  "key": "stage-artifact-completeness",
+                  "name": "Проверка артефакта этапа",
+                  "severity": "HIGH",
+                  "enforcement": "BLOCK",
+                  "expression": "context.stage_exit_contract_satisfied == true",
+                  "evaluation_point": "BEFORE_ARTIFACT_PUBLICATION",
+                  "mandatory": true
+                }
+              ],
+              "onFailure": "terminate"
+            },
+            "variables": null,
+            "links": null,
+            "verbose": null
+          }
+        ],
+        "connections": [
+          {
+            "sourceIdentifier": "trigger",
+            "targetIdentifier": "context_collection",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "context_collection",
+            "targetIdentifier": "routing",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "routing",
+            "targetIdentifier": "route",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "route",
+            "targetIdentifier": "brd_agent",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": "brd",
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "route",
+            "targetIdentifier": "srd_agent",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": "srd",
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "route",
+            "targetIdentifier": "brd_agent",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "review",
+            "targetIdentifier": "route",
+            "sourceOutletIdentifier": "decline",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "review",
+            "targetIdentifier": "publish",
+            "sourceOutletIdentifier": "approve",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "route",
+            "targetIdentifier": "webhook-mst1s1i5",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": "code",
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "brd_agent",
+            "targetIdentifier": "governance-brd_agent",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "governance-brd_agent",
+            "targetIdentifier": "review",
+            "sourceOutletIdentifier": "pass",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "governance-brd_agent",
+            "targetIdentifier": "brd_agent",
+            "sourceOutletIdentifier": "fail",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "srd_agent",
+            "targetIdentifier": "governance-srd_agent",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "governance-srd_agent",
+            "targetIdentifier": "review",
+            "sourceOutletIdentifier": "pass",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "governance-srd_agent",
+            "targetIdentifier": "srd_agent",
+            "sourceOutletIdentifier": "fail",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "webhook-mst1s1i5",
+            "targetIdentifier": "governance-webhook-mst1s1i5",
+            "sourceOutletIdentifier": null,
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "governance-webhook-mst1s1i5",
+            "targetIdentifier": "review",
+            "sourceOutletIdentifier": "pass",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          },
+          {
+            "sourceIdentifier": "governance-webhook-mst1s1i5",
+            "targetIdentifier": "webhook-mst1s1i5",
+            "sourceOutletIdentifier": "fail",
+            "sourceOptionIdentifier": null,
+            "fallback": false
+          }
+        ],
+        "ui": {
+          "positions": {
+            "trigger": {
+              "x": 12,
+              "y": 220
+            },
+            "context_collection": {
+              "x": 272,
+              "y": 220
+            },
+            "routing": {
+              "x": 532,
+              "y": 220
+            },
+            "route": {
+              "x": 792,
+              "y": 170
+            },
+            "brd_agent": {
+              "x": 1072,
+              "y": 117
+            },
+            "srd_agent": {
+              "x": 1072,
+              "y": 237
+            },
+            "review": {
+              "x": 1612,
+              "y": 202
+            },
+            "publish": {
+              "x": 1892,
+              "y": 237
+            },
+            "webhook-mst1s1i5": {
+              "x": 1059.594670142774,
+              "y": 408.3150912583674
+            },
+            "governance-brd_agent": {
+              "x": 1332,
+              "y": 12
+            },
+            "governance-srd_agent": {
+              "x": 1332,
+              "y": 202
+            },
+            "governance-webhook-mst1s1i5": {
+              "x": 1334.8679450102104,
+              "y": 373.04181639093093
+            }
+          },
+          "kind": "e2e"
+        }
+      },
+      "temporal_plan": {
+        "name": "AI PDLC",
+        "version": "0.1.0",
+        "description": "",
+        "trigger": {
+          "type": "self_serve",
+          "userInputs": {
+            "properties": {
+              "channel": {
+                "type": "string",
+                "title": "Slack channel",
+                "description": "ID канала, например C0AKKCGEKL1",
+                "default": "C0AKKCGEKL1"
+              },
+              "thread_ts": {
+                "type": "string",
+                "title": "Thread ts",
+                "description": "timestamp родительского сообщения (conversations.replies)"
+              },
+              "text": {
+                "type": "string",
+                "title": "Request text",
+                "description": "Текст задачи, если тред ещё не прочитан"
+              },
+              "source_id": {
+                "type": "string",
+                "title": "Source id",
+                "description": "slack:{channel}:{thread_ts} — заполняется gateway автоматически"
+              }
+            },
+            "required": [
+              "channel",
+              "text"
+            ],
+            "order": [
+              "channel",
+              "thread_ts",
+              "text",
+              "source_id"
+            ]
+          },
+          "identifier": "trigger",
+          "published": true
+        },
+        "inputs": [
+          {
+            "name": "channel",
+            "type": "string",
+            "required": true,
+            "description": "Slack channel"
+          },
+          {
+            "name": "thread_ts",
+            "type": "string",
+            "required": false,
+            "description": "Thread ts"
+          },
+          {
+            "name": "text",
+            "type": "string",
+            "required": true,
+            "description": "Request text"
+          },
+          {
+            "name": "source_id",
+            "type": "string",
+            "required": false,
+            "description": "Source id"
+          }
+        ],
+        "step_order": [
+          "context_collection",
+          "routing",
+          "route",
+          "brd_agent",
+          "srd_agent",
+          "webhook-mst1s1i5",
+          "governance-brd_agent",
+          "governance-srd_agent",
+          "governance-webhook-mst1s1i5",
+          "review",
+          "publish"
+        ],
+        "steps": {
+          "context_collection": {
+            "kind": "activity",
+            "id": "context_collection",
+            "name": "Context collection",
+            "activity_name": "http_webhook",
+            "input": {
+              "url": "https://slack.com/api/conversations.replies?channel={{ .outputs.trigger.channel }}&ts={{ .outputs.trigger.thread_ts }}&inclusive=true",
+              "method": "GET",
+              "headers": {
+                "Authorization": "Bearer {{ .secrets[\"slack-bot-token\"] }}",
+                "Content-Type": "application/json; charset=utf-8"
+              },
+              "body": null,
+              "synchronized": true,
+              "onTimeout": "fail",
+              "onFailure": "continue",
+              "verbose": true,
+              "agent": false
+            },
+            "output_mapping": [
+              {
+                "name": "body",
+                "path": "response.body"
+              },
+              {
+                "name": "status",
+                "path": "response.status"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": "routing",
+            "on_failure": "continue",
+            "outlets": [
+              {
+                "target": "routing",
+                "sourceHandle": null,
+                "fallback": false
+              }
+            ]
+          },
+          "routing": {
+            "kind": "activity",
+            "id": "routing",
+            "name": "Routing",
+            "activity_name": "ai_generate_summary",
+            "input": {
+              "userPrompt": "Classify the Slack request as BRD (business/product requirements) or SRD (system/technical requirements).\n\nSlack thread (API):\n{{ .outputs.context_collection.body }}\n\nRequest text:\n{{ .outputs.trigger.text }}\n\nReturn JSON: {\"scheme\":\"BRD\"|\"SRD\",\"rationale\":\"...\"}",
+              "systemPrompt": "You route product-engineering requests. Answer with a JSON object only, no markdown.",
+              "tools": [],
+              "provider": null,
+              "model": null,
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "scheme": {
+                    "type": "string",
+                    "enum": [
+                      "BRD",
+                      "SRD"
+                    ]
+                  },
+                  "rationale": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "scheme"
+                ]
+              },
+              "mcpServers": null
+            },
+            "output_mapping": [
+              {
+                "name": "response",
+                "path": "response.text"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": "route",
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "route",
+                "sourceHandle": null,
+                "fallback": false
+              }
+            ]
+          },
+          "route": {
+            "kind": "condition",
+            "id": "route",
+            "name": "Condition",
+            "branches": [
+              {
+                "id": "brd",
+                "expression": ".outputs.routing.scheme == \"BRD\"",
+                "next_step": "brd_agent"
+              },
+              {
+                "id": "srd",
+                "expression": ".outputs.routing.scheme == \"SRD\"",
+                "next_step": "srd_agent"
+              },
+              {
+                "id": "code",
+                "expression": ".outputs.routing.scheme == \"CODE\"",
+                "next_step": "webhook-mst1s1i5"
+              }
+            ],
+            "fallback": "brd_agent"
+          },
+          "brd_agent": {
+            "kind": "activity",
+            "id": "brd_agent",
+            "name": "BRD agent",
+            "activity_name": "ai_agent_execute",
+            "input": {
+              "agentIdentifier": "business-requirements",
+              "userPrompt": "Write or revise a Business Requirements document.\n\nCurrent run dossier:\nRequest:\n{{ .outputs.trigger.text }}\n\nSlack thread:\n{{ .outputs.context_collection.body }}\n\nRouting:\n{{ .outputs.routing.response }}\n\nPrevious BRD (empty on first pass; on rework this is the last draft):\n{{ .outputs.brd_agent.text }}\n\nReviewer feedback (empty unless this is a rework):\n{{ .outputs.review.comment }}\n{{ .outputs.review.reason }}\n\nIf a previous BRD is present, revise it using the reviewer feedback and keep accepted sections. Do not start from scratch. Otherwise write the first draft from the request and thread.",
+              "outputSchema": null
+            },
+            "output_mapping": [
+              {
+                "name": "result",
+                "path": "response.result"
+              },
+              {
+                "name": "text",
+                "path": "response.text"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": "governance-brd_agent",
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "governance-brd_agent",
+                "sourceHandle": null,
+                "fallback": false
+              }
+            ]
+          },
+          "srd_agent": {
+            "kind": "activity",
+            "id": "srd_agent",
+            "name": "SRD agent",
+            "activity_name": "ai_agent_execute",
+            "input": {
+              "agentIdentifier": "system-requirements",
+              "userPrompt": "Write or revise a System Requirements document.\n\nCurrent run dossier:\nRequest:\n{{ .outputs.trigger.text }}\n\nSlack thread:\n{{ .outputs.context_collection.body }}\n\nRouting:\n{{ .outputs.routing.response }}\n\nRelated BRD (if any):\n{{ .outputs.brd_agent.text }}\n\nPrevious SRD (empty on first pass; on rework this is the last draft):\n{{ .outputs.srd_agent.text }}\n\nReviewer feedback (empty unless this is a rework):\n{{ .outputs.review.comment }}\n{{ .outputs.review.reason }}\n\nIf a previous SRD is present, revise it using the reviewer feedback and keep accepted sections. Do not start from scratch. Otherwise write the first draft from the request, thread, and any related BRD.",
+              "outputSchema": null
+            },
+            "output_mapping": [
+              {
+                "name": "result",
+                "path": "response.result"
+              },
+              {
+                "name": "text",
+                "path": "response.text"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": "governance-srd_agent",
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "governance-srd_agent",
+                "sourceHandle": null,
+                "fallback": false
+              }
+            ]
+          },
+          "review": {
+            "kind": "activity",
+            "id": "review",
+            "name": "Review",
+            "activity_name": "human_review",
+            "input": {
+              "description": "Approve the {{ .outputs.routing.scheme }} artifact or send it back.\n\n{{ .outputs.brd_agent.text }}{{ .outputs.srd_agent.text }}",
+              "userInputs": {
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "title": "Reason",
+                    "description": "The reason for the approve/decline."
+                  }
+                },
+                "required": [],
+                "buttons": [
+                  {
+                    "identifier": "approve",
+                    "label": "Approve",
+                    "variant": "PRIMARY"
+                  },
+                  {
+                    "identifier": "decline",
+                    "label": "Decline",
+                    "variant": "DANGER"
+                  }
+                ]
+              },
+              "outlets": [
+                {
+                  "evaluationMethod": "button",
+                  "identifier": "approve",
+                  "title": "Approve",
+                  "numOfResponders": 1
+                },
+                {
+                  "evaluationMethod": "button",
+                  "identifier": "decline",
+                  "title": "Decline",
+                  "numOfResponders": 1
+                }
+              ],
+              "responders": {},
+              "notifications": [
+                {
+                  "target": "webhook",
+                  "url": "https://slack.com/api/chat.postMessage",
+                  "headers": {
+                    "Authorization": "Bearer {{ .secrets[\"slack-bot-token\"] }}",
+                    "Content-Type": "application/json; charset=utf-8"
+                  },
+                  "body": {
+                    "channel": "{{ .outputs.trigger.channel }}",
+                    "thread_ts": "{{ .outputs.trigger.thread_ts }}",
+                    "text": "Review required for *{{ .outputs.routing.scheme }}* (AI PDLC).\nApprove or decline in the designer."
+                  }
+                }
+              ],
+              "title": "Review",
+              "node_id": "review"
+            },
+            "output_mapping": [
+              {
+                "name": "selectedOutlet",
+                "path": "signal.selectedOutlet"
+              },
+              {
+                "name": "responses",
+                "path": "signal.responses"
+              },
+              {
+                "name": "decision",
+                "path": "signal.decision"
+              },
+              {
+                "name": "reason",
+                "path": "signal.reason"
+              },
+              {
+                "name": "comment",
+                "path": "signal.comment"
+              },
+              {
+                "name": "inputs",
+                "path": "signal.inputs"
+              }
+            ],
+            "wait_for_signal": true,
+            "signal_name": "review_decision",
+            "next_step": null,
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "route",
+                "sourceHandle": "decline",
+                "fallback": false
+              },
+              {
+                "target": "publish",
+                "sourceHandle": "approve",
+                "fallback": false
+              }
+            ]
+          },
+          "publish": {
+            "kind": "activity",
+            "id": "publish",
+            "name": "Publishing",
+            "activity_name": "http_webhook",
+            "input": {
+              "url": "https://slack.com/api/chat.postMessage",
+              "method": "POST",
+              "headers": {
+                "Authorization": "Bearer {{ .secrets[\"slack-bot-token\"] }}",
+                "Content-Type": "application/json; charset=utf-8"
+              },
+              "body": {
+                "channel": "{{ .outputs.trigger.channel }}",
+                "thread_ts": "{{ .outputs.trigger.thread_ts }}",
+                "text": "Approved *{{ .outputs.routing.scheme }}* artifact:\n\n{{ .outputs.brd_agent.text }}{{ .outputs.srd_agent.text }}\n\nReviewer: {{ .outputs.review.reason }}"
+              },
+              "synchronized": true,
+              "onTimeout": "fail",
+              "onFailure": "terminate",
+              "verbose": true,
+              "agent": false
+            },
+            "output_mapping": [
+              {
+                "name": "body",
+                "path": "response.body"
+              },
+              {
+                "name": "status",
+                "path": "response.status"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": null,
+            "on_failure": "terminate",
+            "outlets": []
+          },
+          "webhook-mst1s1i5": {
+            "kind": "activity",
+            "id": "webhook-mst1s1i5",
+            "name": "AI Agent",
+            "activity_name": "ai_agent_execute",
+            "input": {
+              "agentIdentifier": "business-requirements",
+              "userPrompt": "",
+              "outputSchema": null
+            },
+            "output_mapping": [
+              {
+                "name": "result",
+                "path": "response.result"
+              },
+              {
+                "name": "text",
+                "path": "response.text"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": "governance-webhook-mst1s1i5",
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "governance-webhook-mst1s1i5",
+                "sourceHandle": null,
+                "fallback": false
+              }
+            ]
+          },
+          "governance-brd_agent": {
+            "kind": "activity",
+            "id": "governance-brd_agent",
+            "name": "Проверки · Business Requirements",
+            "activity_name": "internal_service",
+            "input": {
+              "service": "policy.evaluate",
+              "parameter": {},
+              "onTimeout": "fail",
+              "onFailure": "terminate",
+              "verbose": false,
+              "governance": true,
+              "packs": [
+                {
+                  "key": "user-data-protection",
+                  "name": "User data protection before BRD review",
+                  "severity": "CRITICAL",
+                  "enforcement": "BLOCK",
+                  "expression": "context.artifact.pii_clean == true AND context.artifact.secrets_clean == true",
+                  "evaluation_point": "AFTER_SKILL",
+                  "mandatory": true
+                },
+                {
+                  "key": "stage-artifact-completeness",
+                  "name": "Проверка артефакта этапа",
+                  "severity": "HIGH",
+                  "enforcement": "BLOCK",
+                  "expression": "context.stage_exit_contract_satisfied == true",
+                  "evaluation_point": "BEFORE_ARTIFACT_PUBLICATION",
+                  "mandatory": true
+                }
+              ],
+              "produces": [
+                "BUSINESS_REQUIREMENTS"
+              ],
+              "producer": "brd_agent",
+              "producer_ids": [
+                "brd_agent"
+              ]
+            },
+            "output_mapping": [
+              {
+                "name": "result",
+                "path": "result"
+              },
+              {
+                "name": "passed",
+                "path": "passed"
+              },
+              {
+                "name": "ok",
+                "path": "ok"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": null,
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "review",
+                "sourceHandle": "pass",
+                "fallback": false
+              },
+              {
+                "target": "brd_agent",
+                "sourceHandle": "fail",
+                "fallback": false
+              }
+            ]
+          },
+          "governance-srd_agent": {
+            "kind": "activity",
+            "id": "governance-srd_agent",
+            "name": "Проверки · System Requirements",
+            "activity_name": "internal_service",
+            "input": {
+              "service": "policy.evaluate",
+              "parameter": {},
+              "onTimeout": "fail",
+              "onFailure": "terminate",
+              "verbose": false,
+              "governance": true,
+              "packs": [
+                {
+                  "key": "stage-artifact-completeness",
+                  "name": "Проверка артефакта этапа",
+                  "severity": "HIGH",
+                  "enforcement": "BLOCK",
+                  "expression": "context.stage_exit_contract_satisfied == true",
+                  "evaluation_point": "BEFORE_ARTIFACT_PUBLICATION",
+                  "mandatory": true
+                }
+              ],
+              "produces": [
+                "SYSTEM_REQUIREMENTS"
+              ],
+              "producer": "srd_agent",
+              "producer_ids": [
+                "srd_agent"
+              ]
+            },
+            "output_mapping": [
+              {
+                "name": "result",
+                "path": "result"
+              },
+              {
+                "name": "passed",
+                "path": "passed"
+              },
+              {
+                "name": "ok",
+                "path": "ok"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": null,
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "review",
+                "sourceHandle": "pass",
+                "fallback": false
+              },
+              {
+                "target": "srd_agent",
+                "sourceHandle": "fail",
+                "fallback": false
+              }
+            ]
+          },
+          "governance-webhook-mst1s1i5": {
+            "kind": "activity",
+            "id": "governance-webhook-mst1s1i5",
+            "name": "Проверки · Business Requirements",
+            "activity_name": "internal_service",
+            "input": {
+              "service": "policy.evaluate",
+              "parameter": {},
+              "onTimeout": "fail",
+              "onFailure": "terminate",
+              "verbose": false,
+              "governance": true,
+              "packs": [
+                {
+                  "key": "user-data-protection",
+                  "name": "User data protection before BRD review",
+                  "severity": "CRITICAL",
+                  "enforcement": "BLOCK",
+                  "expression": "context.artifact.pii_clean == true AND context.artifact.secrets_clean == true",
+                  "evaluation_point": "AFTER_SKILL",
+                  "mandatory": true
+                },
+                {
+                  "key": "stage-artifact-completeness",
+                  "name": "Проверка артефакта этапа",
+                  "severity": "HIGH",
+                  "enforcement": "BLOCK",
+                  "expression": "context.stage_exit_contract_satisfied == true",
+                  "evaluation_point": "BEFORE_ARTIFACT_PUBLICATION",
+                  "mandatory": true
+                }
+              ],
+              "produces": [
+                "BUSINESS_REQUIREMENTS"
+              ],
+              "producer": "webhook-mst1s1i5",
+              "producer_ids": [
+                "webhook-mst1s1i5"
+              ]
+            },
+            "output_mapping": [
+              {
+                "name": "result",
+                "path": "result"
+              },
+              {
+                "name": "passed",
+                "path": "passed"
+              },
+              {
+                "name": "ok",
+                "path": "ok"
+              }
+            ],
+            "wait_for_signal": false,
+            "signal_name": null,
+            "next_step": null,
+            "on_failure": "terminate",
+            "outlets": [
+              {
+                "target": "review",
+                "sourceHandle": "pass",
+                "fallback": false
+              },
+              {
+                "target": "webhook-mst1s1i5",
+                "sourceHandle": "fail",
+                "fallback": false
+              }
+            ]
+          }
+        }
+      },
+      "validation_status": "valid",
+      "validation_report": {
+        "ok": true,
+        "issues": []
+      },
+      "revision": 76,
+      "created_at": "2026-08-12T18:33:51.714320",
+      "published_at": "2026-08-14T14:38:53.797174",
+      "updated_at": "2026-08-14T14:38:53.797176"
+    }
+  ]
+}

@@ -1,0 +1,469 @@
+{
+  "id": "generate-system-requirements",
+  "name": "Generate System Requirements",
+  "description": "Сценарий SRD после platform classify. In-template classify пропускается если routing уже передан (pre-scenario).",
+  "version": 27,
+  "is_default": true,
+  "status": "published",
+  "steps": [
+    {
+      "id": "step-start",
+      "type": "start",
+      "label": "Start",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 320.0,
+        "y": 60.0
+      },
+      "description": "Точка входа процесса",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "started",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-evidence",
+      "type": "script",
+      "label": "Collect evidence",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 320.0,
+        "y": 164.0
+      },
+      "description": "Сбор первичного контекста по задаче (общий для всех сценариев)",
+      "config": {
+        "timeout_minutes": 2
+      },
+      "skill_id": null,
+      "script_id": "collect_evidence",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "evidence",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-compress",
+      "type": "script",
+      "label": "Compress context",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 320.0,
+        "y": 278.0
+      },
+      "description": "Нормализация / сжатие контекста → бриф исполнения",
+      "config": {
+        "timeout_minutes": 1
+      },
+      "skill_id": null,
+      "script_id": "compress_context",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "evidence",
+          "source_step": "step-evidence",
+          "source_output": "evidence"
+        }
+      ],
+      "output_key": "evidence_brief",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-classify",
+      "type": "skill",
+      "label": "Classify Task",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 320.0,
+        "y": 392.0
+      },
+      "description": "Классификация задачи на сценарий (primary_skill)",
+      "config": {
+        "timeout_minutes": 1
+      },
+      "skill_id": "classify",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "routing",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-start-playbook",
+      "type": "start_playbook",
+      "label": "Start Playbook",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 320.0,
+        "y": 506.0
+      },
+      "description": "Начало пользовательского сценария",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "playbook_started",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-sr",
+      "type": "skill",
+      "label": "System Requirements",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 320.0,
+        "y": 772.0
+      },
+      "description": "",
+      "config": {
+        "timeout_minutes": 15
+      },
+      "skill_id": "system-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-validate",
+      "type": "script",
+      "label": "Verify artifact",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 320.0,
+        "y": 886.0
+      },
+      "description": "",
+      "config": {
+        "timeout_minutes": 5
+      },
+      "skill_id": null,
+      "script_id": "verify",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "verification_report",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-decision",
+      "type": "gateway_or",
+      "label": "Gateway ИЛИ",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 320.0,
+        "y": 1000.0
+      },
+      "description": "",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-refine",
+      "type": "skill",
+      "label": "System Requirements",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 560.0,
+        "y": 1152.0
+      },
+      "description": "",
+      "config": {
+        "mode": "rework",
+        "timeout_minutes": 10
+      },
+      "skill_id": "system-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-approval",
+      "type": "approval",
+      "label": "Human approval",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 320.0,
+        "y": 1152.0
+      },
+      "description": "Solution Architect закрывает этап system-requirements перед публикацией",
+      "config": {
+        "auto_approve": false,
+        "timeout_hours": 72,
+        "approver_role": "Solution Architect",
+        "artifact_name": "SystemRequirementsDoc",
+        "checkpoint_key": "srd",
+        "question": "Можно ли публиковать системные требования в Slack thread?",
+        "next_stage": "Publish Artifact",
+        "playbook_key": "system-requirements"
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": null,
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-publish",
+      "type": "script",
+      "label": "Publish artifact",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 320.0,
+        "y": 1266.0
+      },
+      "description": "",
+      "config": {
+        "retries": 5
+      },
+      "skill_id": null,
+      "script_id": "publish",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "publication_receipt",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-end-playbook",
+      "type": "end_playbook",
+      "label": "End Playbook",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 320.0,
+        "y": 1380.0
+      },
+      "description": "Конец пользовательского сценария",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "playbook_ended",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-end",
+      "type": "end",
+      "label": "End",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 320.0,
+        "y": 1494.0
+      },
+      "description": "Завершение процесса",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": null,
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-14-gateway-and",
+      "type": "gateway_and",
+      "label": "Gateway И",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 320.0,
+        "y": 620.0
+      },
+      "description": "",
+      "config": {
+        "timeout_minutes": 10
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-shell-start-evidence",
+      "from_step": "step-start",
+      "to_step": "step-evidence",
+      "label": null
+    },
+    {
+      "id": "e-shell-evidence-compress",
+      "from_step": "step-evidence",
+      "to_step": "step-compress",
+      "label": null
+    },
+    {
+      "id": "e-shell-compress-classify",
+      "from_step": "step-compress",
+      "to_step": "step-classify",
+      "label": null
+    },
+    {
+      "id": "e-shell-classify-start-pb",
+      "from_step": "step-classify",
+      "to_step": "step-start-playbook",
+      "label": null
+    },
+    {
+      "id": "e-gen-val",
+      "from_step": "step-generate-sr",
+      "to_step": "step-validate",
+      "label": null
+    },
+    {
+      "id": "e-val-dec",
+      "from_step": "step-validate",
+      "to_step": "step-decision",
+      "label": null
+    },
+    {
+      "id": "e-dec-appr",
+      "from_step": "step-decision",
+      "to_step": "step-approval",
+      "label": "yes"
+    },
+    {
+      "id": "e-dec-ref",
+      "from_step": "step-decision",
+      "to_step": "step-refine",
+      "label": "no"
+    },
+    {
+      "id": "e-ref-val",
+      "from_step": "step-refine",
+      "to_step": "step-validate",
+      "label": null
+    },
+    {
+      "id": "e-appr-pub",
+      "from_step": "step-approval",
+      "to_step": "step-publish",
+      "label": "approve"
+    },
+    {
+      "id": "e-appr-ref",
+      "from_step": "step-approval",
+      "to_step": "step-refine",
+      "label": "request_changes"
+    },
+    {
+      "id": "e-shell-body-end-pb",
+      "from_step": "step-publish",
+      "to_step": "step-end-playbook",
+      "label": null
+    },
+    {
+      "id": "e-shell-end-pb-end",
+      "from_step": "step-end-playbook",
+      "to_step": "step-end",
+      "label": null
+    },
+    {
+      "id": "e-step-start-playbook-step-14-gateway-and",
+      "from_step": "step-start-playbook",
+      "to_step": "step-14-gateway-and",
+      "label": null
+    },
+    {
+      "id": "e-step-14-gateway-and-step-generate-sr",
+      "from_step": "step-14-gateway-and",
+      "to_step": "step-generate-sr",
+      "label": null
+    }
+  ],
+  "settings": {
+    "max_rework": 3,
+    "publish_retries": 5,
+    "classify_confidence_threshold": 0.3,
+    "default_timeout_minutes": 10,
+    "publication_target": "callback"
+  }
+}

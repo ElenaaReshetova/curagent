@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "id": "32da066d-1f42-5370-a1c3-6ac06eb556ab",
+      "username": "admin",
+      "display_name": "Experiment Admin",
+      "email": "",
+      "roles": [
+        "admin"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

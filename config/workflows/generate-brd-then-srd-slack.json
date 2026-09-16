@@ -1,0 +1,735 @@
+{
+  "id": "generate-brd-then-srd-slack",
+  "name": "Slack: BRD → SRD (sequential)",
+  "description": "E2E Flow runtime: BRD полный цикл (generate/verify/approval/publish) → SRD полный цикл с consume_prior_artifact. Для flow с цепочкой business-requirements → system-requirements.",
+  "version": 1,
+  "is_default": false,
+  "status": "published",
+  "steps": [
+    {
+      "id": "step-start",
+      "type": "start",
+      "label": "Start",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 40.0
+      },
+      "description": "Точка входа E2E Flow slack-brd-srd-delivery",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "started",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-evidence",
+      "type": "script",
+      "label": "Collect evidence",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 140.0
+      },
+      "description": "Сбор первичного контекста по задаче",
+      "config": {
+        "timeout_minutes": 2
+      },
+      "skill_id": null,
+      "script_id": "collect_evidence",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "evidence",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-compress",
+      "type": "script",
+      "label": "Compress context",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 240.0
+      },
+      "description": "Нормализация / сжатие контекста → бриф",
+      "config": {
+        "timeout_minutes": 1
+      },
+      "skill_id": null,
+      "script_id": "compress_context",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "evidence",
+          "source_step": "step-evidence",
+          "source_output": "evidence"
+        }
+      ],
+      "output_key": "evidence_brief",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-classify",
+      "type": "skill",
+      "label": "Classify Task",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 340.0
+      },
+      "description": "Классификация задачи",
+      "config": {
+        "timeout_minutes": 1
+      },
+      "skill_id": "classify",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "routing",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-start-playbook",
+      "type": "start_playbook",
+      "label": "Start E2E stages",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 440.0
+      },
+      "description": "Начало цепочки BDR → SRD (без classify-ветвления)",
+      "config": {
+        "flow_key": "slack-brd-srd-delivery",
+        "stage_playbooks": [
+          "business-requirements",
+          "system-requirements"
+        ]
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "playbook_started",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-brd",
+      "type": "skill",
+      "label": "Business Requirements",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 280.0,
+        "y": 620.0
+      },
+      "description": "Ветка: playbook business-requirements",
+      "config": {
+        "timeout_minutes": 15,
+        "playbook_key": "business-requirements"
+      },
+      "skill_id": "business-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-verify-brd",
+      "type": "script",
+      "label": "Verify BRD",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 660.0
+      },
+      "description": "Структурная/семантическая проверка BRD",
+      "config": {
+        "timeout_minutes": 5
+      },
+      "skill_id": null,
+      "script_id": "verify",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "verification_report",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-gateway-brd",
+      "type": "gateway_or",
+      "label": "BRD OK?",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 760.0
+      },
+      "description": "yes → data protection; no → refine BRD",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-data-protection",
+      "type": "script",
+      "label": "User data protection",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 860.0
+      },
+      "description": "Контроль этапа BRD: артефакт не содержит PII/секретов до human review",
+      "config": {
+        "timeout_minutes": 2,
+        "control_key": "user-data-protection"
+      },
+      "skill_id": null,
+      "script_id": "compliance",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "compliance",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-gateway-dp",
+      "type": "gateway_or",
+      "label": "Data protection OK?",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 960.0
+      },
+      "description": "yes → BRD human approval; no → refine BRD",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-approval-brd",
+      "type": "approval",
+      "label": "Human approval (BRD)",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1060.0
+      },
+      "description": "Product Owner закрывает этап business-requirements",
+      "config": {
+        "auto_approve": false,
+        "timeout_hours": 72,
+        "approver_role": "Product Owner",
+        "artifact_name": "BusinessRequirementsDoc",
+        "checkpoint_key": "brd",
+        "question": "Можно ли принять BRD и перейти к системным требованиям?",
+        "next_stage": "System Requirements",
+        "playbook_key": "business-requirements"
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "approval_decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-refine-brd",
+      "type": "skill",
+      "label": "Refine BRD",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 760.0,
+        "y": 760.0
+      },
+      "description": "Доработка BRD по verify / data-protection / human feedback",
+      "config": {
+        "mode": "rework",
+        "timeout_minutes": 10,
+        "playbook_key": "business-requirements"
+      },
+      "skill_id": "business-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-generate-srd",
+      "type": "skill",
+      "label": "System Requirements",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 760.0,
+        "y": 620.0
+      },
+      "description": "Ветка: playbook system-requirements (без BRD)",
+      "config": {
+        "timeout_minutes": 15,
+        "consume_prior_artifact": true,
+        "reset_artifact_version": true,
+        "playbook_key": "system-requirements",
+        "flow_stage": "System Requirements"
+      },
+      "skill_id": "system-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [
+        {
+          "param": "brief",
+          "source_step": "step-compress",
+          "source_output": "evidence_brief"
+        }
+      ],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-verify-srd",
+      "type": "script",
+      "label": "Verify SRD",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1260.0
+      },
+      "description": "Структурная/семантическая проверка SRS",
+      "config": {
+        "timeout_minutes": 5
+      },
+      "skill_id": null,
+      "script_id": "verify",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "verification_report",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-gateway-srd",
+      "type": "gateway_or",
+      "label": "SRD OK?",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1360.0
+      },
+      "description": "yes → SRD human approval; no → refine SRD",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-approval-srd",
+      "type": "approval",
+      "label": "Human approval (SRD)",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1460.0
+      },
+      "description": "Solution Architect закрывает этап system-requirements перед публикацией",
+      "config": {
+        "auto_approve": false,
+        "timeout_hours": 72,
+        "approver_role": "Solution Architect",
+        "artifact_name": "SystemRequirementsDoc",
+        "checkpoint_key": "srd",
+        "question": "Можно ли публиковать системные требования в Slack thread?",
+        "next_stage": "Publish Artifact",
+        "playbook_key": "system-requirements"
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "approval_decision",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-refine-srd",
+      "type": "skill",
+      "label": "Refine SRD",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 760.0,
+        "y": 1360.0
+      },
+      "description": "Доработка SRS по verify / human feedback (только system-requirements skill)",
+      "config": {
+        "mode": "rework",
+        "timeout_minutes": 10,
+        "playbook_key": "system-requirements"
+      },
+      "skill_id": "system-requirements",
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "artifact",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-publish",
+      "type": "script",
+      "label": "Publish artifact",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1560.0
+      },
+      "description": "Публикация утверждённого SRS в Slack",
+      "config": {
+        "retries": 5
+      },
+      "skill_id": null,
+      "script_id": "publish",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "publication_receipt",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-end-playbook",
+      "type": "end_playbook",
+      "label": "End Playbook",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 1660.0
+      },
+      "description": "Конец этапа system-requirements / E2E Flow",
+      "config": {
+        "playbook_key": "system-requirements"
+      },
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "playbook_ended",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-end",
+      "type": "end",
+      "label": "End",
+      "enabled": true,
+      "locked": true,
+      "position": {
+        "x": 520.0,
+        "y": 1760.0
+      },
+      "description": "Завершение E2E Flow",
+      "config": {},
+      "skill_id": null,
+      "script_id": null,
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": null,
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    },
+    {
+      "id": "step-publish-brd",
+      "type": "script",
+      "label": "Publish BRD",
+      "enabled": true,
+      "locked": false,
+      "position": {
+        "x": 520.0,
+        "y": 1160.0
+      },
+      "description": "Публикация утверждённого BRD перед этапом SRD",
+      "config": {
+        "retries": 5
+      },
+      "skill_id": null,
+      "script_id": "publish",
+      "tool_id": null,
+      "capability_id": null,
+      "system_handler": null,
+      "input_mappings": [],
+      "output_key": "publication_receipt",
+      "model_profile": "default",
+      "max_input_tokens": 24000,
+      "max_output_tokens": 8000
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-start-evidence",
+      "from_step": "step-start",
+      "to_step": "step-evidence",
+      "label": null
+    },
+    {
+      "id": "e-evidence-compress",
+      "from_step": "step-evidence",
+      "to_step": "step-compress",
+      "label": null
+    },
+    {
+      "id": "e-compress-classify",
+      "from_step": "step-compress",
+      "to_step": "step-classify",
+      "label": null
+    },
+    {
+      "id": "e-classify-start-pb",
+      "from_step": "step-classify",
+      "to_step": "step-start-playbook",
+      "label": null
+    },
+    {
+      "id": "e-start-pb-brd",
+      "from_step": "step-start-playbook",
+      "to_step": "step-generate-brd",
+      "label": null
+    },
+    {
+      "id": "e-brd-verify",
+      "from_step": "step-generate-brd",
+      "to_step": "step-verify-brd",
+      "label": null
+    },
+    {
+      "id": "e-verify-brd-gw",
+      "from_step": "step-verify-brd",
+      "to_step": "step-gateway-brd",
+      "label": null
+    },
+    {
+      "id": "e-gw-brd-yes",
+      "from_step": "step-gateway-brd",
+      "to_step": "step-data-protection",
+      "label": "yes"
+    },
+    {
+      "id": "e-gw-brd-no",
+      "from_step": "step-gateway-brd",
+      "to_step": "step-refine-brd",
+      "label": "no"
+    },
+    {
+      "id": "e-dp-gw",
+      "from_step": "step-data-protection",
+      "to_step": "step-gateway-dp",
+      "label": null
+    },
+    {
+      "id": "e-gw-dp-yes",
+      "from_step": "step-gateway-dp",
+      "to_step": "step-approval-brd",
+      "label": "yes"
+    },
+    {
+      "id": "e-gw-dp-no",
+      "from_step": "step-gateway-dp",
+      "to_step": "step-refine-brd",
+      "label": "no"
+    },
+    {
+      "id": "e-approval-brd-ok",
+      "from_step": "step-approval-brd",
+      "to_step": "step-publish-brd",
+      "label": "approve"
+    },
+    {
+      "id": "e-approval-brd-rework",
+      "from_step": "step-approval-brd",
+      "to_step": "step-refine-brd",
+      "label": "request_changes"
+    },
+    {
+      "id": "e-refine-brd-verify",
+      "from_step": "step-refine-brd",
+      "to_step": "step-verify-brd",
+      "label": null
+    },
+    {
+      "id": "e-srd-verify",
+      "from_step": "step-generate-srd",
+      "to_step": "step-verify-srd",
+      "label": null
+    },
+    {
+      "id": "e-verify-srd-gw",
+      "from_step": "step-verify-srd",
+      "to_step": "step-gateway-srd",
+      "label": null
+    },
+    {
+      "id": "e-gw-srd-yes",
+      "from_step": "step-gateway-srd",
+      "to_step": "step-approval-srd",
+      "label": "yes"
+    },
+    {
+      "id": "e-gw-srd-no",
+      "from_step": "step-gateway-srd",
+      "to_step": "step-refine-srd",
+      "label": "no"
+    },
+    {
+      "id": "e-approval-srd-ok",
+      "from_step": "step-approval-srd",
+      "to_step": "step-publish",
+      "label": "approve"
+    },
+    {
+      "id": "e-approval-srd-rework",
+      "from_step": "step-approval-srd",
+      "to_step": "step-refine-srd",
+      "label": "request_changes"
+    },
+    {
+      "id": "e-refine-srd-verify",
+      "from_step": "step-refine-srd",
+      "to_step": "step-verify-srd",
+      "label": null
+    },
+    {
+      "id": "e-publish-end-pb",
+      "from_step": "step-publish",
+      "to_step": "step-end-playbook",
+      "label": null
+    },
+    {
+      "id": "e-end-pb-end",
+      "from_step": "step-end-playbook",
+      "to_step": "step-end",
+      "label": null
+    },
+    {
+      "id": "e-publish-brd-srd",
+      "from_step": "step-publish-brd",
+      "to_step": "step-generate-srd",
+      "label": null
+    }
+  ],
+  "settings": {
+    "max_rework": 2,
+    "publish_retries": 2,
+    "classify_confidence_threshold": 0.3,
+    "default_timeout_minutes": 10,
+    "publication_target": "callback",
+    "flow_key": "slack-srd-delivery",
+    "stage_playbooks": [
+      "business-requirements",
+      "system-requirements"
+    ]
+  }
+}

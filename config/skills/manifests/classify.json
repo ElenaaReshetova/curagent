@@ -1,0 +1,10 @@
+{
+  "id": "classify",
+  "version": "1.1",
+  "name": "Classify Task",
+  "description": "Классификация задачи и маршрутизация на specialist skill (BRD, SRS, tests, code analysis, general). Deterministic classifier — не MCP.",
+  "allowed_capabilities": [],
+  "skill_md": "skills/classify/SKILL.md",
+  "tags": ["routing", "classify", "playbook"],
+  "status": "published"
+}

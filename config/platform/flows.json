@@ -1,0 +1,157 @@
+{
+  "flows": [
+    {
+      "id": "954416ce-c1a8-5f8c-9ce9-949e325497ba",
+      "key": "slack-brd-srd-delivery",
+      "version": "1.0",
+      "name": "Slack → Classify → BRD | SRD",
+      "status": "active",
+      "family": "analysis",
+      "nodes": [
+        {
+          "id": "ingress",
+          "type": "wait_event",
+          "label": "Ingress",
+          "config": {
+            "source": "slack",
+            "mode": "mention"
+          }
+        },
+        {
+          "id": "normalize",
+          "type": "platform",
+          "label": "Normalize",
+          "config": {
+            "step": "normalize"
+          }
+        },
+        {
+          "id": "evidence",
+          "type": "platform",
+          "label": "Collect evidence",
+          "config": {
+            "step": "collect_evidence"
+          }
+        },
+        {
+          "id": "compress",
+          "type": "platform",
+          "label": "Compress context",
+          "config": {
+            "step": "compress_context"
+          }
+        },
+        {
+          "id": "classify",
+          "type": "platform",
+          "label": "Classify",
+          "config": {
+            "step": "classify",
+            "skill_key": "classify"
+          }
+        },
+        {
+          "id": "slack-brd-delivery",
+          "type": "subflow",
+          "flow_key": "slack-brd-delivery",
+          "label": "BRD scenario"
+        },
+        {
+          "id": "slack-srd-delivery",
+          "type": "subflow",
+          "flow_key": "slack-srd-delivery",
+          "label": "SRD scenario"
+        }
+      ],
+      "edges": [
+        {
+          "source": "ingress",
+          "target": "normalize"
+        },
+        {
+          "source": "normalize",
+          "target": "evidence"
+        },
+        {
+          "source": "evidence",
+          "target": "compress"
+        },
+        {
+          "source": "compress",
+          "target": "classify"
+        },
+        {
+          "source": "classify",
+          "target": "slack-brd-delivery",
+          "condition": "primary_skill == business-requirements"
+        },
+        {
+          "source": "classify",
+          "target": "slack-srd-delivery",
+          "condition": "primary_skill == system-requirements"
+        }
+      ],
+      "entry_contract": "SlackWorkItem@1",
+      "exit_contract": "WorkItemArtifact@1",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "31ae4baa-2cf7-511d-9a0d-e6d183b322fa",
+      "key": "slack-brd-delivery",
+      "version": "1.0",
+      "name": "Slack → Business Requirements",
+      "status": "active",
+      "family": "analysis",
+      "nodes": [
+        {
+          "id": "business-requirements",
+          "type": "playbook",
+          "playbook_key": "business-requirements"
+        },
+        {
+          "id": "publish",
+          "type": "publication",
+          "capability": "chat.reply"
+        }
+      ],
+      "edges": [
+        {
+          "source": "business-requirements",
+          "target": "publish"
+        }
+      ],
+      "entry_contract": "SlackWorkItem@1",
+      "exit_contract": "BusinessRequirementsArtifact@1",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "98465d8f-dd6e-5b80-99ec-c9dc97bac00d",
+      "key": "slack-srd-delivery",
+      "version": "1.0",
+      "name": "Slack → System Requirements",
+      "status": "active",
+      "family": "analysis",
+      "nodes": [
+        {
+          "id": "system-requirements",
+          "type": "playbook",
+          "playbook_key": "system-requirements"
+        },
+        {
+          "id": "publish",
+          "type": "publication",
+          "capability": "chat.reply"
+        }
+      ],
+      "edges": [
+        {
+          "source": "system-requirements",
+          "target": "publish"
+        }
+      ],
+      "entry_contract": "SlackWorkItem@1",
+      "exit_contract": "SystemRequirementsArtifact@1",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

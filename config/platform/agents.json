@@ -1,0 +1,48 @@
+{
+  "agents": [
+    {
+      "id": "978547fd-fa2c-571d-9110-b63efe3ee056",
+      "key": "slack-brd-agent",
+      "name": "Slack BRD Agent",
+      "status": "active",
+      "ingress_bindings": [
+        {
+          "source": "slack",
+          "mode": "mention",
+          "enabled": true
+        }
+      ],
+      "allowed_playbook_keys": [
+        "business-requirements",
+        "system-requirements"
+      ],
+      "allowed_flow_keys": [
+        "slack-brd-srd-delivery",
+        "slack-brd-delivery",
+        "slack-srd-delivery"
+      ],
+      "default_flow_key": "slack-brd-srd-delivery",
+      "skill_bindings": [
+        {
+          "interface_key": "analysis.business_requirements.generate@1",
+          "skill_key": "business-requirements"
+        },
+        {
+          "interface_key": "analysis.system_requirements.generate@1",
+          "skill_key": "system-requirements"
+        },
+        {
+          "interface_key": "routing.classify@1",
+          "skill_key": "classify"
+        }
+      ],
+      "runtime_profile_key": "local-lm-studio",
+      "knowledge_space_bindings": [
+        "slack-intake"
+      ],
+      "model_profile_key": "lm-studio-local",
+      "supervision_profile_key": "checkpoint",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

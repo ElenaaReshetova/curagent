@@ -1,0 +1,28 @@
+{
+  "controls": [
+    {
+      "id": "57e4fbcf-a772-55ed-aa97-f50392b10dc2",
+      "key": "user-data-protection",
+      "name": "User data protection before BRD review",
+      "description": "BRD must not contain PII/secrets before human checkpoint.",
+      "owner_team": "Governance Team",
+      "status": "active",
+      "current_active_version_id": "f9f4df31-91c1-549c-afad-9cafcbced9f7",
+      "current_draft_version_id": "7db35086-a22a-4674-92f6-99b41f6ed2e6",
+      "created_at": "2026-07-20T06:10:03.416467",
+      "updated_at": "2026-07-20T07:29:02.590336"
+    },
+    {
+      "id": "0d777ed0-f5c5-541b-ac82-4b5874e06c8e",
+      "key": "stage-artifact-completeness",
+      "name": "Проверка артефакта этапа",
+      "description": "Mandatory framework spine gate: exit artifact must satisfy the stage contract.",
+      "owner_team": "Platform",
+      "status": "active",
+      "current_active_version_id": "75e00c9e-12b0-567d-9216-5f6a8202d971",
+      "current_draft_version_id": null,
+      "created_at": "2026-07-23T14:23:40.086564",
+      "updated_at": "2026-07-23T14:23:40.086564"
+    }
+  ]
+}

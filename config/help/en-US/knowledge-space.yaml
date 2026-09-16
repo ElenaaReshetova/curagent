@@ -1,0 +1,62 @@
+# Knowledge Space — contextual help (en-US)
+
+concepts:
+  - conceptKey: knowledge-space
+    title: Knowledge Space
+    shortDescription: A logical boundary of trusted sources the agent may search.
+    fullDescription: >
+      A Knowledge Space separates Skills from concrete systems (Jira, Confluence, Git).
+      The Skill asks for context; the space decides where to look and what counts as evidence.
+    recommendedValue: One space per durable domain or product, not per request.
+    relatedConcepts:
+      - knowledge-space.name
+      - knowledge-space.key
+      - knowledge-space.type
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.name
+    title: Name
+    shortDescription: >
+      Display name in the catalog. Can be changed later. Example: Payments.
+    recommendedValue: Short domain name without internal jargon.
+    relatedConcepts: [knowledge-space, knowledge-space.key]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.key
+    title: Key
+    shortDescription: >
+      Technical slug for APIs and bindings (latin, digits, hyphens). Immutable after create. Example: payments.
+    warnings:
+      - Key is unique and cannot be changed later.
+    relatedConcepts: [knowledge-space, knowledge-space.name]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.type
+    title: Type
+    shortDescription: >
+      DOMAIN — domain, PRODUCT — product, TEAM — team, SYSTEM — platform, REGULATORY — compliance. Usually DOMAIN.
+    recommendedValue: DOMAIN for most business contexts.
+    relatedConcepts: [knowledge-space, knowledge-space.classification]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.classification
+    title: Classification
+    shortDescription: >
+      Data sensitivity: INTERNAL — normal, CONFIDENTIAL — commercial, RESTRICTED — strict limits (PII/PCI).
+    recommendedValue: Choose the minimum sufficient level.
+    relatedConcepts: [knowledge-space, knowledge-space.type]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.purpose
+    title: Purpose
+    shortDescription: >
+      Why the agent needs this space: domain and search boundaries. 1–3 sentences, no MCP tool lists.
+    recommendedValue: Describe domain and boundaries; do not list raw tool IDs.
+    relatedConcepts: [knowledge-space]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC

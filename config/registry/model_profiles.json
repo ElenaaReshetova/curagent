@@ -1,0 +1,7 @@
+{
+  "profiles": [
+    {"id": "default", "name": "Default", "description": "Balanced model settings"},
+    {"id": "strong-reasoning", "name": "Strong Reasoning", "description": "Complex analysis and requirements"},
+    {"id": "fast-draft", "name": "Fast Draft", "description": "Quick first draft, lower latency"}
+  ]
+}

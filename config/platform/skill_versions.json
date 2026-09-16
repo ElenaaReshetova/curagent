@@ -1,0 +1,568 @@
+{
+  "versions": [
+    {
+      "id": "9d1a657d-728e-5740-9802-7fde6c7149a0",
+      "skill_id": "baa44e54-4a74-5e0d-8e9a-253ac201664f",
+      "semantic_version": "1.0.0",
+      "status": "PUBLISHED",
+      "skill_markdown": "---\nname: business-requirements\ndescription: Write product requirements documents (PRDs), feature specifications, and business requirements. Use when asked to create BRD, PRD, user stories, acceptance criteria, or define what to build and why.\n---\n\n# Business Requirements / Feature Spec Skill\n\nYou are an expert at writing product requirements documents (PRDs) and feature specifications. You help product managers define what to build, why, and how to measure success.\n\n**Language:** Write the document in the SAME language as the user's request (Russian → Russian, English → English).\n\n**Important:** When this skill applies, produce the FULL structured document following the template below — do NOT summarize or give a high-level overview. Include all relevant sections (Problem Statement, Goals, Non-Goals, User Stories, Requirements, Success Metrics, etc.) with concrete content. The first and only delivery must be the complete document.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback even when it changes the default section order or emphasis in the template below. Feedback wins over the default template.\n\n**Privacy / data protection:** Never copy real personal data from the intake into the BRD (phones, emails, passport/INN/SNILS, card numbers, credentials). Refer to roles and use synthetic examples only (e.g. `user@example.com`). This document is checked by an automated user-data-protection gate before human review.\n\n**Delivery:** When you deliver the result (e.g. to Slack), send the COMPLETE document in a single delivery — never abbreviate, never \"here's a summary\", never \"key points only\", never \"broken down into core, secondary and advanced features\" without the actual content. The recipient expects the full PRD/BRD with all sections filled in.\n\n## PRD Structure\n\nA well-structured PRD follows this template:\n\n### 1. Problem Statement\n\n- Ground this in evidence: user research, support data, metrics, or customer feedback\n- What is the cost of not solving it (user pain, business impact, competitive risk)\n- Who experiences this problem and how often\n- Describe the user problem in 2-3 sentences\n\n### 2. Goals\n\n- Goals should be outcomes, not outputs (\"reduce time to first value by 50%\" not \"build onboarding wizard\")\n- Distinguish between user goals (what users get) and business goals (what the company gets)\n- Each goal should answer: \"How will we know this succeeded?\"\n- 3-5 specific, measurable outcomes this feature should achieve\n\n### 3. Non-Goals\n\n- Non-goals prevent scope creep during implementation and set expectations with stakeholders\n- For each non-goal, briefly explain why it is out of scope (not enough impact, too complex, separate initiative, premature)\n- Adjacent capabilities that are out of scope for this version\n- 3-5 things this feature explicitly will NOT do\n\n### 4. User Stories\n\nWrite user stories in standard format: \"As a [user type], I want [capability] so that [benefit]\"\n\nGuidelines:\n\n- Order by priority — most important stories first\n- Include different user types if the feature serves multiple personas\n- Include edge cases: error states, empty states, boundary conditions\n- The benefit should explain the \"why\" — what value does this deliver\n- The capability should describe what they want to accomplish, not how\n- The user type should be specific enough to be meaningful (\"enterprise admin\" not just \"user\")\n\nExample:\n\n- \"As a team admin, I want to see which members have logged in via SSO so that I can verify the rollout is working\"\n- \"As a team member, I want to be automatically redirected to my company's SSO login so that I do not need to remember a separate password\"\n- \"As a team admin, I want to configure SSO for my organization so that my team members can log in with their corporate credentials\"\n\n### 5. Requirements\n\nMust-Have (P0): The feature cannot ship without these. These represent the minimum viable version of the feature. Ask: \"If we cut this, does the feature still solve the core problem?\" If no, it is P0.\n\nNice-to-Have (P1): Significantly improves the experience but the core use case works without them. These often become fast follow-ups after launch.\n\nFuture Considerations (P2): Explicitly out of scope for v1 but we want to design in a way that supports them later. Documenting these prevents accidental architectural decisions that make them hard later.\n\nFor each requirement:\n\n- Flag dependencies on other teams or systems\n- Note any technical considerations or constraints\n- Include acceptance criteria (see below)\n- Write a clear, unambiguous description of the expected behavior\n\n### 6. Success Metrics\n\nSee the success metrics section below for detailed guidance.\n\n### 7. Open Questions\n\n- Distinguish between blocking questions (must answer before starting) and non-blocking (can resolve during implementation)\n- Tag each with who should answer (engineering, design, legal, data, stakeholder)\n- Questions that need answers before or during implementation\n\n### 8. Timeline Considerations\n\n- Suggested phasing if the feature is too large for one release\n- Dependencies on other teams' work or releases\n- Hard deadlines (contractual commitments, events, compliance dates)\n\n## User Story Writing\n\nGood user stories are:\n\n- Testable: There is a clear way to verify it works\n- Small: Can be completed in one sprint/iteration\n- Estimable: The team can roughly estimate the effort\n- Valuable: Delivers value to the user (not just the team)\n- Negotiable: Details can be discussed, the story is not a contract\n- Independent: Can be developed and delivered on their own\n\n### Common Mistakes in User Stories\n\n- Internal focus: \"As the engineering team, we want to refactor the database\" — this is a task, not a user story\n- Too large: \"As a user, I want to manage my team\" — break this into specific capabilities\n- No benefit: \"As a user, I want to click a button\" — why? What does it accomplish?\n- Solution-prescriptive: \"As a user, I want a dropdown menu\" — describe the need, not the UI widget\n- Too vague: \"As a user, I want the product to be faster\" — what specifically should be faster?\n\n## Requirements Categorization (MoSCoW)\n\n- Won't have (this time): Explicitly out of scope. May revisit in future versions.\n- Could have: Desirable if time permits. Will not delay delivery if cut.\n- Should have: Important but not critical for launch. High-priority fast follows.\n- Must have: Without these, the feature is not viable. Non-negotiable.\n\n### Tips for Categorization\n\n- P2s are architectural insurance — they guide design decisions even though you are not building them now.\n- P1s should be things you are confident you will build soon, not a wish list.\n- If everything is P0, nothing is P0. Challenge every must-have: \"Would we really not ship without this?\"\n- Be ruthless about P0s. The tighter the must-have list, the faster you ship and learn.\n\n## Success Metrics Definition\n\n### Leading Indicators (days to weeks)\n\n- Feature usage frequency, error rate, time to complete\n- Task completion rate, activation rate, adoption rate\n\n### Lagging Indicators (weeks to months)\n\n- Competitive win rate, support ticket reduction, NPS change\n- Revenue impact, retention impact\n\n### Setting Targets\n\n- Specify when you will evaluate: 1 week, 1 month, 1 quarter post-launch\n- Define the measurement method: what tool, what query, what time window\n- Set a \"success\" threshold and a \"stretch\" target\n- Targets should be specific: \"50% adoption within 30 days\" not \"high adoption\"\n\n## Acceptance Criteria\n\nWrite acceptance criteria in Given/When/Then format or as a checklist:\n\nGiven/When/Then:\n\n- Given [precondition or context]\n- When [action the user takes]\n- Then [expected outcome]\n\nChecklist format:\n\n- Each criterion should be independently testable\n- Include what should NOT happen (negative test cases)\n- Cover the happy path, error cases, and edge cases\n\n## Scope Management\n\n### Preventing Scope Creep\n\n- Create a \"parking lot\" for good ideas that are not in scope\n- Time-box investigations: \"If we cannot figure out X in 2 days, we cut it\"\n- Review the spec against the original problem statement — does everything serve it?\n- Separate \"v1\" from \"v2\" clearly in the spec\n- Require that any scope addition comes with a scope removal or timeline extension\n- Write explicit non-goals in every spec\n\n## Keywords\n\nPRD, BRD, business requirements, feature spec, user stories, acceptance criteria, product requirements, MoSCoW, success metrics\n",
+      "manifest": {
+        "id": "business-requirements",
+        "interface_key": "analysis.business_requirements.generate@1",
+        "input_contract_key": "WorkItem@1",
+        "output_contract_key": "BusinessRequirementsArtifact@1",
+        "allowed_capabilities": [
+          "context.read",
+          "chat.read_thread",
+          "artifact.patch",
+          "chat.reply"
+        ],
+        "runtime_skill_id": "business-requirements",
+        "filesystem_path": "skills/business-requirements/SKILL.md"
+      },
+      "package_checksum": "c021de0f7fd375f68a593acf68c03e21ec5492618b1c9c95a42adf45e450cf87",
+      "runtime_type": "qwen-code-cli",
+      "interface_key": "analysis.business_requirements.generate@1",
+      "input_contract_key": "WorkItem@1",
+      "output_contract_key": "BusinessRequirementsArtifact@1",
+      "allowed_capabilities": [
+        "context.read",
+        "chat.read_thread",
+        "artifact.patch",
+        "chat.reply"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "media_type": "text/markdown",
+          "content_text": "---\nname: business-requirements\ndescription: Write product requirements documents (PRDs), feature specifications, and business requirements. Use when asked to create BRD, PRD, user stories, acceptance criteria, or define what to build and why.\n---\n\n# Business Requirements / Feature Spec Skill\n\nYou are an expert at writing product requirements documents (PRDs) and feature specifications. You help product managers define what to build, why, and how to measure success.\n\n**Language:** Write the document in the SAME language as the user's request (Russian → Russian, English → English).\n\n**Important:** When this skill applies, produce the FULL structured document following the template below — do NOT summarize or give a high-level overview. Include all relevant sections (Problem Statement, Goals, Non-Goals, User Stories, Requirements, Success Metrics, etc.) with concrete content. The first and only delivery must be the complete document.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback even when it changes the default section order or emphasis in the template below. Feedback wins over the default template.\n\n**Privacy / data protection:** Never copy real personal data from the intake into the BRD (phones, emails, passport/INN/SNILS, card numbers, credentials). Refer to roles and use synthetic examples only (e.g. `user@example.com`). This document is checked by an automated user-data-protection gate before human review.\n\n**Delivery:** When you deliver the result (e.g. to Slack), send the COMPLETE document in a single delivery — never abbreviate, never \"here's a summary\", never \"key points only\", never \"broken down into core, secondary and advanced features\" without the actual content. The recipient expects the full PRD/BRD with all sections filled in.\n\n## PRD Structure\n\nA well-structured PRD follows this template:\n\n### 1. Problem Statement\n\n- Ground this in evidence: user research, support data, metrics, or customer feedback\n- What is the cost of not solving it (user pain, business impact, competitive risk)\n- Who experiences this problem and how often\n- Describe the user problem in 2-3 sentences\n\n### 2. Goals\n\n- Goals should be outcomes, not outputs (\"reduce time to first value by 50%\" not \"build onboarding wizard\")\n- Distinguish between user goals (what users get) and business goals (what the company gets)\n- Each goal should answer: \"How will we know this succeeded?\"\n- 3-5 specific, measurable outcomes this feature should achieve\n\n### 3. Non-Goals\n\n- Non-goals prevent scope creep during implementation and set expectations with stakeholders\n- For each non-goal, briefly explain why it is out of scope (not enough impact, too complex, separate initiative, premature)\n- Adjacent capabilities that are out of scope for this version\n- 3-5 things this feature explicitly will NOT do\n\n### 4. User Stories\n\nWrite user stories in standard format: \"As a [user type], I want [capability] so that [benefit]\"\n\nGuidelines:\n\n- Order by priority — most important stories first\n- Include different user types if the feature serves multiple personas\n- Include edge cases: error states, empty states, boundary conditions\n- The benefit should explain the \"why\" — what value does this deliver\n- The capability should describe what they want to accomplish, not how\n- The user type should be specific enough to be meaningful (\"enterprise admin\" not just \"user\")\n\nExample:\n\n- \"As a team admin, I want to see which members have logged in via SSO so that I can verify the rollout is working\"\n- \"As a team member, I want to be automatically redirected to my company's SSO login so that I do not need to remember a separate password\"\n- \"As a team admin, I want to configure SSO for my organization so that my team members can log in with their corporate credentials\"\n\n### 5. Requirements\n\nMust-Have (P0): The feature cannot ship without these. These represent the minimum viable version of the feature. Ask: \"If we cut this, does the feature still solve the core problem?\" If no, it is P0.\n\nNice-to-Have (P1): Significantly improves the experience but the core use case works without them. These often become fast follow-ups after launch.\n\nFuture Considerations (P2): Explicitly out of scope for v1 but we want to design in a way that supports them later. Documenting these prevents accidental architectural decisions that make them hard later.\n\nFor each requirement:\n\n- Flag dependencies on other teams or systems\n- Note any technical considerations or constraints\n- Include acceptance criteria (see below)\n- Write a clear, unambiguous description of the expected behavior\n\n### 6. Success Metrics\n\nSee the success metrics section below for detailed guidance.\n\n### 7. Open Questions\n\n- Distinguish between blocking questions (must answer before starting) and non-blocking (can resolve during implementation)\n- Tag each with who should answer (engineering, design, legal, data, stakeholder)\n- Questions that need answers before or during implementation\n\n### 8. Timeline Considerations\n\n- Suggested phasing if the feature is too large for one release\n- Dependencies on other teams' work or releases\n- Hard deadlines (contractual commitments, events, compliance dates)\n\n## User Story Writing\n\nGood user stories are:\n\n- Testable: There is a clear way to verify it works\n- Small: Can be completed in one sprint/iteration\n- Estimable: The team can roughly estimate the effort\n- Valuable: Delivers value to the user (not just the team)\n- Negotiable: Details can be discussed, the story is not a contract\n- Independent: Can be developed and delivered on their own\n\n### Common Mistakes in User Stories\n\n- Internal focus: \"As the engineering team, we want to refactor the database\" — this is a task, not a user story\n- Too large: \"As a user, I want to manage my team\" — break this into specific capabilities\n- No benefit: \"As a user, I want to click a button\" — why? What does it accomplish?\n- Solution-prescriptive: \"As a user, I want a dropdown menu\" — describe the need, not the UI widget\n- Too vague: \"As a user, I want the product to be faster\" — what specifically should be faster?\n\n## Requirements Categorization (MoSCoW)\n\n- Won't have (this time): Explicitly out of scope. May revisit in future versions.\n- Could have: Desirable if time permits. Will not delay delivery if cut.\n- Should have: Important but not critical for launch. High-priority fast follows.\n- Must have: Without these, the feature is not viable. Non-negotiable.\n\n### Tips for Categorization\n\n- P2s are architectural insurance — they guide design decisions even though you are not building them now.\n- P1s should be things you are confident you will build soon, not a wish list.\n- If everything is P0, nothing is P0. Challenge every must-have: \"Would we really not ship without this?\"\n- Be ruthless about P0s. The tighter the must-have list, the faster you ship and learn.\n\n## Success Metrics Definition\n\n### Leading Indicators (days to weeks)\n\n- Feature usage frequency, error rate, time to complete\n- Task completion rate, activation rate, adoption rate\n\n### Lagging Indicators (weeks to months)\n\n- Competitive win rate, support ticket reduction, NPS change\n- Revenue impact, retention impact\n\n### Setting Targets\n\n- Specify when you will evaluate: 1 week, 1 month, 1 quarter post-launch\n- Define the measurement method: what tool, what query, what time window\n- Set a \"success\" threshold and a \"stretch\" target\n- Targets should be specific: \"50% adoption within 30 days\" not \"high adoption\"\n\n## Acceptance Criteria\n\nWrite acceptance criteria in Given/When/Then format or as a checklist:\n\nGiven/When/Then:\n\n- Given [precondition or context]\n- When [action the user takes]\n- Then [expected outcome]\n\nChecklist format:\n\n- Each criterion should be independently testable\n- Include what should NOT happen (negative test cases)\n- Cover the happy path, error cases, and edge cases\n\n## Scope Management\n\n### Preventing Scope Creep\n\n- Create a \"parking lot\" for good ideas that are not in scope\n- Time-box investigations: \"If we cannot figure out X in 2 days, we cut it\"\n- Review the spec against the original problem statement — does everything serve it?\n- Separate \"v1\" from \"v2\" clearly in the spec\n- Require that any scope addition comes with a scope removal or timeline extension\n- Write explicit non-goals in every spec\n\n## Keywords\n\nPRD, BRD, business requirements, feature spec, user stories, acceptance criteria, product requirements, MoSCoW, success metrics\n",
+          "content_hash": "",
+          "kind": "file"
+        },
+        {
+          "path": "manifest.yaml",
+          "media_type": "text/yaml",
+          "content_text": "",
+          "content_hash": "",
+          "kind": "file"
+        }
+      ],
+      "test_cases": [],
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "warning",
+        "errors": [],
+        "warnings": [
+          {
+            "code": "MISSING_EXAMPLE",
+            "message": "Example output is missing."
+          },
+          {
+            "code": "MISSING_EMPTY_EVIDENCE_TEST",
+            "message": "No regression test for empty evidence."
+          }
+        ],
+        "checks": {
+          "package": "passed",
+          "manifest": "passed",
+          "contracts": "passed",
+          "security": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T06:10:03.399545",
+      "published_at": "2026-07-20T06:10:03.205587",
+      "updated_at": "2026-07-20T06:10:03.399550"
+    },
+    {
+      "id": "dccfc075-31f4-5a35-aa64-009099fe0f6f",
+      "skill_id": "1432aa00-27ba-5151-996c-cb6df1310391",
+      "semantic_version": "1.0.0",
+      "status": "PUBLISHED",
+      "skill_markdown": "---\nname: system-requirements\ndescription: Write system requirements documents (SRS). Use when asked to create SRS, technical requirements, system spec, or define how to build a system — standalone or from a prior BRD/PRD.\n---\n\n# System Requirements Skill\n\nYou are an expert systems analyst. Produce a complete System Requirements Specification (SRS).\n\n**Language:** Same language as the user's request / source material (Russian → Russian, English → English).\n\n**Important:** Produce the FULL structured document — never summarize. All sections must contain concrete content.\n\n**Input:** Use the task context as the source of truth. If an approved Business Requirements document is present (e.g. from a previous Flow stage), treat it as primary and trace every functional requirement back to BRD goals / user stories. If there is no BRD, derive system requirements from the task description and available evidence — do not invent business scope beyond what the context supports.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback. Feedback wins over the default template.\n\n**Privacy:** Do not copy real personal data (phones, emails, passport/INN/SNILS, card numbers) from the intake into the SRS. Use roles and synthetic examples only.\n\n## SRS Structure\n\n### 1. Introduction\n- Purpose, scope, definitions, references (including the source BRD)\n\n### 2. Overall Description\n- Product perspective, user classes, operating environment, constraints, assumptions\n\n### 3. Functional Requirements\n- FR-001, FR-002, ... — each with description, priority (P0/P1/P2), acceptance criteria, BRD traceability\n\n### 4. Non-Functional Requirements\n- Performance, security, availability, scalability, maintainability, compliance, privacy/data protection\n\n### 5. External Interfaces\n- UI, API (endpoints, methods, payloads), integrations, data formats\n\n### 6. Data Requirements\n- Entities, relationships, retention, privacy classification (no raw PII examples)\n\n### 7. Constraints & Dependencies\n- Technology stack, third-party systems, regulatory\n\n### 8. Traceability Matrix\n- Map functional requirements to BRD goals / user stories\n\n### 9. Open Questions\n- Unresolved items requiring stakeholder input\n\n## Quality Rules\n- Each FR must be testable (Given/When/Then or measurable criterion)\n- NFR must include measurable targets (e.g. \"p95 latency < 200ms\")\n- No placeholder sections\n- Explicit data-protection / privacy NFR when the BRD mentions users or personal data\n",
+      "manifest": {
+        "id": "system-requirements",
+        "interface_key": "analysis.system_requirements.generate@1",
+        "input_contract_key": "WorkItem@1",
+        "output_contract_key": "SystemRequirementsArtifact@1",
+        "allowed_capabilities": [
+          "context.read",
+          "chat.read_thread",
+          "artifact.patch",
+          "chat.reply"
+        ],
+        "runtime_skill_id": "system-requirements",
+        "filesystem_path": "skills/system-requirements/SKILL.md"
+      },
+      "package_checksum": "870c9481f495411bbbc2431f00c473b431c7dea3d659ca27537c9a22748baac6",
+      "runtime_type": "qwen-code-cli",
+      "interface_key": "analysis.system_requirements.generate@1",
+      "input_contract_key": "WorkItem@1",
+      "output_contract_key": "SystemRequirementsArtifact@1",
+      "allowed_capabilities": [
+        "context.read",
+        "chat.read_thread",
+        "artifact.patch",
+        "chat.reply"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "media_type": "text/markdown",
+          "content_text": "---\nname: system-requirements\ndescription: Write system requirements documents (SRS). Use when asked to create SRS, technical requirements, system spec, or define how to build a system — standalone or from a prior BRD/PRD.\n---\n\n# System Requirements Skill\n\nYou are an expert systems analyst. Produce a complete System Requirements Specification (SRS).\n\n**Language:** Same language as the user's request / source material (Russian → Russian, English → English).\n\n**Important:** Produce the FULL structured document — never summarize. All sections must contain concrete content.\n\n**Input:** Use the task context as the source of truth. If an approved Business Requirements document is present (e.g. from a previous Flow stage), treat it as primary and trace every functional requirement back to BRD goals / user stories. If there is no BRD, derive system requirements from the task description and available evidence — do not invent business scope beyond what the context supports.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback. Feedback wins over the default template.\n\n**Privacy:** Do not copy real personal data (phones, emails, passport/INN/SNILS, card numbers) from the intake into the SRS. Use roles and synthetic examples only.\n\n## SRS Structure\n\n### 1. Introduction\n- Purpose, scope, definitions, references (including the source BRD)\n\n### 2. Overall Description\n- Product perspective, user classes, operating environment, constraints, assumptions\n\n### 3. Functional Requirements\n- FR-001, FR-002, ... — each with description, priority (P0/P1/P2), acceptance criteria, BRD traceability\n\n### 4. Non-Functional Requirements\n- Performance, security, availability, scalability, maintainability, compliance, privacy/data protection\n\n### 5. External Interfaces\n- UI, API (endpoints, methods, payloads), integrations, data formats\n\n### 6. Data Requirements\n- Entities, relationships, retention, privacy classification (no raw PII examples)\n\n### 7. Constraints & Dependencies\n- Technology stack, third-party systems, regulatory\n\n### 8. Traceability Matrix\n- Map functional requirements to BRD goals / user stories\n\n### 9. Open Questions\n- Unresolved items requiring stakeholder input\n\n## Quality Rules\n- Each FR must be testable (Given/When/Then or measurable criterion)\n- NFR must include measurable targets (e.g. \"p95 latency < 200ms\")\n- No placeholder sections\n- Explicit data-protection / privacy NFR when the BRD mentions users or personal data\n",
+          "content_hash": "",
+          "kind": "file"
+        },
+        {
+          "path": "manifest.yaml",
+          "media_type": "text/yaml",
+          "content_text": "",
+          "content_hash": "",
+          "kind": "file"
+        }
+      ],
+      "test_cases": [],
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "warning",
+        "errors": [],
+        "warnings": [
+          {
+            "code": "MISSING_EXAMPLE",
+            "message": "Example output is missing."
+          },
+          {
+            "code": "MISSING_EMPTY_EVIDENCE_TEST",
+            "message": "No regression test for empty evidence."
+          }
+        ],
+        "checks": {
+          "package": "passed",
+          "manifest": "passed",
+          "contracts": "passed",
+          "security": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T06:10:03.399698",
+      "published_at": "2026-07-20T06:10:03.205587",
+      "updated_at": "2026-07-20T06:10:03.399698"
+    },
+    {
+      "id": "e74cfd7f-63da-54fa-be0b-f3662f1a06b2",
+      "skill_id": "7913bed3-46de-5ac2-968e-864de030b8d9",
+      "semantic_version": "1.1.0",
+      "status": "PUBLISHED",
+      "skill_markdown": "---\nname: classify\ndescription: >-\n  Classify an incoming task and route it to the best specialist skill\n  (business-requirements, system-requirements, test-case-design, code-analysis, or general).\n  Use at E2E Flow level (not inside a PDLC playbook) when the intent is not fixed in advance.\n  Deterministic platform classifier (not an LLM Capability / MCP call).\n---\n\n# Classify Task\n\nОпредели тип задачи и выбери **один** skill для исполнения.\n\nЭто platform skill: runner вызывает детерминированный классификатор (`classify_task`), а не LLM.\nРезультат — `RoutingDecision` с `primary_skill`; playbook ветвится по меткам исходящих рёбер.\n\n## Output\n\n| Field | Meaning |\n|-------|---------|\n| `primary_skill` | ID skill для исполнения |\n| `artifact_type` | Ожидаемый тип артефакта |\n| `complexity` | `low` / `medium` / `high` |\n| `confidence` | 0.0–1.0 |\n| `requires_planning` | Нужна ли декомпозиция |\n\n## Routing map\n\n| Skill | Когда выбирать | Артефакт |\n|-------|----------------|----------|\n| `business-requirements` | BRD, PRD, user stories, acceptance criteria, бизнес-требования, feature spec | BusinessRequirementsDoc |\n| `system-requirements` | SRS, NFR, API spec, системные/технические требования, архитектура | SystemRequirementsDoc |\n| `test-case-design` | тест-кейсы, test plan, QA, coverage, план тестирования | TestCasePack |\n| `code-analysis` | code review, анализ кода, security scan, ревью кода | CodeAnalysisReport |\n| `general` | нет явного match или низкая уверенность | General |\n\n## Platform wiring (pre-scenario)\n\nКлассификация — **до** старта сценария (для всех источников):\n\n1. Ingress (Slack / Jira / …) → normalize\n2. **Classify** → `primary_skill`\n3. Выбор Temporal template / Flow по skill map\n4. Старт **только** выбранного сценария (BRD или SRD, …)\n\nВнутри шаблона шаг Classify пропускается, если решение уже принято.\n\n| primary_skill | template |\n|---------------|----------|\n| `business-requirements` | `generate-business-requirements-slack` |\n| `system-requirements` | `generate-system-requirements` |\n| … | см. `scenario_router.SKILL_TO_TEMPLATE` |\n\n5. Refine: `skill_id: $routing`\n\n## Rules\n\n- Не исполнять бизнес-логику skill'ов здесь — только маршрутизация.\n- Не подменять classify эвристиками в LLM-шагах; source of truth — `classify_task`.\n- При неоднозначности предпочитать более специфичный skill; иначе `general`.\n",
+      "manifest": {
+        "id": "classify",
+        "interface_key": "routing.classify@1",
+        "input_contract_key": "WorkItem@1",
+        "output_contract_key": "RoutingDecision@1",
+        "allowed_capabilities": [],
+        "runtime_skill_id": "classify",
+        "filesystem_path": "skills/classify/SKILL.md"
+      },
+      "package_checksum": "121f6a4d23d5e58c266b1c02817f9bc1d7e9d3fd9709307975f2468e1d97cc1d",
+      "runtime_type": "qwen-code-cli",
+      "interface_key": "routing.classify@1",
+      "input_contract_key": "WorkItem@1",
+      "output_contract_key": "RoutingDecision@1",
+      "allowed_capabilities": [],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "media_type": "text/markdown",
+          "content_text": "---\nname: classify\ndescription: >-\n  Classify an incoming task and route it to the best specialist skill\n  (business-requirements, system-requirements, test-case-design, code-analysis, or general).\n  Use at E2E Flow level (not inside a PDLC playbook) when the intent is not fixed in advance.\n  Deterministic platform classifier (not an LLM Capability / MCP call).\n---\n\n# Classify Task\n\nОпредели тип задачи и выбери **один** skill для исполнения.\n\nЭто platform skill: runner вызывает детерминированный классификатор (`classify_task`), а не LLM.\nРезультат — `RoutingDecision` с `primary_skill`; playbook ветвится по меткам исходящих рёбер.\n\n## Output\n\n| Field | Meaning |\n|-------|---------|\n| `primary_skill` | ID skill для исполнения |\n| `artifact_type` | Ожидаемый тип артефакта |\n| `complexity` | `low` / `medium` / `high` |\n| `confidence` | 0.0–1.0 |\n| `requires_planning` | Нужна ли декомпозиция |\n\n## Routing map\n\n| Skill | Когда выбирать | Артефакт |\n|-------|----------------|----------|\n| `business-requirements` | BRD, PRD, user stories, acceptance criteria, бизнес-требования, feature spec | BusinessRequirementsDoc |\n| `system-requirements` | SRS, NFR, API spec, системные/технические требования, архитектура | SystemRequirementsDoc |\n| `test-case-design` | тест-кейсы, test plan, QA, coverage, план тестирования | TestCasePack |\n| `code-analysis` | code review, анализ кода, security scan, ревью кода | CodeAnalysisReport |\n| `general` | нет явного match или низкая уверенность | General |\n\n## Platform wiring (pre-scenario)\n\nКлассификация — **до** старта сценария (для всех источников):\n\n1. Ingress (Slack / Jira / …) → normalize\n2. **Classify** → `primary_skill`\n3. Выбор Temporal template / Flow по skill map\n4. Старт **только** выбранного сценария (BRD или SRD, …)\n\nВнутри шаблона шаг Classify пропускается, если решение уже принято.\n\n| primary_skill | template |\n|---------------|----------|\n| `business-requirements` | `generate-business-requirements-slack` |\n| `system-requirements` | `generate-system-requirements` |\n| … | см. `scenario_router.SKILL_TO_TEMPLATE` |\n\n5. Refine: `skill_id: $routing`\n\n## Rules\n\n- Не исполнять бизнес-логику skill'ов здесь — только маршрутизация.\n- Не подменять classify эвристиками в LLM-шагах; source of truth — `classify_task`.\n- При неоднозначности предпочитать более специфичный skill; иначе `general`.\n",
+          "content_hash": "",
+          "kind": "file"
+        },
+        {
+          "path": "manifest.yaml",
+          "media_type": "text/yaml",
+          "content_text": "id: classify\ninterface_key: routing.classify@1\ninput_contract_key: WorkItem@1\noutput_contract_key: RoutingDecision@1\nallowed_capabilities: []\nruntime_skill_id: classify\nfilesystem_path: skills/classify/SKILL.md\n",
+          "content_hash": "c216c6b0fc855509",
+          "kind": "file"
+        },
+        {
+          "path": "examples/",
+          "media_type": "inode/directory",
+          "content_text": "",
+          "content_hash": "",
+          "kind": "folder"
+        },
+        {
+          "path": "examples/example-output.json",
+          "media_type": "application/json",
+          "content_text": "{}\n",
+          "content_hash": "",
+          "kind": "file"
+        }
+      ],
+      "test_cases": [
+        {
+          "key": "empty-evidence",
+          "name": "Empty evidence bundle",
+          "mode": "CONTRACT",
+          "status": "PENDING",
+          "duration_s": null
+        }
+      ],
+      "validation_status": "warning",
+      "validation_report": {
+        "valid": true,
+        "status": "warning",
+        "errors": [],
+        "warnings": [
+          {
+            "code": "NO_CAPABILITIES",
+            "message": "No allowed capabilities declared"
+          }
+        ],
+        "checks": {
+          "package": "passed",
+          "manifest": "passed",
+          "contracts": "passed",
+          "security": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T06:10:03.399777",
+      "published_at": "2026-07-20T06:10:03.205587",
+      "updated_at": "2026-07-20T06:10:03.399777"
+    },
+    {
+      "id": "f793b678-e51e-42eb-b109-844e0fc54e9f",
+      "skill_id": "baa44e54-4a74-5e0d-8e9a-253ac201664f",
+      "semantic_version": "1.0.1",
+      "status": "DRAFT",
+      "skill_markdown": "---\nname: business-requirements\ndescription: Write product requirements documents (PRDs), feature specifications, and business requirements. Use when asked to create BRD, PRD, user stories, acceptance criteria, or define what to build and why.\n---\n\n# Business Requirements / Feature Spec Skill\n\nYou are an expert at writing product requirements documents (PRDs) and feature specifications. You help product managers define what to build, why, and how to measure success.\n\n**Language:** Write the document in the SAME language as the user's request (Russian → Russian, English → English).\n\n**Important:** When this skill applies, produce the FULL structured document following the template below — do NOT summarize or give a high-level overview. Include all relevant sections (Problem Statement, Goals, Non-Goals, User Stories, Requirements, Success Metrics, etc.) with concrete content. The first and only delivery must be the complete document.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback even when it changes the default section order or emphasis in the template below. Feedback wins over the default template.\n\n**Privacy / data protection:** Never copy real personal data from the intake into the BRD (phones, emails, passport/INN/SNILS, card numbers, credentials). Refer to roles and use synthetic examples only (e.g. `user@example.com`). This document is checked by an automated user-data-protection gate before human review.\n\n**Delivery:** When you deliver the result (e.g. to Slack), send the COMPLETE document in a single delivery — never abbreviate, never \"here's a summary\", never \"key points only\", never \"broken down into core, secondary and advanced features\" without the actual content. The recipient expects the full PRD/BRD with all sections filled in.\n\n## PRD Structure\n\nA well-structured PRD follows this template:\n\n### 1. Problem Statement\n\n- Ground this in evidence: user research, support data, metrics, or customer feedback\n- What is the cost of not solving it (user pain, business impact, competitive risk)\n- Who experiences this problem and how often\n- Describe the user problem in 2-3 sentences\n\n### 2. Goals\n\n- Goals should be outcomes, not outputs (\"reduce time to first value by 50%\" not \"build onboarding wizard\")\n- Distinguish between user goals (what users get) and business goals (what the company gets)\n- Each goal should answer: \"How will we know this succeeded?\"\n- 3-5 specific, measurable outcomes this feature should achieve\n\n### 3. Non-Goals\n\n- Non-goals prevent scope creep during implementation and set expectations with stakeholders\n- For each non-goal, briefly explain why it is out of scope (not enough impact, too complex, separate initiative, premature)\n- Adjacent capabilities that are out of scope for this version\n- 3-5 things this feature explicitly will NOT do\n\n### 4. User Stories\n\nWrite user stories in standard format: \"As a [user type], I want [capability] so that [benefit]\"\n\nGuidelines:\n\n- Order by priority — most important stories first\n- Include different user types if the feature serves multiple personas\n- Include edge cases: error states, empty states, boundary conditions\n- The benefit should explain the \"why\" — what value does this deliver\n- The capability should describe what they want to accomplish, not how\n- The user type should be specific enough to be meaningful (\"enterprise admin\" not just \"user\")\n\nExample:\n\n- \"As a team admin, I want to see which members have logged in via SSO so that I can verify the rollout is working\"\n- \"As a team member, I want to be automatically redirected to my company's SSO login so that I do not need to remember a separate password\"\n- \"As a team admin, I want to configure SSO for my organization so that my team members can log in with their corporate credentials\"\n\n### 5. Requirements\n\nMust-Have (P0): The feature cannot ship without these. These represent the minimum viable version of the feature. Ask: \"If we cut this, does the feature still solve the core problem?\" If no, it is P0.\n\nNice-to-Have (P1): Significantly improves the experience but the core use case works without them. These often become fast follow-ups after launch.\n\nFuture Considerations (P2): Explicitly out of scope for v1 but we want to design in a way that supports them later. Documenting these prevents accidental architectural decisions that make them hard later.\n\nFor each requirement:\n\n- Flag dependencies on other teams or systems\n- Note any technical considerations or constraints\n- Include acceptance criteria (see below)\n- Write a clear, unambiguous description of the expected behavior\n\n### 6. Success Metrics\n\nSee the success metrics section below for detailed guidance.\n\n### 7. Open Questions\n\n- Distinguish between blocking questions (must answer before starting) and non-blocking (can resolve during implementation)\n- Tag each with who should answer (engineering, design, legal, data, stakeholder)\n- Questions that need answers before or during implementation\n\n### 8. Timeline Considerations\n\n- Suggested phasing if the feature is too large for one release\n- Dependencies on other teams' work or releases\n- Hard deadlines (contractual commitments, events, compliance dates)\n\n## User Story Writing\n\nGood user stories are:\n\n- Testable: There is a clear way to verify it works\n- Small: Can be completed in one sprint/iteration\n- Estimable: The team can roughly estimate the effort\n- Valuable: Delivers value to the user (not just the team)\n- Negotiable: Details can be discussed, the story is not a contract\n- Independent: Can be developed and delivered on their own\n\n### Common Mistakes in User Stories\n\n- Internal focus: \"As the engineering team, we want to refactor the database\" — this is a task, not a user story\n- Too large: \"As a user, I want to manage my team\" — break this into specific capabilities\n- No benefit: \"As a user, I want to click a button\" — why? What does it accomplish?\n- Solution-prescriptive: \"As a user, I want a dropdown menu\" — describe the need, not the UI widget\n- Too vague: \"As a user, I want the product to be faster\" — what specifically should be faster?\n\n## Requirements Categorization (MoSCoW)\n\n- Won't have (this time): Explicitly out of scope. May revisit in future versions.\n- Could have: Desirable if time permits. Will not delay delivery if cut.\n- Should have: Important but not critical for launch. High-priority fast follows.\n- Must have: Without these, the feature is not viable. Non-negotiable.\n\n### Tips for Categorization\n\n- P2s are architectural insurance — they guide design decisions even though you are not building them now.\n- P1s should be things you are confident you will build soon, not a wish list.\n- If everything is P0, nothing is P0. Challenge every must-have: \"Would we really not ship without this?\"\n- Be ruthless about P0s. The tighter the must-have list, the faster you ship and learn.\n\n## Success Metrics Definition\n\n### Leading Indicators (days to weeks)\n\n- Feature usage frequency, error rate, time to complete\n- Task completion rate, activation rate, adoption rate\n\n### Lagging Indicators (weeks to months)\n\n- Competitive win rate, support ticket reduction, NPS change\n- Revenue impact, retention impact\n\n### Setting Targets\n\n- Specify when you will evaluate: 1 week, 1 month, 1 quarter post-launch\n- Define the measurement method: what tool, what query, what time window\n- Set a \"success\" threshold and a \"stretch\" target\n- Targets should be specific: \"50% adoption within 30 days\" not \"high adoption\"\n\n## Acceptance Criteria\n\nWrite acceptance criteria in Given/When/Then format or as a checklist:\n\nGiven/When/Then:\n\n- Given [precondition or context]\n- When [action the user takes]\n- Then [expected outcome]\n\nChecklist format:\n\n- Each criterion should be independently testable\n- Include what should NOT happen (negative test cases)\n- Cover the happy path, error cases, and edge cases\n\n## Scope Management\n\n### Preventing Scope Creep\n\n- Create a \"parking lot\" for good ideas that are not in scope\n- Time-box investigations: \"If we cannot figure out X in 2 days, we cut it\"\n- Review the spec against the original problem statement — does everything serve it?\n- Separate \"v1\" from \"v2\" clearly in the spec\n- Require that any scope addition comes with a scope removal or timeline extension\n- Write explicit non-goals in every spec\n\n## Keywords\n\nPRD, BRD, business requirements, feature spec, user stories, acceptance criteria, product requirements, MoSCoW, success metrics\n",
+      "manifest": {
+        "id": "business-requirements",
+        "interface_key": "analysis.business_requirements.generate@1",
+        "input_contract_key": "WorkItem@1",
+        "output_contract_key": "BusinessRequirementsArtifact@1",
+        "allowed_capabilities": [
+          "context.read",
+          "chat.read_thread",
+          "artifact.patch",
+          "chat.reply"
+        ],
+        "runtime_skill_id": "business-requirements",
+        "filesystem_path": "skills/business-requirements/SKILL.md"
+      },
+      "package_checksum": "c021de0f7fd375f68a593acf68c03e21ec5492618b1c9c95a42adf45e450cf87",
+      "runtime_type": "qwen-code-cli",
+      "interface_key": "analysis.business_requirements.generate@1",
+      "input_contract_key": "WorkItem@1",
+      "output_contract_key": "BusinessRequirementsArtifact@1",
+      "allowed_capabilities": [
+        "context.read",
+        "chat.read_thread",
+        "artifact.patch",
+        "chat.reply"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "media_type": "text/markdown",
+          "content_text": "---\nname: business-requirements\ndescription: Write product requirements documents (PRDs), feature specifications, and business requirements. Use when asked to create BRD, PRD, user stories, acceptance criteria, or define what to build and why.\n---\n\n# Business Requirements / Feature Spec Skill\n\nYou are an expert at writing product requirements documents (PRDs) and feature specifications. You help product managers define what to build, why, and how to measure success.\n\n**Language:** Write the document in the SAME language as the user's request (Russian → Russian, English → English).\n\n**Important:** When this skill applies, produce the FULL structured document following the template below — do NOT summarize or give a high-level overview. Include all relevant sections (Problem Statement, Goals, Non-Goals, User Stories, Requirements, Success Metrics, etc.) with concrete content. The first and only delivery must be the complete document.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback even when it changes the default section order or emphasis in the template below. Feedback wins over the default template.\n\n**Privacy / data protection:** Never copy real personal data from the intake into the BRD (phones, emails, passport/INN/SNILS, card numbers, credentials). Refer to roles and use synthetic examples only (e.g. `user@example.com`). This document is checked by an automated user-data-protection gate before human review.\n\n**Delivery:** When you deliver the result (e.g. to Slack), send the COMPLETE document in a single delivery — never abbreviate, never \"here's a summary\", never \"key points only\", never \"broken down into core, secondary and advanced features\" without the actual content. The recipient expects the full PRD/BRD with all sections filled in.\n\n## PRD Structure\n\nA well-structured PRD follows this template:\n\n### 1. Problem Statement\n\n- Ground this in evidence: user research, support data, metrics, or customer feedback\n- What is the cost of not solving it (user pain, business impact, competitive risk)\n- Who experiences this problem and how often\n- Describe the user problem in 2-3 sentences\n\n### 2. Goals\n\n- Goals should be outcomes, not outputs (\"reduce time to first value by 50%\" not \"build onboarding wizard\")\n- Distinguish between user goals (what users get) and business goals (what the company gets)\n- Each goal should answer: \"How will we know this succeeded?\"\n- 3-5 specific, measurable outcomes this feature should achieve\n\n### 3. Non-Goals\n\n- Non-goals prevent scope creep during implementation and set expectations with stakeholders\n- For each non-goal, briefly explain why it is out of scope (not enough impact, too complex, separate initiative, premature)\n- Adjacent capabilities that are out of scope for this version\n- 3-5 things this feature explicitly will NOT do\n\n### 4. User Stories\n\nWrite user stories in standard format: \"As a [user type], I want [capability] so that [benefit]\"\n\nGuidelines:\n\n- Order by priority — most important stories first\n- Include different user types if the feature serves multiple personas\n- Include edge cases: error states, empty states, boundary conditions\n- The benefit should explain the \"why\" — what value does this deliver\n- The capability should describe what they want to accomplish, not how\n- The user type should be specific enough to be meaningful (\"enterprise admin\" not just \"user\")\n\nExample:\n\n- \"As a team admin, I want to see which members have logged in via SSO so that I can verify the rollout is working\"\n- \"As a team member, I want to be automatically redirected to my company's SSO login so that I do not need to remember a separate password\"\n- \"As a team admin, I want to configure SSO for my organization so that my team members can log in with their corporate credentials\"\n\n### 5. Requirements\n\nMust-Have (P0): The feature cannot ship without these. These represent the minimum viable version of the feature. Ask: \"If we cut this, does the feature still solve the core problem?\" If no, it is P0.\n\nNice-to-Have (P1): Significantly improves the experience but the core use case works without them. These often become fast follow-ups after launch.\n\nFuture Considerations (P2): Explicitly out of scope for v1 but we want to design in a way that supports them later. Documenting these prevents accidental architectural decisions that make them hard later.\n\nFor each requirement:\n\n- Flag dependencies on other teams or systems\n- Note any technical considerations or constraints\n- Include acceptance criteria (see below)\n- Write a clear, unambiguous description of the expected behavior\n\n### 6. Success Metrics\n\nSee the success metrics section below for detailed guidance.\n\n### 7. Open Questions\n\n- Distinguish between blocking questions (must answer before starting) and non-blocking (can resolve during implementation)\n- Tag each with who should answer (engineering, design, legal, data, stakeholder)\n- Questions that need answers before or during implementation\n\n### 8. Timeline Considerations\n\n- Suggested phasing if the feature is too large for one release\n- Dependencies on other teams' work or releases\n- Hard deadlines (contractual commitments, events, compliance dates)\n\n## User Story Writing\n\nGood user stories are:\n\n- Testable: There is a clear way to verify it works\n- Small: Can be completed in one sprint/iteration\n- Estimable: The team can roughly estimate the effort\n- Valuable: Delivers value to the user (not just the team)\n- Negotiable: Details can be discussed, the story is not a contract\n- Independent: Can be developed and delivered on their own\n\n### Common Mistakes in User Stories\n\n- Internal focus: \"As the engineering team, we want to refactor the database\" — this is a task, not a user story\n- Too large: \"As a user, I want to manage my team\" — break this into specific capabilities\n- No benefit: \"As a user, I want to click a button\" — why? What does it accomplish?\n- Solution-prescriptive: \"As a user, I want a dropdown menu\" — describe the need, not the UI widget\n- Too vague: \"As a user, I want the product to be faster\" — what specifically should be faster?\n\n## Requirements Categorization (MoSCoW)\n\n- Won't have (this time): Explicitly out of scope. May revisit in future versions.\n- Could have: Desirable if time permits. Will not delay delivery if cut.\n- Should have: Important but not critical for launch. High-priority fast follows.\n- Must have: Without these, the feature is not viable. Non-negotiable.\n\n### Tips for Categorization\n\n- P2s are architectural insurance — they guide design decisions even though you are not building them now.\n- P1s should be things you are confident you will build soon, not a wish list.\n- If everything is P0, nothing is P0. Challenge every must-have: \"Would we really not ship without this?\"\n- Be ruthless about P0s. The tighter the must-have list, the faster you ship and learn.\n\n## Success Metrics Definition\n\n### Leading Indicators (days to weeks)\n\n- Feature usage frequency, error rate, time to complete\n- Task completion rate, activation rate, adoption rate\n\n### Lagging Indicators (weeks to months)\n\n- Competitive win rate, support ticket reduction, NPS change\n- Revenue impact, retention impact\n\n### Setting Targets\n\n- Specify when you will evaluate: 1 week, 1 month, 1 quarter post-launch\n- Define the measurement method: what tool, what query, what time window\n- Set a \"success\" threshold and a \"stretch\" target\n- Targets should be specific: \"50% adoption within 30 days\" not \"high adoption\"\n\n## Acceptance Criteria\n\nWrite acceptance criteria in Given/When/Then format or as a checklist:\n\nGiven/When/Then:\n\n- Given [precondition or context]\n- When [action the user takes]\n- Then [expected outcome]\n\nChecklist format:\n\n- Each criterion should be independently testable\n- Include what should NOT happen (negative test cases)\n- Cover the happy path, error cases, and edge cases\n\n## Scope Management\n\n### Preventing Scope Creep\n\n- Create a \"parking lot\" for good ideas that are not in scope\n- Time-box investigations: \"If we cannot figure out X in 2 days, we cut it\"\n- Review the spec against the original problem statement — does everything serve it?\n- Separate \"v1\" from \"v2\" clearly in the spec\n- Require that any scope addition comes with a scope removal or timeline extension\n- Write explicit non-goals in every spec\n\n## Keywords\n\nPRD, BRD, business requirements, feature spec, user stories, acceptance criteria, product requirements, MoSCoW, success metrics\n",
+          "content_hash": "",
+          "kind": "file"
+        },
+        {
+          "path": "manifest.yaml",
+          "media_type": "text/yaml",
+          "content_text": "id: business-requirements\ninterface_key: analysis.business_requirements.generate@1\ninput_contract_key: WorkItem@1\noutput_contract_key: BusinessRequirementsArtifact@1\nallowed_capabilities:\n- context.read\n- chat.read_thread\n- artifact.patch\n- chat.reply\nruntime_skill_id: business-requirements\nfilesystem_path: skills/business-requirements/SKILL.md\n",
+          "content_hash": "736126c1aab9fb42",
+          "kind": "file"
+        },
+        {
+          "path": "examples/",
+          "media_type": "inode/directory",
+          "content_text": "",
+          "content_hash": "",
+          "kind": "folder"
+        },
+        {
+          "path": "examples/example-output.json",
+          "media_type": "application/json",
+          "content_text": "{}\n",
+          "content_hash": "",
+          "kind": "file"
+        }
+      ],
+      "test_cases": [
+        {
+          "key": "empty-evidence",
+          "name": "Empty evidence bundle",
+          "mode": "CONTRACT",
+          "status": "PENDING",
+          "duration_s": null
+        }
+      ],
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "package": "passed",
+          "manifest": "passed",
+          "contracts": "passed",
+          "security": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T09:41:01.472426",
+      "published_at": null,
+      "updated_at": "2026-07-20T09:41:01.472428"
+    },
+    {
+      "id": "6afb08f6-7049-4df5-a9d8-a88050c7a5d4",
+      "skill_id": "1432aa00-27ba-5151-996c-cb6df1310391",
+      "semantic_version": "1.0.1",
+      "status": "DRAFT",
+      "skill_markdown": "---\nname: system-requirements\ndescription: Write system requirements documents (SRS). Use when asked to create SRS, technical requirements, system spec, or define how to build a system — standalone or from a prior BRD/PRD.\n---\n\n# System Requirements Skill\n\nYou are an expert systems analyst. Produce a complete System Requirements Specification (SRS).\n\n**Language:** Same language as the user's request / source material (Russian → Russian, English → English).\n\n**Important:** Produce the FULL structured document — never summarize. All sections must contain concrete content.\n\n**Input:** Use the task context as the source of truth. If an approved Business Requirements document is present (e.g. from a previous Flow stage), treat it as primary and trace every functional requirement back to BRD goals / user stories. If there is no BRD, derive system requirements from the task description and available evidence — do not invent business scope beyond what the context supports.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback. Feedback wins over the default template.\n\n**Privacy:** Do not copy real personal data (phones, emails, passport/INN/SNILS, card numbers) from the intake into the SRS. Use roles and synthetic examples only.\n\n## SRS Structure\n\n### 1. Introduction\n- Purpose, scope, definitions, references (including the source BRD)\n\n### 2. Overall Description\n- Product perspective, user classes, operating environment, constraints, assumptions\n\n### 3. Functional Requirements\n- FR-001, FR-002, ... — each with description, priority (P0/P1/P2), acceptance criteria, BRD traceability\n\n### 4. Non-Functional Requirements\n- Performance, security, availability, scalability, maintainability, compliance, privacy/data protection\n\n### 5. External Interfaces\n- UI, API (endpoints, methods, payloads), integrations, data formats\n\n### 6. Data Requirements\n- Entities, relationships, retention, privacy classification (no raw PII examples)\n\n### 7. Constraints & Dependencies\n- Technology stack, third-party systems, regulatory\n\n### 8. Traceability Matrix\n- Map functional requirements to BRD goals / user stories\n\n### 9. Open Questions\n- Unresolved items requiring stakeholder input\n\n## Quality Rules\n- Each FR must be testable (Given/When/Then or measurable criterion)\n- NFR must include measurable targets (e.g. \"p95 latency < 200ms\")\n- No placeholder sections\n- Explicit data-protection / privacy NFR when the BRD mentions users or personal data\n",
+      "manifest": {
+        "id": "system-requirements",
+        "interface_key": "analysis.system_requirements.generate@1",
+        "input_contract_key": "WorkItem@1",
+        "output_contract_key": "SystemRequirementsArtifact@1",
+        "allowed_capabilities": [
+          "context.read",
+          "chat.read_thread",
+          "artifact.patch",
+          "chat.reply"
+        ],
+        "runtime_skill_id": "system-requirements",
+        "filesystem_path": "skills/system-requirements/SKILL.md"
+      },
+      "package_checksum": "870c9481f495411bbbc2431f00c473b431c7dea3d659ca27537c9a22748baac6",
+      "runtime_type": "qwen-code-cli",
+      "interface_key": "analysis.system_requirements.generate@1",
+      "input_contract_key": "WorkItem@1",
+      "output_contract_key": "SystemRequirementsArtifact@1",
+      "allowed_capabilities": [
+        "context.read",
+        "chat.read_thread",
+        "artifact.patch",
+        "chat.reply"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "media_type": "text/markdown",
+          "content_text": "---\nname: system-requirements\ndescription: Write system requirements documents (SRS). Use when asked to create SRS, technical requirements, system spec, or define how to build a system — standalone or from a prior BRD/PRD.\n---\n\n# System Requirements Skill\n\nYou are an expert systems analyst. Produce a complete System Requirements Specification (SRS).\n\n**Language:** Same language as the user's request / source material (Russian → Russian, English → English).\n\n**Important:** Produce the FULL structured document — never summarize. All sections must contain concrete content.\n\n**Input:** Use the task context as the source of truth. If an approved Business Requirements document is present (e.g. from a previous Flow stage), treat it as primary and trace every functional requirement back to BRD goals / user stories. If there is no BRD, derive system requirements from the task description and available evidence — do not invent business scope beyond what the context supports.\n\n**Rework / reviewer feedback:** If the task includes reviewer feedback or a current draft to revise, apply that feedback. Feedback wins over the default template.\n\n**Privacy:** Do not copy real personal data (phones, emails, passport/INN/SNILS, card numbers) from the intake into the SRS. Use roles and synthetic examples only.\n\n## SRS Structure\n\n### 1. Introduction\n- Purpose, scope, definitions, references (including the source BRD)\n\n### 2. Overall Description\n- Product perspective, user classes, operating environment, constraints, assumptions\n\n### 3. Functional Requirements\n- FR-001, FR-002, ... — each with description, priority (P0/P1/P2), acceptance criteria, BRD traceability\n\n### 4. Non-Functional Requirements\n- Performance, security, availability, scalability, maintainability, compliance, privacy/data protection\n\n### 5. External Interfaces\n- UI, API (endpoints, methods, payloads), integrations, data formats\n\n### 6. Data Requirements\n- Entities, relationships, retention, privacy classification (no raw PII examples)\n\n### 7. Constraints & Dependencies\n- Technology stack, third-party systems, regulatory\n\n### 8. Traceability Matrix\n- Map functional requirements to BRD goals / user stories\n\n### 9. Open Questions\n- Unresolved items requiring stakeholder input\n\n## Quality Rules\n- Each FR must be testable (Given/When/Then or measurable criterion)\n- NFR must include measurable targets (e.g. \"p95 latency < 200ms\")\n- No placeholder sections\n- Explicit data-protection / privacy NFR when the BRD mentions users or personal data\n",
+          "content_hash": "",
+          "kind": "file"
+        },
+        {
+          "path": "manifest.yaml",
+          "media_type": "text/yaml",
+          "content_text": "",
+          "content_hash": "",
+          "kind": "file"
+        }
+      ],
+      "test_cases": [],
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "warning",
+        "errors": [],
+        "warnings": [
+          {
+            "code": "MISSING_EXAMPLE",
+            "message": "Example output is missing."
+          },
+          {
+            "code": "MISSING_EMPTY_EVIDENCE_TEST",
+            "message": "No regression test for empty evidence."
+          }
+        ],
+        "checks": {
+          "package": "passed",
+          "manifest": "passed",
+          "contracts": "passed",
+          "security": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-21T04:45:10.677756",
+      "published_at": null,
+      "updated_at": "2026-07-21T04:45:10.677758"
+    },
+    {
+      "id": "41975f9a-5174-5fd2-bcf4-74a33cfedd64",
+      "skill_id": "7e4d0f15-ae2f-58d5-bf7d-f313d0d85db7",
+      "semantic_version": "1.0.0",
+      "status": "PUBLISHED",
+      "skill_markdown": "---\nname: normalize-task\ndescription: >-\n  Normalize an incoming autonomous-agent task into a canonical work-item envelope:\n  title, description, commit URL, repo, diff scope, policy/SDD refs, and language.\n  Use as the first productive skill in a playbook when the request comes from\n  GigaCode Desktop (or similar) with a linked commit.\n---\n\n# Task Normalizer\n\nПриведи входящую задачу к каноническому виду для последующих шагов playbook.\n\n**Language:** Same language as the user's request (Russian → Russian, English → English).\n\n## Inputs\n\n- Raw task text / work item from ingress (GigaCode Desktop, Slack, API, …)\n- Optional links: commit URL, repo, SDD/policy paths\n\n## Outputs\n\nStructured normalized task (WorkItem / Problem Understanding patch) with:\n\n| Field | Meaning |\n|-------|---------|\n| `title` | Short task title |\n| `description` | Cleaned task body |\n| `commit_url` | Linked commit URL if present |\n| `repo` | Repository identity if present |\n| `diff_scope` | Files / paths / PR scope if present |\n| `policy_refs` | Paths or IDs of SDD / security policy docs |\n| `language` | Detected language of the request |\n| `source` | Origin system (e.g. `GIGACODE_DESKTOP`) |\n\n## Procedure\n\n1. Parse the user request; do not invent commit URLs or file paths.\n2. Extract commit / repo / scope / policy references when explicitly provided.\n3. Produce a concise title and cleaned description.\n4. Mark missing critical fields as open questions (do not block silently).\n5. Return a typed patch only — no free-form essay.\n\n## Rules\n\n- Do not execute code review or policy analysis here — only normalization.\n- Do not copy secrets or real PII into the normalized envelope; redact if present.\n- Preserve the user's linked commit URL verbatim when present.\n",
+      "manifest": {
+        "id": "normalize-task",
+        "interface_key": "analysis.problem.understand@1",
+        "input_contract_key": "WorkItem@1",
+        "output_contract_key": "ProblemUnderstandingPatch@1",
+        "allowed_capabilities": [
+          "context.read"
+        ],
+        "runtime_skill_id": "normalize-task",
+        "filesystem_path": "skills/normalize-task/SKILL.md"
+      },
+      "package_checksum": "03665796b1a32b4c932fcc34381593074f4b777e75b799edf7854e0750d7de0f",
+      "runtime_type": "qwen-code-cli",
+      "interface_key": "analysis.problem.understand@1",
+      "input_contract_key": "WorkItem@1",
+      "output_contract_key": "ProblemUnderstandingPatch@1",
+      "allowed_capabilities": [
+        "context.read"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "media_type": "text/markdown",
+          "content_text": "---\nname: normalize-task\ndescription: >-\n  Normalize an incoming autonomous-agent task into a canonical work-item envelope:\n  title, description, commit URL, repo, diff scope, policy/SDD refs, and language.\n  Use as the first productive skill in a playbook when the request comes from\n  GigaCode Desktop (or similar) with a linked commit.\n---\n\n# Task Normalizer\n\nПриведи входящую задачу к каноническому виду для последующих шагов playbook.\n\n**Language:** Same language as the user's request (Russian → Russian, English → English).\n\n## Inputs\n\n- Raw task text / work item from ingress (GigaCode Desktop, Slack, API, …)\n- Optional links: commit URL, repo, SDD/policy paths\n\n## Outputs\n\nStructured normalized task (WorkItem / Problem Understanding patch) with:\n\n| Field | Meaning |\n|-------|---------|\n| `title` | Short task title |\n| `description` | Cleaned task body |\n| `commit_url` | Linked commit URL if present |\n| `repo` | Repository identity if present |\n| `diff_scope` | Files / paths / PR scope if present |\n| `policy_refs` | Paths or IDs of SDD / security policy docs |\n| `language` | Detected language of the request |\n| `source` | Origin system (e.g. `GIGACODE_DESKTOP`) |\n\n## Procedure\n\n1. Parse the user request; do not invent commit URLs or file paths.\n2. Extract commit / repo / scope / policy references when explicitly provided.\n3. Produce a concise title and cleaned description.\n4. Mark missing critical fields as open questions (do not block silently).\n5. Return a typed patch only — no free-form essay.\n\n## Rules\n\n- Do not execute code review or policy analysis here — only normalization.\n- Do not copy secrets or real PII into the normalized envelope; redact if present.\n- Preserve the user's linked commit URL verbatim when present.\n",
+          "content_hash": "",
+          "kind": "file"
+        },
+        {
+          "path": "manifest.yaml",
+          "media_type": "text/yaml",
+          "content_text": "id: normalize-task\ninterface_key: analysis.problem.understand@1\ninput_contract_key: WorkItem@1\noutput_contract_key: ProblemUnderstandingPatch@1\nallowed_capabilities:\n- context.read\nruntime_skill_id: normalize-task\nfilesystem_path: skills/normalize-task/SKILL.md\n",
+          "content_hash": "692be85789cad93f",
+          "kind": "file"
+        },
+        {
+          "path": "examples/",
+          "media_type": "inode/directory",
+          "content_text": "",
+          "content_hash": "",
+          "kind": "folder"
+        },
+        {
+          "path": "examples/example-output.json",
+          "media_type": "application/json",
+          "content_text": "{}\n",
+          "content_hash": "",
+          "kind": "file"
+        }
+      ],
+      "test_cases": [
+        {
+          "key": "empty-evidence",
+          "name": "Empty evidence bundle",
+          "mode": "CONTRACT",
+          "status": "PENDING",
+          "duration_s": null
+        }
+      ],
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "package": "passed",
+          "manifest": "passed",
+          "contracts": "passed",
+          "security": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-23T14:13:47.508179",
+      "published_at": "2026-07-23T14:13:47.508167",
+      "updated_at": "2026-07-23T14:13:47.508180"
+    },
+    {
+      "id": "1c22ac49-46c0-5518-b3c5-a50d3c93e037",
+      "skill_id": "8b27b4a1-b1d9-5370-84e8-329248fbcf17",
+      "semantic_version": "1.0.0",
+      "status": "PUBLISHED",
+      "skill_markdown": "---\nname: code-analysis\ndescription: Analyze code for quality, security, architecture, and maintainability. Use when asked for code review, static analysis, security audit, or codebase assessment.\n---\n\n# Code Analysis Skill\n\nYou are an expert software engineer performing a structured code analysis.\n\n**Language:** Same language as the user's request (Russian → Russian, English → English).\n\n**Important:** Produce a complete Code Analysis Report — never summarize.\n\n## Code Analysis Report Structure\n\n### 1. Executive Summary\n- Overall assessment (Healthy / Needs Attention / Critical Issues)\n- Top 3 findings\n\n### 2. Scope & Context\n- What was analyzed (files, modules, repo area)\n- Analysis criteria (security, performance, maintainability, patterns)\n\n### 3. Findings\n\nFor each finding:\n\n#### F-XXX: [Title]\n- **Severity:** Critical / High / Medium / Low / Info\n- **Category:** Security / Performance / Architecture / Style / Bug Risk\n- **Location:** file:line or module (if provided in task)\n- **Description:** What the issue is\n- **Impact:** Why it matters\n- **Recommendation:** Concrete fix\n\nMinimum: 5 findings (or state \"No issues found\" with evidence of what was reviewed).\n\n### 4. Architecture Assessment\n- Layering, coupling, cohesion, design patterns\n\n### 5. Security Review\n- Input validation, auth, secrets, injection risks\n\n### 6. Recommendations Summary\n- Prioritized action list (P0/P1/P2)\n\n### 7. Positive Observations\n- Good practices found (if any)\n\n## Quality Rules\n- Findings must reference specific code elements when task provides them\n- Do not invent file paths not mentioned in the task\n- Recommendations must be actionable\n",
+      "manifest": {
+        "id": "code-analysis",
+        "interface_key": "analysis.code_analysis.generate@1",
+        "input_contract_key": "Artifact@1",
+        "output_contract_key": "ArtifactPatch@1",
+        "allowed_capabilities": [
+          "context.read",
+          "repo.search",
+          "repo.read_file"
+        ],
+        "runtime_skill_id": "code-analysis",
+        "filesystem_path": "skills/code-analysis/SKILL.md"
+      },
+      "package_checksum": "d53985a78c5f85e8e8d3199006221fe3f8889d0227e9cd3b5eb1dcff7c1bd68a",
+      "runtime_type": "qwen-code-cli",
+      "interface_key": "analysis.code_analysis.generate@1",
+      "input_contract_key": "Artifact@1",
+      "output_contract_key": "ArtifactPatch@1",
+      "allowed_capabilities": [
+        "context.read",
+        "repo.search",
+        "repo.read_file"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "media_type": "text/markdown",
+          "content_text": "---\nname: code-analysis\ndescription: Analyze code for quality, security, architecture, and maintainability. Use when asked for code review, static analysis, security audit, or codebase assessment.\n---\n\n# Code Analysis Skill\n\nYou are an expert software engineer performing a structured code analysis.\n\n**Language:** Same language as the user's request (Russian → Russian, English → English).\n\n**Important:** Produce a complete Code Analysis Report — never summarize.\n\n## Code Analysis Report Structure\n\n### 1. Executive Summary\n- Overall assessment (Healthy / Needs Attention / Critical Issues)\n- Top 3 findings\n\n### 2. Scope & Context\n- What was analyzed (files, modules, repo area)\n- Analysis criteria (security, performance, maintainability, patterns)\n\n### 3. Findings\n\nFor each finding:\n\n#### F-XXX: [Title]\n- **Severity:** Critical / High / Medium / Low / Info\n- **Category:** Security / Performance / Architecture / Style / Bug Risk\n- **Location:** file:line or module (if provided in task)\n- **Description:** What the issue is\n- **Impact:** Why it matters\n- **Recommendation:** Concrete fix\n\nMinimum: 5 findings (or state \"No issues found\" with evidence of what was reviewed).\n\n### 4. Architecture Assessment\n- Layering, coupling, cohesion, design patterns\n\n### 5. Security Review\n- Input validation, auth, secrets, injection risks\n\n### 6. Recommendations Summary\n- Prioritized action list (P0/P1/P2)\n\n### 7. Positive Observations\n- Good practices found (if any)\n\n## Quality Rules\n- Findings must reference specific code elements when task provides them\n- Do not invent file paths not mentioned in the task\n- Recommendations must be actionable\n",
+          "content_hash": "",
+          "kind": "file"
+        },
+        {
+          "path": "manifest.yaml",
+          "media_type": "text/yaml",
+          "content_text": "id: code-analysis\ninterface_key: analysis.code_analysis.generate@1\ninput_contract_key: Artifact@1\noutput_contract_key: ArtifactPatch@1\nallowed_capabilities:\n- context.read\n- repo.search\n- repo.read_file\nruntime_skill_id: code-analysis\nfilesystem_path: skills/code-analysis/SKILL.md\n",
+          "content_hash": "c4aabefc54318d65",
+          "kind": "file"
+        },
+        {
+          "path": "examples/",
+          "media_type": "inode/directory",
+          "content_text": "",
+          "content_hash": "",
+          "kind": "folder"
+        },
+        {
+          "path": "examples/example-output.json",
+          "media_type": "application/json",
+          "content_text": "{}\n",
+          "content_hash": "",
+          "kind": "file"
+        }
+      ],
+      "test_cases": [
+        {
+          "key": "empty-evidence",
+          "name": "Empty evidence bundle",
+          "mode": "CONTRACT",
+          "status": "PENDING",
+          "duration_s": null
+        }
+      ],
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "package": "passed",
+          "manifest": "passed",
+          "contracts": "passed",
+          "security": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-23T14:23:40.087509",
+      "published_at": "2026-07-23T14:23:40.086564",
+      "updated_at": "2026-07-23T14:23:40.087510"
+    }
+  ]
+}

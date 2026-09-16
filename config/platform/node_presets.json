@@ -1,0 +1,121 @@
+{
+  "presets": [
+    {
+      "id": "351425fb-563b-459b-bd87-bd6d5863f3f3",
+      "name": "Context collection from Slack",
+      "node_type": "webhook",
+      "label": "Context collection",
+      "config": {
+        "type": "WEBHOOK",
+        "url": "https://slack.com/api/conversations.replies?channel={{ .outputs.trigger.channel }}&ts={{ .outputs.trigger.thread_ts }}&inclusive=true",
+        "method": "GET",
+        "headers": {
+          "Authorization": "Bearer {{ .secrets[\"slack-bot-token\"] }}",
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "synchronized": true,
+        "onTimeout": "fail",
+        "onFailure": "continue",
+        "verbose": true,
+        "timeout_seconds": 3600,
+        "failure_behavior": "ASK_HUMAN",
+        "playbook_key": "",
+        "flow_key": "",
+        "knowledge_space_key": ""
+      },
+      "kind": null,
+      "created_at": "2026-08-13T11:05:38.704341",
+      "updated_at": "2026-08-13T11:05:38.704341"
+    },
+    {
+      "id": "1a9acac4-a498-46e8-85f0-5877dceebed7",
+      "name": "Routing",
+      "node_type": "ai",
+      "label": "Routing",
+      "config": {
+        "type": "AI",
+        "systemPrompt": "You route product-engineering requests. Answer with a JSON object only, no markdown.",
+        "userPrompt": "Classify the Slack request as BRD (business/product requirements) or SRD (system/technical requirements).\n\nSlack thread (API):\n{{ .outputs.context_collection.body }}\n\nRequest text:\n{{ .outputs.trigger.text }}\n\nReturn JSON: {\"scheme\":\"BRD\"|\"SRD\",\"rationale\":\"...\"}",
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "scheme": {
+              "type": "string",
+              "enum": [
+                "BRD",
+                "SRD"
+              ]
+            },
+            "rationale": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "scheme"
+          ]
+        },
+        "timeout_seconds": 3600,
+        "failure_behavior": "ASK_HUMAN",
+        "playbook_key": "",
+        "flow_key": "",
+        "knowledge_space_key": ""
+      },
+      "kind": null,
+      "created_at": "2026-08-13T12:40:41.080820",
+      "updated_at": "2026-08-13T12:40:41.080820"
+    },
+    {
+      "id": "65da1eac-935c-4505-a93f-fe6698895fe2",
+      "name": "Slack task",
+      "node_type": "trigger",
+      "label": "Slack task",
+      "config": {
+        "type": "SELF_SERVE_TRIGGER",
+        "published": true,
+        "userInputs": {
+          "properties": {
+            "channel": {
+              "type": "string",
+              "title": "Slack channel",
+              "description": "ID канала, например C0AKKCGEKL1",
+              "default": "C0AKKCGEKL1"
+            },
+            "thread_ts": {
+              "type": "string",
+              "title": "Thread ts",
+              "description": "timestamp родительского сообщения (conversations.replies)"
+            },
+            "text": {
+              "type": "string",
+              "title": "Request text",
+              "description": "Текст задачи, если тред ещё не прочитан"
+            },
+            "source_id": {
+              "type": "string",
+              "title": "Source id",
+              "description": "slack:{channel}:{thread_ts} — заполняется gateway автоматически"
+            }
+          },
+          "required": [
+            "channel",
+            "text"
+          ],
+          "order": [
+            "channel",
+            "thread_ts",
+            "text",
+            "source_id"
+          ]
+        },
+        "timeout_seconds": 3600,
+        "failure_behavior": "ASK_HUMAN",
+        "triggerType": "SELF_SERVE_TRIGGER",
+        "flow_key": "",
+        "knowledge_space_key": ""
+      },
+      "kind": null,
+      "created_at": "2026-08-14T08:53:01.535477",
+      "updated_at": "2026-08-14T08:53:01.535477"
+    }
+  ]
+}

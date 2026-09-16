@@ -1,0 +1,74 @@
+{
+  "capabilities": [
+    {
+      "id": "45bd140a-4cd6-5f4d-a443-52a0a4ee8f4f",
+      "key": "chat.read_thread",
+      "name": "Chat Read Thread",
+      "group": "chat",
+      "operation": "read_thread",
+      "risk": "read",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "9739e2fc-eea4-5da7-ae16-a7faf1d5d57f",
+      "key": "chat.reply",
+      "name": "Chat Reply",
+      "group": "chat",
+      "operation": "reply",
+      "risk": "medium",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "56eaf8c7-5feb-5073-a71e-343078d46b56",
+      "key": "slack-reply",
+      "name": "Slack Reply",
+      "group": "messenger",
+      "operation": "reply",
+      "risk": "medium",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "1faf4644-eaa8-5a75-8ff1-fb4c8e8630e6",
+      "key": "artifact.read",
+      "name": "Artifact Read",
+      "group": "artifact",
+      "operation": "read",
+      "risk": "read",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "ed3f1b12-af64-52a2-afde-8fe313b0fc9e",
+      "key": "artifact.patch",
+      "name": "Artifact Patch",
+      "group": "artifact",
+      "operation": "patch",
+      "risk": "medium",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "ee93501a-7c6b-56e5-a0b5-56f08f4ac715",
+      "key": "publisher.publish",
+      "name": "Publisher Publish",
+      "group": "publisher",
+      "operation": "publish",
+      "risk": "high",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "07b197c4-0710-5849-9021-10cf8ba90f8c",
+      "key": "context.read",
+      "name": "Context Read",
+      "group": "context",
+      "operation": "read",
+      "risk": "read",
+      "status": "active",
+      "updated_at": "2026-07-20T06:10:03.205587"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "system-requirements",
+  "version": "1.0",
+  "name": "System Requirements",
+  "description": "Write system requirements documents (SRS) standalone or from prior business context, including NFR, API specs, and architecture constraints.",
+  "allowed_capabilities": [
+    "chat.read_thread",
+    "chat.reply",
+    "slack-reply",
+    "context.read",
+    "artifact.patch"
+  ],
+  "skill_md": "skills/system-requirements/SKILL.md",
+  "tags": [
+    "slack",
+    "srd",
+    "srs",
+    "pdlc"
+  ],
+  "status": "published"
+}

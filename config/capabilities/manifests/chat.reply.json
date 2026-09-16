@@ -1,0 +1,81 @@
+{
+  "capability_id": "chat.reply",
+  "version": "1.0",
+  "manifest_version": 1,
+  "name": "Chat Reply",
+  "description": "Публикация ответа / артефакта в Slack thread.",
+  "group": "messenger",
+  "status": "published",
+  "operation_type": "publish",
+  "risk_level": "medium",
+  "idempotent": true,
+  "cacheable": false,
+  "requires_approval": false,
+  "allowed_execution_modes": [
+    "draft",
+    "change_proposal",
+    "autonomous"
+  ],
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "channel_id",
+      "thread_ts",
+      "text"
+    ],
+    "properties": {
+      "channel_id": {
+        "type": "string"
+      },
+      "thread_ts": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "tags": [
+    "slack",
+    "messenger",
+    "publish"
+  ],
+  "implementations": [
+    {
+      "id": "slack.reply",
+      "type": "mcp",
+      "server_id": "slack",
+      "tool_name": "slack_reply_to_thread",
+      "status": "approved",
+      "priority": 100,
+      "risk_level": "medium",
+      "enabled": true,
+      "timeout_seconds": 20
+    }
+  ],
+  "required_input_fields": [
+    "channel_id",
+    "thread_ts",
+    "text"
+  ],
+  "visibility": {
+    "tenants": [
+      "*"
+    ],
+    "roles": [
+      "*"
+    ],
+    "skills": [
+      "business-requirements",
+      "classify",
+      "system-requirements"
+    ],
+    "playbooks": [
+      "business-requirements",
+      "system-requirements"
+    ]
+  }
+}

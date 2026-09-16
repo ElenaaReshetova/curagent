@@ -1,0 +1,123 @@
+# Область знаний — contextual help (ru-RU)
+
+concepts:
+  - conceptKey: knowledge-space
+    title: Область знаний
+    shortDescription: >
+      Логический контур доверенных источников, по которым агент ищет контекст.
+    fullDescription: >
+      Область знаний отделяет навык от конкретных систем (Jira, Confluence, Git).
+      Навык запрашивает «архитектурный контекст», а область решает, где искать
+      и что считать допустимым evidence. Без области каждый навык пришлось бы
+      вручную привязывать к провайдерам.
+    example:
+      title: Пример
+      value: "payments → Jira PAY + Confluence PAY + repos payment-*"
+    recommendedValue: Одна область на устойчивый домен или продукт, а не на каждый запрос.
+    consequences:
+      - Источники и приоритеты области влияют на качество evidence во всех связанных этапах.
+    relatedConcepts:
+      - knowledge-space.name
+      - knowledge-space.key
+      - knowledge-space.type
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.name
+    title: Название
+    shortDescription: >
+      Как область будет называться в каталоге. Можно менять позже. Пример: «Платежи».
+    fullDescription: >
+      Показывается операторам и ревьюерам. Техническая привязка идёт по ключу,
+      а не по названию — имя можно уточнить без поломки bindings.
+    example:
+      title: Пример
+      value: Платежи
+    recommendedValue: Короткое доменное имя без внутреннего жаргона.
+    consequences:
+      - Неудачное название затрудняет выбор области в Flows и Playbooks.
+    relatedConcepts: [knowledge-space, knowledge-space.key]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.key
+    title: Ключ
+    shortDescription: >
+      Технический slug для API и привязок: латиница, цифры, дефисы. После создания не меняется. Пример: payments.
+    fullDescription: >
+      Используется в bindings, runtime resolution и URL. Формат: латиница,
+      цифры и дефисы (например payments, mobile-apps). После создания ключ
+      нельзя изменить — при ошибке создайте новую область.
+    example:
+      title: Пример
+      value: payments
+    recommendedValue: Короткий slug домена или продукта в lower-case.
+    warnings:
+      - Ключ уникален в workspace и неизменяем после создания.
+    consequences:
+      - Смена смысла ключа ломает ссылки из Flows / Playbooks.
+    relatedConcepts: [knowledge-space, knowledge-space.name]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.type
+    title: Тип
+    shortDescription: >
+      DOMAIN — домен, PRODUCT — продукт, TEAM — команда, SYSTEM — платформа, REGULATORY — compliance. Обычно DOMAIN.
+    fullDescription: >
+      DOMAIN — предметная область (payments, identity).
+      PRODUCT — конкретный продукт.
+      TEAM — знания команды.
+      SYSTEM — платформенный / инфраструктурный контур.
+      REGULATORY — compliance и регуляторные источники.
+      Тип помогает фильтровать каталог и задавать ожидания по составу источников.
+    example:
+      title: Пример
+      value: DOMAIN
+    recommendedValue: DOMAIN для большинства бизнес-контуров.
+    consequences:
+      - Неверный тип усложняет поиск нужной области в каталоге.
+    relatedConcepts: [knowledge-space, knowledge-space.classification]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.classification
+    title: Классификация
+    shortDescription: >
+      Чувствительность данных: INTERNAL — обычный контекст, CONFIDENTIAL — коммерческий, RESTRICTED — жёсткие ограничения (PII/PCI).
+    fullDescription: >
+      INTERNAL — обычный внутренний контекст.
+      CONFIDENTIAL — коммерчески чувствительные материалы.
+      RESTRICTED — жёсткие ограничения (PII, PCI, секреты политики).
+      Классификация влияет на политики доступа и свежести источников.
+    example:
+      title: Пример
+      value: CONFIDENTIAL
+    recommendedValue: Выберите минимально достаточный уровень; не завышайте без причины.
+    warnings:
+      - RESTRICTED ужесточает freshness и доступ — проверяйте источники осознанно.
+    consequences:
+      - Завышенная классификация может блокировать нужный поиск.
+      - Заниженная — риск утечки чувствительного контекста в агента.
+    relatedConcepts: [knowledge-space, knowledge-space.type]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space.purpose
+    title: Назначение
+    shortDescription: >
+      Зачем агенту эта область: какой домен и границы поиска. 1–3 предложения, без списка MCP-инструментов.
+    fullDescription: >
+      Опишите на языке домена, что искать и что считать авторитетным.
+      Не подменяйте назначение списком MCP-инструментов или raw tool id.
+    example:
+      title: Пример
+      value: >
+        Доверенный контекст платёжных продуктов, архитектуры и операций:
+        Jira PAY, Confluence PAY, репозитории payment-*.
+    recommendedValue: Опишите домен и границы, без привязки к конкретным tool id.
+    consequences:
+      - Пустое назначение ослабляет понятность каталога и проверки качества.
+    relatedConcepts: [knowledge-space]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC

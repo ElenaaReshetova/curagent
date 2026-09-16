@@ -1,0 +1,116 @@
+{
+  "versions": [
+    {
+      "id": "f9f4df31-91c1-549c-afad-9cafcbced9f7",
+      "control_id": "57e4fbcf-a772-55ed-aa97-f50392b10dc2",
+      "semantic_version": "1.0.0",
+      "version_number": 1,
+      "status": "ACTIVE",
+      "control_type": "COMPLIANCE",
+      "severity": "CRITICAL",
+      "evaluation_point": "AFTER_SKILL",
+      "evaluation_type": "DECLARATIVE_EXPRESSION",
+      "expression": "context.artifact.pii_clean == true AND context.artifact.secrets_clean == true",
+      "enforcement_on_failed": "BLOCK",
+      "enforcement_on_error": "PAUSE_EXECUTION",
+      "applicability": [
+        {
+          "field": "artifact.type",
+          "operator": "EQUALS",
+          "value": "BUSINESS_REQUIREMENTS"
+        }
+      ],
+      "evidence_requirements": [],
+      "remediation_steps": [
+        "Remove PII/secrets; use roles and synthetic examples"
+      ],
+      "exception_policy": {},
+      "monitoring": {},
+      "validation_status": "unknown",
+      "validation_report": {},
+      "pass_rate_pct": 0.0,
+      "violations_count": 0,
+      "created_at": "2026-07-20T06:10:03.416488",
+      "updated_at": "2026-07-20T06:10:03.416489",
+      "activated_at": "2026-07-20T06:10:03.205587"
+    },
+    {
+      "id": "7db35086-a22a-4674-92f6-99b41f6ed2e6",
+      "control_id": "57e4fbcf-a772-55ed-aa97-f50392b10dc2",
+      "semantic_version": "1.0.1",
+      "version_number": 2,
+      "status": "DRAFT",
+      "control_type": "COMPLIANCE",
+      "severity": "CRITICAL",
+      "evaluation_point": "AFTER_SKILL",
+      "evaluation_type": "DECLARATIVE_EXPRESSION",
+      "expression": "context.artifact.pii_clean == true AND context.artifact.secrets_clean == true",
+      "enforcement_on_failed": "BLOCK",
+      "enforcement_on_error": "PAUSE_EXECUTION",
+      "applicability": [
+        {
+          "field": "artifact.type",
+          "operator": "EQUALS",
+          "value": "BUSINESS_REQUIREMENTS"
+        }
+      ],
+      "evidence_requirements": [],
+      "remediation_steps": [
+        "Remove PII/secrets; use roles and synthetic examples"
+      ],
+      "exception_policy": {},
+      "monitoring": {},
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": []
+      },
+      "pass_rate_pct": 0.0,
+      "violations_count": 0,
+      "created_at": "2026-07-20T07:29:02.589266",
+      "updated_at": "2026-07-20T07:29:02.589271",
+      "activated_at": null
+    },
+    {
+      "id": "75e00c9e-12b0-567d-9216-5f6a8202d971",
+      "control_id": "0d777ed0-f5c5-541b-ac82-4b5874e06c8e",
+      "semantic_version": "1.0.0",
+      "version_number": 1,
+      "status": "ACTIVE",
+      "control_type": "COMPLIANCE",
+      "severity": "HIGH",
+      "evaluation_point": "BEFORE_ARTIFACT_PUBLICATION",
+      "evaluation_type": "DECLARATIVE_EXPRESSION",
+      "expression": "context.stage_exit_contract_satisfied == true",
+      "enforcement_on_failed": "BLOCK",
+      "enforcement_on_error": "PAUSE_EXECUTION",
+      "applicability": [
+        {
+          "field": "execution.id",
+          "operator": "EXISTS",
+          "value": "true"
+        }
+      ],
+      "evidence_requirements": [],
+      "remediation_steps": [
+        "Complete the stage exit artifact per contract"
+      ],
+      "exception_policy": {},
+      "monitoring": {},
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": []
+      },
+      "pass_rate_pct": 0.0,
+      "violations_count": 0,
+      "created_at": "2026-07-23T14:23:40.086564",
+      "updated_at": "2026-07-23T14:23:40.086564",
+      "activated_at": "2026-07-23T14:23:40.086564"
+    }
+  ]
+}

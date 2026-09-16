@@ -1,0 +1,77 @@
+{
+  "capability_id": "jira-add-comment",
+  "version": "1.0",
+  "manifest_version": 1,
+  "name": "Jira Add Comment (legacy)",
+  "description": "Legacy alias → prefer task.comment",
+  "group": "tracker",
+  "status": "deprecated",
+  "operation_type": "update",
+  "risk_level": "high",
+  "idempotent": true,
+  "cacheable": false,
+  "requires_approval": true,
+  "allowed_execution_modes": [
+    "change_proposal",
+    "autonomous"
+  ],
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "issue_key",
+      "body"
+    ],
+    "properties": {
+      "issue_key": {
+        "type": "string"
+      },
+      "body": {
+        "type": "string"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "tags": [
+    "tracker",
+    "legacy"
+  ],
+  "implementations": [
+    {
+      "id": "jira.add-comment",
+      "type": "mcp",
+      "server_id": "jira",
+      "tool_name": "add_comment",
+      "status": "approved",
+      "priority": 100,
+      "risk_level": "high",
+      "enabled": true,
+      "timeout_seconds": 20,
+      "selectors": {
+        "taskSources": [
+          "jira"
+        ]
+      }
+    }
+  ],
+  "required_input_fields": [
+    "issue_key",
+    "body"
+  ],
+  "visibility": {
+    "tenants": [
+      "*"
+    ],
+    "roles": [
+      "playbook-executor",
+      "*"
+    ],
+    "skills": [
+      "*"
+    ],
+    "playbooks": [
+      "*"
+    ]
+  }
+}

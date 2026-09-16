@@ -1,0 +1,55 @@
+{
+  "capability_id": "artifact.publish",
+  "version": "1.0",
+  "manifest_version": 1,
+  "name": "Публикация артефакта",
+  "description": "Каноническая публикация результата (HTTP/callback и др.).",
+  "group": "artifact",
+  "status": "published",
+  "operation_type": "publish",
+  "risk_level": "medium",
+  "idempotent": true,
+  "cacheable": false,
+  "requires_approval": true,
+  "allowed_execution_modes": [
+    "draft",
+    "change_proposal",
+    "autonomous"
+  ],
+  "input_schema": {
+    "type": "object"
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "tags": [
+    "artifact",
+    "mvp"
+  ],
+  "implementations": [
+    {
+      "id": "platform.http-callback",
+      "type": "system",
+      "handler": "http_callback",
+      "status": "approved",
+      "priority": 100,
+      "risk_level": "medium",
+      "enabled": true,
+      "timeout_seconds": 30
+    }
+  ],
+  "visibility": {
+    "tenants": [
+      "*"
+    ],
+    "roles": [
+      "*"
+    ],
+    "skills": [
+      "*"
+    ],
+    "playbooks": [
+      "*"
+    ]
+  }
+}

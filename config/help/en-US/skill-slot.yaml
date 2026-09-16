@@ -1,0 +1,135 @@
+# Skill Slot help — en-US fallback
+
+concepts:
+  - conceptKey: skill-slot
+    title: Skill Slot
+    shortDescription: A place in a PDLC Stage where a Skill runs at execution time.
+    fullDescription: >
+      A Skill Slot is not the Skill itself — it is how the Skill is used in this PDLC Stage.
+    recommendedValue: Describe the business outcome, then choose a Skill interface.
+    consequences:
+      - Publish requires an interface_key on every Skill Slot.
+    relatedConcepts: [skill, playbook]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: skill
+    title: Skill
+    shortDescription: A reusable platform capability (implementation + contracts).
+    relatedConcepts: [skill-slot]
+    documentationPath: /docs/skills
+    audienceLevel: BASIC
+
+  - conceptKey: skill-interface
+    title: Skill interface
+    shortDescription: Input/output contract a Skill implementation must satisfy.
+    recommendedValue: Pick from the catalog rather than typing a raw key.
+    relatedConcepts: [skill-slot, skill]
+    documentationPath: /docs/skills
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.display-name
+    title: Step name
+    shortDescription: How this step appears on the canvas and in reports.
+    recommendedValue: Verb + outcome, e.g. Generate system requirements.
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.description
+    title: Step description
+    shortDescription: Why this step exists in the process.
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.expected-result
+    title: Expected result
+    shortDescription: What should exist after the slot succeeds.
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.skill-selection
+    title: Which Skill performs this step
+    shortDescription: Choose the Skill interface (and optional pinned implementation).
+    warnings:
+      - Do not publish a Skill Slot without an interface_key.
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.version-policy
+    title: Skill version policy
+    shortDescription: How the implementation version is chosen at runtime.
+    recommendedValue: PINNED for Production, LATEST_COMPATIBLE for Development.
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.runtime-profile
+    title: Runtime Profile
+    shortDescription: Environment, model, and limits for Skill execution.
+    recommendedValue: Inherit from the PDLC Stage unless you need an override.
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.input-mapping
+    title: Input mapping
+    shortDescription: Where the Skill gets the fields it expects.
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.output-mapping
+    title: Output mapping
+    shortDescription: Where the Skill result is stored in the PDLC Stage context.
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.failure
+    title: On failure
+    shortDescription: What happens if the Skill fails.
+    recommendedValue: Block for compliance-sensitive steps.
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.knowledge
+    title: Knowledge Spaces
+    shortDescription: Knowledge sources the Skill may retrieve from.
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.rules
+    title: Правила (rules)
+    shortDescription: Behavioral rules applied on this step.
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.controls
+    title: Controls
+    shortDescription: Compliance and quality checks for this step.
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.capabilities
+    title: Capabilities
+    shortDescription: Gateway operations the Skill may invoke.
+    audienceLevel: ADVANCED
+
+  - conceptKey: playbook.designer
+    title: PDLC Stage Designer
+    shortDescription: Graph editor for PDLC Stage steps.
+    audienceLevel: BASIC
+
+  - conceptKey: runtime-profile
+    title: Runtime Profile
+    shortDescription: Execution profile for AI / sandbox / limits.
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space
+    title: Knowledge Space
+    shortDescription: Boundary for knowledge sources and retrieval policy.
+    audienceLevel: BASIC
+
+  - conceptKey: control
+    title: Control
+    shortDescription: Evaluated check with enforcement and evidence.
+    audienceLevel: BASIC
+
+  - conceptKey: capability
+    title: Capability
+    shortDescription: Allowed operation via the Capability Gateway.
+    audienceLevel: BASIC
+
+  - conceptKey: human-checkpoint
+    title: Human Checkpoint
+    shortDescription: Execution waits for a human decision.
+    audienceLevel: BASIC
+
+  - conceptKey: artifact
+    title: Artifact
+    shortDescription: Versioned output of a PDLC Stage or Skill.
+    audienceLevel: BASIC

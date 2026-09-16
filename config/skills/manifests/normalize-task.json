@@ -1,0 +1,16 @@
+{
+  "id": "normalize-task",
+  "version": "1.0",
+  "name": "Task Normalizer",
+  "description": "Normalize an incoming task into a canonical work-item envelope (commit URL, repo, diff scope, policy/SDD refs).",
+  "allowed_capabilities": [
+    "context.read"
+  ],
+  "skill_md": "skills/normalize-task/SKILL.md",
+  "tags": [
+    "normalize",
+    "intake",
+    "gigacode-desktop"
+  ],
+  "status": "published"
+}

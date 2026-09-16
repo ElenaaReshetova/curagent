@@ -1,0 +1,19 @@
+{
+  "integrations": [
+    {
+      "key": "slack",
+      "name": "Slack",
+      "version": "1.0",
+      "status": "online",
+      "last_check_at": "2026-07-20T06:10:03.205587",
+      "tool_count": 1,
+      "description": "Real Slack bot · channel C0AKKCGEKL1 · team T0AKA32KE12",
+      "endpoint": "mcp://slack",
+      "capabilities": [
+        "chat.read_thread",
+        "chat.reply",
+        "slack-reply"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "contracts": [
+    {
+      "id": "216f7194-1c70-52e1-bdfc-3d7ec1ba9fd1",
+      "key": "WorkItem@1",
+      "name": "Work Item",
+      "description": "Normalized task or request from ingress (Jira, Slack, manual).",
+      "kind": "work_item",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "title"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [
+        "SlackWorkItem@1",
+        "CanonicalWorkItem@1"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "95176ef1-c24a-5eaa-b5ed-69a999256ce3",
+      "key": "SlackWorkItem@1",
+      "name": "Slack Work Item",
+      "description": "Work item sourced from a Slack thread.",
+      "kind": "work_item",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "title"
+        ]
+      },
+      "satisfies": [
+        "WorkItem@1"
+      ],
+      "accepts": [],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "ccf4a895-dc50-5063-bd9e-d4a3bb9ca963",
+      "key": "CanonicalWorkItem@1",
+      "name": "Canonical Work Item",
+      "description": "Platform-normalized work item envelope.",
+      "kind": "work_item",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "title"
+        ]
+      },
+      "satisfies": [
+        "WorkItem@1"
+      ],
+      "accepts": [],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "30184bd7-79c8-5b14-8b5b-59a34e9facd7",
+      "key": "ProblemUnderstandingArtifact@1",
+      "name": "Problem Understanding",
+      "description": "Scoped problem statement with actors, constraints and open questions.",
+      "kind": "artifact",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [
+        "ProblemUnderstandingPatch@1"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "238eac10-72c0-5f43-837c-0ab036973ae2",
+      "key": "ProblemUnderstandingPatch@1",
+      "name": "Problem Understanding Patch",
+      "description": "Patch updating the problem understanding artifact.",
+      "kind": "patch",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [
+        "ProblemUnderstandingArtifact@1"
+      ],
+      "accepts": [],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "1d4dac2c-9fe0-5cd8-8603-f5d06bacc370",
+      "key": "BusinessRequirementsArtifact@1",
+      "name": "Business Requirements",
+      "description": "BRD / PRD with goals, user stories and acceptance criteria.",
+      "kind": "artifact",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [
+        "ArtifactPatch@1"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "83312517-5b05-5894-bfac-b72cfd37f04d",
+      "key": "SystemRequirementsArtifact@1",
+      "name": "System Requirements",
+      "description": "System requirements document (v1).",
+      "kind": "artifact",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [
+        "SystemRequirementsPatch@1",
+        "ArtifactPatch@1"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "346425a1-b9ec-5003-b08a-f43d79f6e12e",
+      "key": "SystemRequirementsArtifact@2",
+      "name": "System Requirements",
+      "description": "System requirements document (v2).",
+      "kind": "artifact",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [
+        "SystemRequirementsPatch@1",
+        "ArtifactPatch@1"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "70e3f37f-165e-51c9-9c82-49777f659c49",
+      "key": "SystemRequirementsPatch@1",
+      "name": "System Requirements Patch",
+      "description": "Patch updating system requirements.",
+      "kind": "patch",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [
+        "SystemRequirementsArtifact@1",
+        "SystemRequirementsArtifact@2"
+      ],
+      "accepts": [],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "fea8ae44-a760-5029-a731-d48231c28cfb",
+      "key": "RequirementsArtifact@1",
+      "name": "Requirements",
+      "description": "Generic requirements artifact for review and validation skills.",
+      "kind": "artifact",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [
+        "QualityReviewPatch@1",
+        "ArtifactPatch@1"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "7788eb9e-5582-5a5a-b3b1-daa0eb4ad3c0",
+      "key": "QualityReviewPatch@1",
+      "name": "Quality Review Patch",
+      "description": "Findings from a requirements quality review.",
+      "kind": "patch",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [
+        "RequirementsArtifact@1"
+      ],
+      "accepts": [],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "ae3385ce-6f7a-595b-a590-6c7e8c2c183a",
+      "key": "RoutingDecision@1",
+      "name": "Routing Decision",
+      "description": "Classifier output selecting the next playbook or flow.",
+      "kind": "decision",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "ce4ddf4e-a69c-56a7-8f25-0f45998e3f12",
+      "key": "Artifact@1",
+      "name": "Generic Artifact",
+      "description": "Fallback typed artifact for skills without a specific schema.",
+      "kind": "artifact",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [],
+      "accepts": [
+        "ArtifactPatch@1"
+      ],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    },
+    {
+      "id": "e678cdf1-7e65-59e0-97b1-f7f75f943708",
+      "key": "ArtifactPatch@1",
+      "name": "Generic Artifact Patch",
+      "description": "Fallback patch envelope for skill output.",
+      "kind": "patch",
+      "json_schema": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type"
+        ]
+      },
+      "satisfies": [
+        "Artifact@1"
+      ],
+      "accepts": [],
+      "status": "active",
+      "updated_at": "2026-07-21T10:37:01.828947"
+    }
+  ]
+}

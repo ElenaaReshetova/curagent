@@ -1,0 +1,295 @@
+# Слот навыка & Designer этапа PDLC — contextual help (ru-RU)
+
+concepts:
+  - conceptKey: skill-slot
+    title: Слот навыка
+    shortDescription: >
+      Место в этапе PDLC, где во время выполнения вызывается конкретный навык (skill).
+    fullDescription: >
+      Слот навыка — это не сам навык, а его использование внутри этапа PDLC.
+      Здесь задают, какой навык вызвать, какие данные передать, какой Runtime
+      использовать и что делать при ошибке. Один навык можно подключить
+      в нескольких слотах с разными настройками.
+    example:
+      title: Пример
+      value: "Слот «Сформировать требования» вызывает навык Generate System Requirements"
+    recommendedValue: Опишите бизнес-результат шага, затем выберите навык.
+    consequences:
+      - Без выбранного интерфейса навыка слот нельзя опубликовать.
+      - Настройки слота влияют только на этот шаг этапа PDLC.
+    warnings: []
+    relatedConcepts: [skill, playbook, runtime-profile]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: skill
+    title: Навык (skill)
+    shortDescription: Переиспользуемая возможность платформы (реализация + контракты).
+    fullDescription: >
+      Навык (skill) — пакет с интерфейсом, версиями и реализацией. Слот навыка ссылается
+      на навык (через interface и при необходимости конкретную реализацию).
+    recommendedValue: Выбирайте опубликованные навыки со статусом active.
+    consequences:
+      - Смена навыка меняет ожидаемые вход и выход шага.
+    relatedConcepts: [skill-slot, skill-interface]
+    documentationPath: /docs/skills
+    audienceLevel: BASIC
+
+  - conceptKey: skill-interface
+    title: Интерфейс навыка
+    shortDescription: Контракт входа/выхода, которому должен соответствовать навыку.
+    fullDescription: >
+      Interface key связывает слот с семейством реализаций. Валидация этапа PDLC
+      требует, чтобы у SKILL_SLOT был указан interface_key.
+    example:
+      title: Пример
+      value: analysis.system_requirements.generate@1
+    recommendedValue: Выберите интерфейс из каталога, не вводите ключ вручную без необходимости.
+    consequences:
+      - Несовместимый интерфейс сломает bindings и runtime resolution.
+    relatedConcepts: [skill-slot, skill]
+    documentationPath: /docs/skills
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.display-name
+    title: Название шага
+    shortDescription: Как шаг отображается на схеме и в отчётах.
+    fullDescription: >
+      Используйте понятное бизнес-название. Технический key узла задаётся отдельно
+      и обычно не меняется после создания.
+    recommendedValue: Глагол + результат, например «Сформировать системные требования».
+    consequences:
+      - Название видят ревьюеры и операторы Executions.
+    relatedConcepts: [skill-slot]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.description
+    title: Описание шага
+    shortDescription: Зачем нужен этот шаг с точки зрения процесса.
+    fullDescription: >
+      Опишите бизнес-результат, а не внутреннюю реализацию. Текст помогает
+      коллегам понять этап PDLC без чтения графа.
+    example:
+      title: Пример
+      value: Подготовить системные требования на основе утверждённых бизнес-требований.
+    recommendedValue: 1–2 предложения на языке домена.
+    consequences: []
+    relatedConcepts: [skill-slot]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.expected-result
+    title: Ожидаемый результат
+    shortDescription: Что должно появиться после успешного выполнения слота.
+    fullDescription: >
+      Кратко зафиксируйте артефакт или решение. Это помогает при validation
+      и Human Checkpoint.
+    recommendedValue: Укажите тип артефакта или статус, например «System Requirements Artifact».
+    consequences:
+      - Расхождение с output навыка усложнит review.
+    relatedConcepts: [skill-slot, artifact]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.skill-selection
+    title: Какой навык выполняет шаг
+    shortDescription: Выбор интерфейса (и при необходимости реализации) для слота.
+    fullDescription: >
+      Сначала выберите интерфейс навыка — контракт шага. Реализацию можно
+      закрепить через binding на версии этапа PDLC или оставить на runtime resolution.
+    recommendedValue: Опубликованный навык, совместимый с входом предыдущих шагов.
+    consequences:
+      - Смена интерфейса требует пересмотреть mapping и controls.
+    warnings:
+      - Не оставляйте слот без interface_key перед Publish.
+    relatedConcepts: [skill, skill-interface, skill-slot.version-policy]
+    documentationPath: /docs/skills
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.version-policy
+    title: Политика версии навыка
+    shortDescription: Как выбирается версия реализации при запуске.
+    fullDescription: >
+      PINNED — всегда указанная версия (предсказуемо для Production).
+      LATEST_COMPATIBLE — новейшая совместимая версия (удобно для Development).
+      RUNTIME_RESOLVED — платформа выбирает по правилам организации.
+    recommendedValue: PINNED для Production, LATEST_COMPATIBLE для Development.
+    consequences:
+      - PINNED не подхватывает новые версии автоматически.
+      - LATEST_COMPATIBLE может изменить поведение после обновления навыка.
+      - RUNTIME_RESOLVED требует настроенных правил выбора.
+    warnings:
+      - Не используйте RUNTIME_RESOLVED без понятных org-правил.
+    relatedConcepts: [skill, skill-slot]
+    documentationPath: /docs/skills
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.runtime-profile
+    title: Профиль исполнения
+    shortDescription: Среда, модель и ограничения, в которых выполняется навык.
+    fullDescription: >
+      Профиль исполнения определяет провайдера, модель, сеть, файловую систему,
+      способности, лимиты стоимости и retry. Обычно слот наследует профиль этапа PDLC.
+    recommendedValue: Наследовать от этапа PDLC, пока нет особых требований.
+    consequences:
+      - Влияет на качество, стоимость и доступные способности.
+      - Unrestricted network повышает риск.
+    warnings:
+      - Не выбирайте unrestricted network без необходимости.
+    relatedConcepts: [runtime-profile, capability, control]
+    documentationPath: /docs/runtime-profiles
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.input-mapping
+    title: Входные данные
+    shortDescription: Откуда слот берёт поля, которые ожидает навык.
+    fullDescription: >
+      Сопоставьте доступные данные этапа PDLC с полями входа навыка. В Basic-режиме
+      достаточно отметить обязательные поля; JSONPath и CEL — в Expert.
+    recommendedValue: Заполните все обязательные поля навыка перед Publish.
+    consequences:
+      - Неверный mapping даст ошибку на шаге или пустой результат.
+    relatedConcepts: [skill-slot, skill-interface]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.output-mapping
+    title: Куда сохранить результат
+    shortDescription: Как выход навыка попадает в контекст этапа PDLC и артефакты.
+    fullDescription: >
+      Укажите, какой артефакт или переменная получит результат. Это нужно
+      следующим шагам и publication.
+    recommendedValue: Сохраняйте в именованный артефакт этапа PDLC.
+    consequences:
+      - Без output следующие шаги не увидят результат.
+    relatedConcepts: [skill-slot, artifact]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: skill-slot.failure
+    title: Поведение при ошибке
+    shortDescription: Что делать, если навык завершился с ошибкой.
+    fullDescription: >
+      Block — остановить этап PDLC (безопасно по умолчанию).
+      Retry — повторить по политике. Escalate — Human Checkpoint.
+    recommendedValue: Block для шагов, влияющих на артефакты и compliance.
+    consequences:
+      - Continue без обработки может скрыть дефект.
+    relatedConcepts: [control, human-checkpoint]
+    documentationPath: /docs/playbooks
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.knowledge
+    title: Knowledge Spaces
+    shortDescription: Какие базы знаний навык может использовать для retrieval.
+    fullDescription: >
+      Ограничивает источники evidence. Пустой список обычно означает наследование
+      от этапа PDLC / Runtime.
+    recommendedValue: Наследовать от этапа PDLC, если нет особого scope.
+    consequences:
+      - Лишние spaces повышают шум; слишком узкий scope ухудшает качество.
+    relatedConcepts: [knowledge-space, evidence]
+    documentationPath: /docs/knowledge
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.rules
+    title: Привязки · Правила (rules)
+    shortDescription: >
+      Правила (rules), которые уточняют результат навыка на этом шаге этапа PDLC.
+    fullDescription: >
+      Правила (rules) задают стиль, терминологию и формат ответа навыка.
+      Привязка делается здесь, на уровне слота навыка.
+      После выбора нажмите «Сохранить» в Designer.
+    recommendedValue: Добавляйте только нужные доменные правила поверх корпоративных.
+    consequences:
+      - Конфликтующие правила усложняют resolution; Control всегда побеждает.
+    relatedConcepts: [rule, control]
+    documentationPath: /docs/rules
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.controls
+    title: Controls
+    shortDescription: Проверки compliance / quality на входе или выходе шага.
+    fullDescription: >
+      Controls могут блокировать шаг, требовать evidence или эскалацию.
+      Часть controls приходит из Control packs этапа PDLC.
+    recommendedValue: Не отключайте mandatory corporate controls.
+    consequences:
+      - Отключение blocking control повышает риск нарушения политики.
+    warnings:
+      - Mandatory controls нельзя снять в Draft без исключения.
+    relatedConcepts: [control, evidence]
+    documentationPath: /docs/controls
+    audienceLevel: ADVANCED
+
+  - conceptKey: skill-slot.capabilities
+    title: Способности
+    shortDescription: Внешние операции, которые навык может вызывать через gateway.
+    fullDescription: >
+      Способность — разрешённое действие (Jira, Slack, artifact.publish и т.д.).
+      Runtime и Controls ограничивают фактический доступ.
+    recommendedValue: Минимально необходимый набор способностей.
+    consequences:
+      - Лишние способности на запись увеличивают blast radius.
+    relatedConcepts: [capability, runtime-profile, integration]
+    documentationPath: /docs/capabilities
+    audienceLevel: ADVANCED
+
+  - conceptKey: playbook.designer
+    title: Designer этапа PDLC
+    shortDescription: Редактор графа шагов этапе PDLC.
+    fullDescription: >
+      Соединяйте узлы рёбрами, настраивайте свойства в инспекторе справа.
+      Draft сохраняется с optimistic locking (revision).
+    recommendedValue: Сначала Basic-настройки слота навыка, затем Advanced.
+    consequences:
+      - Publish фиксирует immutable версию.
+    relatedConcepts: [skill-slot, playbook]
+    documentationPath: /docs/playbooks
+    audienceLevel: BASIC
+
+  - conceptKey: runtime-profile
+    title: Профиль исполнения
+    shortDescription: Профиль исполнения AI / sandbox / limits.
+    fullDescription: >
+      Отдельная версионируемая сущность Build → Профили исполнения.
+      Этап PDLC и слот навыка могут наследовать или переопределять профиль.
+    relatedConcepts: [skill-slot.runtime-profile, capability]
+    documentationPath: /docs/runtime-profiles
+    audienceLevel: BASIC
+
+  - conceptKey: knowledge-space
+    title: Knowledge Space
+    shortDescription: Граница источников знаний и политик retrieval.
+    relatedConcepts: [skill-slot.knowledge, evidence]
+    documentationPath: /docs/knowledge
+    audienceLevel: BASIC
+
+  - conceptKey: control
+    title: Control
+    shortDescription: Правило проверки с enforcement и evidence.
+    relatedConcepts: [skill-slot.controls, evidence]
+    documentationPath: /docs/controls
+    audienceLevel: BASIC
+
+  - conceptKey: capability
+    title: Способность
+    shortDescription: Разрешённая операция через шлюз способностей.
+    relatedConcepts: [skill-slot.capabilities, integration]
+    documentationPath: /docs/capabilities
+    audienceLevel: BASIC
+
+  - conceptKey: human-checkpoint
+    title: Human Checkpoint
+    shortDescription: Точка, где выполнение ждёт решения человека.
+    relatedConcepts: [skill-slot.failure]
+    documentationPath: /docs/human-checkpoints
+    audienceLevel: BASIC
+
+  - conceptKey: artifact
+    title: Artifact
+    shortDescription: Версионируемый результат работы этапа PDLC / навыка.
+    relatedConcepts: [skill-slot.output-mapping]
+    documentationPath: /docs/artifacts
+    audienceLevel: BASIC

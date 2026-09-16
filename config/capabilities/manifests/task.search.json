@@ -1,0 +1,76 @@
+{
+  "capability_id": "task.search",
+  "version": "1.0",
+  "manifest_version": 1,
+  "name": "Поиск задач",
+  "description": "Поиск задач в tracker по запросу.",
+  "group": "tracker",
+  "status": "published",
+  "operation_type": "search",
+  "risk_level": "low",
+  "idempotent": true,
+  "cacheable": true,
+  "requires_approval": false,
+  "allowed_execution_modes": [
+    "read_only",
+    "draft",
+    "change_proposal",
+    "autonomous"
+  ],
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "query"
+    ],
+    "properties": {
+      "query": {
+        "type": "string"
+      },
+      "limit": {
+        "type": "integer"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "tags": [
+    "tracker",
+    "mvp"
+  ],
+  "implementations": [
+    {
+      "id": "jira.search",
+      "type": "mcp",
+      "server_id": "jira",
+      "tool_name": "search_issues",
+      "status": "approved",
+      "priority": 100,
+      "risk_level": "low",
+      "enabled": true,
+      "timeout_seconds": 30,
+      "selectors": {
+        "taskSources": [
+          "jira"
+        ]
+      }
+    }
+  ],
+  "required_input_fields": [
+    "query"
+  ],
+  "visibility": {
+    "tenants": [
+      "*"
+    ],
+    "roles": [
+      "*"
+    ],
+    "skills": [
+      "*"
+    ],
+    "playbooks": [
+      "*"
+    ]
+  }
+}

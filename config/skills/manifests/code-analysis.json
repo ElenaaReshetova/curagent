@@ -1,0 +1,10 @@
+{
+  "id": "code-analysis",
+  "version": "1.0",
+  "name": "Code Analysis",
+  "description": "Analyze code for quality, security, architecture, and maintainability. Use when asked for code review, static analysis, security audit, or codebase assessment.",
+  "allowed_capabilities": [],
+  "skill_md": "skills/code-analysis/SKILL.md",
+  "tags": [],
+  "status": "published"
+}

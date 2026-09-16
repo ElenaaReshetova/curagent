@@ -1,0 +1,63 @@
+{
+  "skills": [
+    {
+      "id": "classify",
+      "name": "Classify Task",
+      "description": "Классификация задачи и маршрутизация на BRD / SRS / tests / code analysis / general",
+      "capability_id": null,
+      "allowed_capabilities": []
+    },
+    {
+      "id": "normalize-task",
+      "name": "Task Normalizer",
+      "description": "Нормализация входящей задачи в канонический work-item (commit URL, repo, scope, policy refs)",
+      "capability_id": null,
+      "allowed_capabilities": [
+        "context.read"
+      ]
+    },
+    {
+      "id": "business-requirements",
+      "name": "Business Requirements",
+      "description": "Формирование бизнес-требований",
+      "capability_id": null,
+      "allowed_capabilities": [
+        "task.read",
+        "task.search",
+        "task.comment"
+      ]
+    },
+    {
+      "id": "system-requirements",
+      "name": "System Requirements",
+      "description": "Генерация системных требований (SRS)",
+      "capability_id": null,
+      "allowed_capabilities": [
+        "task.read",
+        "task.search",
+        "docs.search",
+        "docs.read",
+        "repo.search",
+        "repo.read_file"
+      ]
+    },
+    {
+      "id": "test-case-design",
+      "name": "Test Case Design",
+      "description": "Проектирование тест-кейсов",
+      "capability_id": null
+    },
+    {
+      "id": "code-analysis",
+      "name": "Code Analysis",
+      "description": "Анализ кода и технические ревью",
+      "capability_id": null
+    },
+    {
+      "id": "general",
+      "name": "General",
+      "description": "Универсальный skill",
+      "capability_id": null
+    }
+  ]
+}

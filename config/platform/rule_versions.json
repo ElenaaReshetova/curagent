@@ -1,0 +1,148 @@
+{
+  "versions": [
+    {
+      "id": "44793aff-99a1-547c-916c-c480d1487260",
+      "rule_id": "249929c5-65de-5301-a239-4ea101b9db26",
+      "semantic_version": "1.0.0",
+      "version_number": 1,
+      "status": "PUBLISHED",
+      "content_markdown": "# BRD Structure\n\nОбязательные секции артефакта:\n1. Problem Statement\n2. Goals\n3. Non-Goals\n4. User Stories\n5. Requirements (P0 / P1 / P2) с acceptance criteria\n6. Success Metrics\n7. Open Questions\n\nДокумент должен быть полным — без summary-only ответов.\n",
+      "metadata": {},
+      "scope_type": "PLAYBOOK",
+      "scope_selector": {
+        "playbookKeys": [
+          "business-requirements"
+        ]
+      },
+      "scope_weight": 800,
+      "priority": 90,
+      "conflict_strategy": "OVERRIDE",
+      "conflict_key": "requirements-structure",
+      "language": "ru",
+      "checksum": "56796531bd4ffef773bb0488c3a70a1a4e2aa742fdbfd7588d4bde7e9015d0fc",
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "structure": "passed",
+          "security": "passed",
+          "controls": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T06:10:03.413924",
+      "published_at": "2026-07-20T06:10:03.205587",
+      "updated_at": "2026-07-20T06:10:03.413928"
+    },
+    {
+      "id": "dbc7f4a0-9033-52f7-abc3-caf6a7188f18",
+      "rule_id": "32ed43b7-0d37-5339-91c8-cf12bdde2462",
+      "semantic_version": "1.0.0",
+      "version_number": 1,
+      "status": "PUBLISHED",
+      "content_markdown": "# Language\n\n**HARD CONSTRAINT:** весь пользовательский артефакт — только на русском языке.\n\n- Заголовки, секции, требования, acceptance criteria, таблицы и списки — на русском.\n- Английские названия секций из шаблона навыка (Introduction, Functional Requirements и т.п.) — это примеры; переводи их на русский.\n- Не смешивай языки. Даже если задача, Slack-тред или шаблон частично на английском — ответ всё равно на русском.\n",
+      "metadata": {},
+      "scope_type": "WORKSPACE",
+      "scope_selector": {},
+      "scope_weight": 300,
+      "priority": 40,
+      "conflict_strategy": "OVERRIDE",
+      "conflict_key": "output-language",
+      "language": "ru",
+      "checksum": "fb60151b543a860c853896dcf4939831b5934c1e02edea107907a87edddde027",
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "structure": "passed",
+          "security": "passed",
+          "controls": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T06:10:03.413971",
+      "published_at": "2026-07-20T06:10:03.205587",
+      "updated_at": "2026-07-20T06:10:03.413971"
+    },
+    {
+      "id": "66b870cf-a8b9-55d2-a6d3-27b99b7e4661",
+      "rule_id": "afd70392-c4f1-51be-9c9f-0b308f2948ee",
+      "semantic_version": "1.0.0",
+      "version_number": 1,
+      "status": "PUBLISHED",
+      "content_markdown": "# Evidence\n\n- Каждое P0-требование должно быть выводимо из текста задачи / треда.\n- Явно помечай допущения как Assumptions.\n- Не выдумывай метрики и пользователей без оснований в контексте.\n",
+      "metadata": {},
+      "scope_type": "PLAYBOOK",
+      "scope_selector": {
+        "playbookKeys": [
+          "business-requirements"
+        ]
+      },
+      "scope_weight": 800,
+      "priority": 70,
+      "conflict_strategy": "OVERRIDE",
+      "conflict_key": "evidence",
+      "language": "ru",
+      "checksum": "2b20782c3428a48124252da25363fa48f7fb1e83e3fd080cc99aba5743fd5ead",
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "structure": "passed",
+          "security": "passed",
+          "controls": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T06:10:03.413988",
+      "published_at": "2026-07-20T06:10:03.205587",
+      "updated_at": "2026-07-20T06:10:03.413989"
+    },
+    {
+      "id": "b0031b93-e116-551d-a70b-da52f492481e",
+      "rule_id": "9a8343cf-7fbf-5455-a5de-ce7b87e6c682",
+      "semantic_version": "1.0.0",
+      "version_number": 1,
+      "status": "PUBLISHED",
+      "content_markdown": "# SRD Structure\n\nОбязательные секции артефакта:\n1. Introduction (purpose, scope, definitions, references)\n2. Overall Description (product perspective, user classes, constraints, assumptions)\n3. Functional Requirements (FR-001, ... с приоритетом P0/P1/P2 и acceptance criteria)\n4. Non-Functional Requirements (performance, security, availability, privacy)\n5. External Interfaces (UI / API / integrations)\n6. Data Requirements (entities, retention, классификация)\n7. Constraints & Dependencies\n8. Traceability Matrix (FR → BRD goals / user stories)\n9. Open Questions\n\nДокумент должен быть полным — без summary-only ответов.\n",
+      "metadata": {},
+      "scope_type": "PLAYBOOK",
+      "scope_selector": {
+        "playbookKeys": [
+          "system-requirements"
+        ]
+      },
+      "scope_weight": 800,
+      "priority": 90,
+      "conflict_strategy": "OVERRIDE",
+      "conflict_key": "requirements-structure-srd",
+      "language": "ru",
+      "checksum": "b57aba475d820abcb6ebac57146fa8048dcb59ee3de9b77ff43de7ab2e024392",
+      "validation_status": "valid",
+      "validation_report": {
+        "valid": true,
+        "status": "valid",
+        "errors": [],
+        "warnings": [],
+        "checks": {
+          "structure": "passed",
+          "security": "passed",
+          "controls": "passed"
+        }
+      },
+      "revision": 1,
+      "created_at": "2026-07-20T06:10:03.414002",
+      "published_at": "2026-07-20T06:10:03.205587",
+      "updated_at": "2026-07-20T06:10:03.414003"
+    }
+  ]
+}

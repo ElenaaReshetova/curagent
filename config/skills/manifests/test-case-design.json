@@ -1,0 +1,10 @@
+{
+  "id": "test-case-design",
+  "version": "1.0",
+  "name": "Test Case Design",
+  "description": "Design test cases, test plans, and test coverage matrices. Use when asked to create test cases, test plan, QA scenarios, acceptance tests, or testing strategy.",
+  "allowed_capabilities": [],
+  "skill_md": "skills/test-case-design/SKILL.md",
+  "tags": [],
+  "status": "published"
+}

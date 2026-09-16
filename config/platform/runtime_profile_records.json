@@ -1,0 +1,20 @@
+{
+  "profiles": [
+    {
+      "id": "c600923f-543e-5ae0-8fe7-862afe94e044",
+      "workspace_id": "default",
+      "key": "local-lm-studio",
+      "name": "Local LM Studio",
+      "description": "Локальный runtime для Slack→BRD→SRD эксперимента. Model: google/gemma-4-e2b",
+      "status": "active",
+      "owner_team": "Platform",
+      "current_active_version_id": "302c3f0c-8890-5eac-8fe9-47cdc193fb67",
+      "current_draft_version_id": null,
+      "runs_30d": 0,
+      "health_status": "HEALTHY",
+      "created_at": "2026-07-20T06:10:03.415003",
+      "updated_at": "2026-07-20T06:10:03.415004",
+      "revision": 1
+    }
+  ]
+}
