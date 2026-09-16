@@ -1,0 +1,678 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Workflow DSL",
+  "version": "2",
+  "definitions": {
+    "WorkflowDsl": {
+      "$defs": {
+        "DslConnection": {
+          "properties": {
+            "sourceIdentifier": {
+              "title": "Sourceidentifier",
+              "type": "string"
+            },
+            "targetIdentifier": {
+              "title": "Targetidentifier",
+              "type": "string"
+            },
+            "sourceOutletIdentifier": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Sourceoutletidentifier"
+            },
+            "sourceOptionIdentifier": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Sourceoptionidentifier"
+            },
+            "fallback": {
+              "default": false,
+              "title": "Fallback",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "sourceIdentifier",
+            "targetIdentifier"
+          ],
+          "title": "DslConnection",
+          "type": "object"
+        },
+        "DslNode": {
+          "properties": {
+            "identifier": {
+              "title": "Identifier",
+              "type": "string"
+            },
+            "title": {
+              "default": "",
+              "title": "Title",
+              "type": "string"
+            },
+            "icon": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Icon"
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Description"
+            },
+            "config": {
+              "additionalProperties": true,
+              "title": "Config",
+              "type": "object"
+            },
+            "variables": {
+              "anyOf": [
+                {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Variables"
+            },
+            "links": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Links"
+            },
+            "verbose": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Verbose"
+            }
+          },
+          "required": [
+            "identifier"
+          ],
+          "title": "DslNode",
+          "type": "object"
+        }
+      },
+      "description": "workflow document.",
+      "properties": {
+        "identifier": {
+          "title": "Identifier",
+          "type": "string"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "produces": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Produces",
+          "type": "array"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/DslNode"
+          },
+          "title": "Nodes",
+          "type": "array"
+        },
+        "connections": {
+          "items": {
+            "$ref": "#/$defs/DslConnection"
+          },
+          "title": "Connections",
+          "type": "array"
+        },
+        "ui": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ui"
+        }
+      },
+      "required": [
+        "identifier"
+      ],
+      "title": "WorkflowDsl",
+      "type": "object"
+    },
+    "DslNode": {
+      "properties": {
+        "identifier": {
+          "title": "Identifier",
+          "type": "string"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "icon": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Icon"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "config": {
+          "additionalProperties": true,
+          "title": "Config",
+          "type": "object"
+        },
+        "variables": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variables"
+        },
+        "links": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Links"
+        },
+        "verbose": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verbose"
+        }
+      },
+      "required": [
+        "identifier"
+      ],
+      "title": "DslNode",
+      "type": "object"
+    },
+    "DslConnection": {
+      "properties": {
+        "sourceIdentifier": {
+          "title": "Sourceidentifier",
+          "type": "string"
+        },
+        "targetIdentifier": {
+          "title": "Targetidentifier",
+          "type": "string"
+        },
+        "sourceOutletIdentifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sourceoutletidentifier"
+        },
+        "sourceOptionIdentifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sourceoptionidentifier"
+        },
+        "fallback": {
+          "default": false,
+          "title": "Fallback",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "sourceIdentifier",
+        "targetIdentifier"
+      ],
+      "title": "DslConnection",
+      "type": "object"
+    }
+  },
+  "nodeTypes": [
+    "ai",
+    "ai_agent",
+    "condition",
+    "input",
+    "integration_action",
+    "internal_service",
+    "kafka",
+    "subflow",
+    "trigger",
+    "upsert_entity",
+    "webhook"
+  ],
+  "nodeRegistry": {
+    "trigger": {
+      "type": "trigger",
+      "category": "Triggers",
+      "title": "Trigger",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "SELF_SERVE_TRIGGER",
+              "EVENT_TRIGGER",
+              "SCHEDULE_TRIGGER"
+            ]
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "userInputs": {
+            "type": "object"
+          },
+          "event": {
+            "type": "object"
+          },
+          "cron": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ai_agent": {
+      "type": "ai_agent",
+      "category": "Actions",
+      "title": "AI Agent",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "AI_AGENT"
+          },
+          "agentIdentifier": {
+            "type": "string"
+          },
+          "userPrompt": {
+            "type": "string"
+          },
+          "outputSchema": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "agentIdentifier",
+          "userPrompt"
+        ]
+      }
+    },
+    "ai": {
+      "type": "ai",
+      "category": "Actions",
+      "title": "AI",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "AI"
+          },
+          "userPrompt": {
+            "type": "string"
+          },
+          "systemPrompt": {
+            "type": "string"
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "outputSchema": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "userPrompt"
+        ]
+      }
+    },
+    "webhook": {
+      "type": "webhook",
+      "category": "Actions",
+      "title": "Webhook",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "WEBHOOK"
+          },
+          "url": {
+            "type": "string"
+          },
+          "method": {
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE"
+            ]
+          },
+          "headers": {
+            "type": "object"
+          },
+          "body": {},
+          "synchronized": {
+            "type": "boolean"
+          },
+          "onTimeout": {
+            "enum": [
+              "fail",
+              "continue"
+            ]
+          },
+          "onFailure": {
+            "enum": [
+              "continue",
+              "terminate"
+            ]
+          },
+          "verbose": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      }
+    },
+    "upsert_entity": {
+      "type": "upsert_entity",
+      "category": "Actions",
+      "title": "Upsert entity",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "UPSERT_ENTITY"
+          },
+          "blueprintIdentifier": {
+            "type": "string"
+          },
+          "mapping": {
+            "type": "object"
+          },
+          "onFailure": {
+            "enum": [
+              "continue",
+              "terminate"
+            ]
+          }
+        },
+        "required": [
+          "blueprintIdentifier",
+          "mapping"
+        ]
+      }
+    },
+    "kafka": {
+      "type": "kafka",
+      "category": "Actions",
+      "title": "Kafka",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "KAFKA"
+          },
+          "payload": {},
+          "onFailure": {
+            "enum": [
+              "continue",
+              "terminate"
+            ]
+          }
+        }
+      }
+    },
+    "integration_action": {
+      "type": "integration_action",
+      "category": "Actions",
+      "title": "Integration action",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "INTEGRATION_ACTION"
+          },
+          "integrationProvider": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "workflow": {
+            "type": "string"
+          },
+          "workflowInputs": {
+            "type": "object"
+          },
+          "onFailure": {
+            "enum": [
+              "continue",
+              "terminate"
+            ]
+          }
+        }
+      }
+    },
+    "internal_service": {
+      "type": "internal_service",
+      "category": "Actions",
+      "title": "Internal service",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "INTERNAL_SERVICE"
+          },
+          "service": {
+            "type": "string"
+          },
+          "parameter": {
+            "type": "object"
+          },
+          "onTimeout": {
+            "enum": [
+              "fail",
+              "continue"
+            ]
+          },
+          "onFailure": {
+            "enum": [
+              "continue",
+              "terminate"
+            ]
+          }
+        },
+        "required": [
+          "service"
+        ]
+      }
+    },
+    "subflow": {
+      "type": "subflow",
+      "category": "Actions",
+      "title": "Subflow",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "SUBFLOW"
+          },
+          "graph_kind": {
+            "enum": [
+              "e2e",
+              "stage"
+            ]
+          },
+          "graph_key": {
+            "type": "string"
+          },
+          "graph_id": {
+            "type": "string"
+          },
+          "input": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "graph_key"
+        ]
+      }
+    },
+    "condition": {
+      "type": "condition",
+      "category": "Conditions",
+      "title": "Condition",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "CONDITION"
+          },
+          "options": {
+            "type": "array",
+            "description": "CONDITION options (identifier, title, expression)"
+          }
+        }
+      }
+    },
+    "input": {
+      "type": "input",
+      "category": "Actions",
+      "title": "Input",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "INPUT"
+          },
+          "description": {
+            "type": "string"
+          },
+          "userInputs": {
+            "type": "object",
+            "description": "properties + buttons"
+          },
+          "outlets": {
+            "type": "array",
+            "description": "branches; identifier must match a button"
+          },
+          "responders": {
+            "type": "object"
+          },
+          "notifications": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  }
+}

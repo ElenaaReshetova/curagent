@@ -1,0 +1,30 @@
+# Agent (LangChain ReAct + GigaChat / LM Studio)
+# Pin to 0.3.x: langchain>=0.3.0 resolves to 1.x on fresh installs; 1.x removed AgentExecutor from langchain.agents.
+langchain>=0.3.28,<0.4
+langchain-core>=0.3.28,<0.4
+langchain-community>=0.3.28,<0.4
+langchain-openai>=0.3.28,<0.4
+langchain-gigachat>=0.3.0,<0.4
+openai>=1.0.0
+
+# API
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+
+# Kafka
+aiokafka>=0.11.0
+
+# HTTP client
+httpx>=0.27.0
+
+# Config & validation
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Platform persistence (Playbooks SoT → PostgreSQL)
+sqlalchemy>=2.0.36,<3
+alembic>=1.14.0,<2
+psycopg[binary]>=3.2.0,<4
+
+# Skills (Anthropic-style YAML frontmatter)
+pyyaml>=6.0.0
