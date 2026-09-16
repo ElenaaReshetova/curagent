@@ -1,0 +1,321 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 5s
+      timeout: 10s
+      retries: 6
+      start_period: 15s
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+  postgresql:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: temporal
+    volumes:
+      - temporal_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U temporal"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Platform business DB (Playbooks SoT). Separate from Temporal's postgres.
+  platform_db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: platform
+      POSTGRES_PASSWORD: platform
+      POSTGRES_DB: platform
+    ports:
+      - "5433:5432"
+    volumes:
+      - platform_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U platform -d platform"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  temporal:
+    image: temporalio/auto-setup:1.25.2
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    ports:
+      - "7233:7233"
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: temporal
+      POSTGRES_PWD: temporal
+      POSTGRES_SEEDS: postgresql
+    healthcheck:
+      test: ["CMD", "tctl", "--address", "temporal:7233", "cluster", "health"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
+
+  temporal-ui:
+    image: temporalio/ui:2.31.2
+    depends_on:
+      temporal:
+        condition: service_healthy
+    ports:
+      - "8088:8080"
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+
+  chat_gateway:
+    build:
+      context: .
+      dockerfile: docker/chat_gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_TASKS_TOPIC: tasks
+      CHAT_CALLBACK_BASE_URL: http://chat_gateway:8080
+
+  # Legacy single-agent API (optional — direct POST /task for testing)
+  agent:
+    build:
+      context: .
+      dockerfile: docker/agent/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      LM_STUDIO_URL: http://host.docker.internal:1234/v1
+      LM_STUDIO_MODEL: ${LM_STUDIO_MODEL:-nvidia/nemotron-3-nano-4b}
+      GIGACHAT_CREDENTIALS: ${GIGACHAT_CREDENTIALS:-}
+      GIGACHAT_MODEL: ${GIGACHAT_MODEL:-GigaChat}
+      SKILLS_DIR: /app/skills
+      # MCP Slack (for replying to Slack threads via MCP instead of HTTP callback)
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:-}
+      SLACK_TEAM_ID: ${SLACK_TEAM_ID:-}
+      SLACK_CHANNEL_IDS: ${SLACK_CHANNEL_IDS:-}
+      # MCP Jira (for Jira search, create, update, add comments)
+      JIRA_BASE_URL: ${JIRA_BASE_URL:-}
+      JIRA_USER_EMAIL: ${JIRA_USER_EMAIL:-}
+      JIRA_API_TOKEN: ${JIRA_API_TOKEN:-}
+      JIRA_TYPE: ${JIRA_TYPE:-cloud}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  slack_gateway:
+    build:
+      context: .
+      dockerfile: docker/slack_gateway/Dockerfile
+    ports:
+      - "8090:8090"
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_TASKS_TOPIC: tasks
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:-}
+      SLACK_BOT_NAME: My MCP Bot
+      SLACK_CALLBACK_BASE_URL: http://slack_gateway:8090
+      SLACK_POLL_INTERVAL: 30
+      SLACK_HISTORY_LIMIT: 200
+      DEBUG_SLACK_POLL: ${DEBUG_SLACK_POLL:-0}
+      # auto = launched E2E (AI PDLC) if armed; otherwise pre-scenario classify
+      SLACK_WORKFLOW_TEMPLATE_ID: ${SLACK_WORKFLOW_TEMPLATE_ID:-auto}
+      SLACK_FLOW_KEY: ${SLACK_FLOW_KEY:-ai-pdlc-flow}
+    volumes:
+      - ./src/slack_gateway:/app/src/slack_gateway:ro
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  jira_gateway:
+    build:
+      context: .
+      dockerfile: docker/jira_gateway/Dockerfile
+    ports:
+      - "8091:8091"
+    volumes:
+      - ./.cursor:/app/.cursor
+    environment:
+      DEBUG_LOG_PATH: /app/.cursor/debug.log
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_TASKS_TOPIC: tasks
+      JIRA_BASE_URL: ${JIRA_BASE_URL:-}
+      JIRA_USER_EMAIL: ${JIRA_USER_EMAIL:-}
+      JIRA_API_TOKEN: ${JIRA_API_TOKEN:-}
+      JIRA_PROJECT: ${JIRA_PROJECT:-CUR}
+      JIRA_ASSIGNEE_DISPLAY_NAME: ${JIRA_ASSIGNEE_DISPLAY_NAME:-}
+      JIRA_ASSIGNEE_ACCOUNT_ID: ${JIRA_ASSIGNEE_ACCOUNT_ID:-}
+      JIRA_JQL_OVERRIDE: ${JIRA_JQL_OVERRIDE:-}
+      JIRA_CALLBACK_BASE_URL: http://jira_gateway:8091
+      JIRA_POLL_INTERVAL: 60
+      DEBUG_JIRA_POLL: ${DEBUG_JIRA_POLL:-0}
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  orchestrator_worker:
+    build:
+      context: .
+      dockerfile: docker/orchestrator/Dockerfile
+    environment:
+      TEMPORAL_HOST: temporal:7233
+      TEMPORAL_TASK_QUEUE: agent-task-queue
+      REGISTRY_CONFIG_DIR: /app/config/registry
+      CAPABILITY_MANIFESTS_DIR: /app/config/capabilities/manifests
+      TOOL_GATEWAY_AUDIT_DIR: /app/data/tool_gateway_audit
+      SKILLS_DIR: /app/skills
+      WORKFLOW_CONFIG_DIR: /app/config/workflows
+      LM_STUDIO_URL: http://host.docker.internal:1234/v1
+      LM_STUDIO_MODEL: ${LM_STUDIO_MODEL:-google/gemma-4-e2b}
+      GIGACHAT_CREDENTIALS: ${GIGACHAT_CREDENTIALS:-}
+      GIGACHAT_MODEL: ${GIGACHAT_MODEL:-GigaChat}
+      PLATFORM_CONFIG_DIR: /app/config/platform
+      PLATFORM_DATABASE_URL: postgresql+psycopg://platform:platform@platform_db:5432/platform
+      WORKFLOWS_STORE: postgres
+      RUNTIME_PROFILE_KEY: local-lm-studio
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:-}
+      SLACK_CHANNEL_IDS: ${SLACK_CHANNEL_IDS:-}
+      SLACK_FLOW_KEY: ${SLACK_FLOW_KEY:-ai-pdlc-flow}
+      MCP_CONFIG_DIR: /app/config/mcp
+    volumes:
+      - ./config/workflows:/app/config/workflows
+      - ./config/registry:/app/config/registry
+      - ./config/capabilities:/app/config/capabilities
+      - ./config/skills:/app/config/skills
+      - ./config/platform:/app/config/platform
+      - ./config/mcp:/app/config/mcp:ro
+      - ./skills:/app/skills:ro
+      - ./src/orchestrator:/app/src/orchestrator:ro
+      - ./src/agent:/app/src/agent:ro
+      - ./src/platform:/app/src/platform:ro
+      - ./src/tool_gateway:/app/src/tool_gateway:ro
+      - tool_gateway_audit:/app/data/tool_gateway_audit
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      temporal:
+        condition: service_healthy
+      platform_db:
+        condition: service_healthy
+    restart: on-failure
+
+  workflow_ui:
+    build:
+      context: .
+      dockerfile: docker/workflow_ui/Dockerfile
+    ports:
+      - "8092:8092"
+    environment:
+      WORKFLOW_CONFIG_DIR: /app/config/workflows
+      REGISTRY_CONFIG_DIR: /app/config/registry
+      CAPABILITY_MANIFESTS_DIR: /app/config/capabilities/manifests
+      SKILL_MANIFESTS_DIR: /app/config/skills/manifests
+      MCP_CONFIG_DIR: /app/config/mcp
+      PLATFORM_CONFIG_DIR: /app/config/platform
+      PLATFORM_DATABASE_URL: postgresql+psycopg://platform:platform@platform_db:5432/platform
+      PLAYBOOKS_STORE: postgres
+      SKILLS_STORE: postgres
+      WORKFLOWS_STORE: postgres
+      TOOL_GATEWAY_AUDIT_DIR: /app/data/tool_gateway_audit
+      SKILLS_DIR: /app/skills
+      TEMPORAL_UI_URL: http://localhost:8088
+      TEMPORAL_HOST: temporal:7233
+      WORKFLOW_UI_PORT: "8092"
+      WORKFLOW_UI_RELOAD: "1"
+      RUNTIME_PROFILE_KEY: local-lm-studio
+    volumes:
+      - ./config/workflows:/app/config/workflows
+      - ./config/registry:/app/config/registry
+      - ./config/capabilities:/app/config/capabilities
+      - ./config/skills:/app/config/skills
+      - ./config/mcp:/app/config/mcp
+      - ./config/platform:/app/config/platform
+      - ./skills:/app/skills:ro
+      - ./src/workflow_ui:/app/src/workflow_ui:ro
+      - ./src/platform:/app/src/platform:ro
+      - ./src/tool_gateway:/app/src/tool_gateway:ro
+      - ./src/orchestrator:/app/src/orchestrator:ro
+      - ./src/agent:/app/src/agent:ro
+      - tool_gateway_audit:/app/data/tool_gateway_audit
+    depends_on:
+      temporal:
+        condition: service_healthy
+      platform_db:
+        condition: service_healthy
+    restart: on-failure
+
+  tool_gateway:
+    build:
+      context: .
+      dockerfile: docker/tool_gateway/Dockerfile
+    ports:
+      - "8093:8093"
+    environment:
+      CAPABILITY_MANIFESTS_DIR: /app/config/capabilities/manifests
+      REGISTRY_CONFIG_DIR: /app/config/registry
+      TOOL_GATEWAY_AUDIT_DIR: /app/data/tool_gateway_audit
+      TOOL_GATEWAY_PORT: "8093"
+      PYTHONPATH: /app
+    volumes:
+      - ./config/capabilities:/app/config/capabilities
+      - ./config/registry:/app/config/registry
+      - ./src/tool_gateway:/app/src/tool_gateway:ro
+      - ./src/agent:/app/src/agent:ro
+      - tool_gateway_audit:/app/data/tool_gateway_audit
+    command: ["python", "-m", "src.tool_gateway"]
+    restart: on-failure
+
+  task_manager:
+    build:
+      context: .
+      dockerfile: docker/task_manager/Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_TASKS_TOPIC: tasks
+      TEMPORAL_HOST: temporal:7233
+      TEMPORAL_TASK_QUEUE: agent-task-queue
+      WORKFLOW_STARTER_POLL_INTERVAL: 2
+      PLATFORM_CONFIG_DIR: /app/config/platform
+      RUNTIME_PROFILE_KEY: local-lm-studio
+    volumes:
+      - ./src/orchestrator:/app/src/orchestrator:ro
+      - ./src/platform:/app/src/platform:ro
+      - ./config/platform:/app/config/platform
+    depends_on:
+      kafka:
+        condition: service_healthy
+      temporal:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  temporal_pg:
+  platform_pg:
+  tool_gateway_audit:
